@@ -25,12 +25,33 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed } from "vue";
-import type { UploadProps, UploadUserFile } from "element-plus";
-
+import {
+  type UploadProps,
+  type UploadUserFile,
+  type UploadRawFile,
+  ElMessage,
+} from "element-plus";
+import { uploadFileApi } from "@/api/KnowHubApi";
 const fileList = ref<UploadUserFile[]>();
 
 const uploadFile = () => {
-  console.log(fileList.value);
+  const files: File[] = [];
+  fileList.value?.forEach((e) => {
+    files.push(e.raw as File);
+  });
+  console.log("上传的文件:", files);
+
+  uploadFileApi(files)
+    .then((res) => {
+      console.log(res);
+      ElMessage({
+        type: "success",
+        message: res.data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 </script>
 

@@ -11,6 +11,7 @@ spring:
   servlet:
     multipart:
       max-file-size: 20MB
+      enabled: true
 server:
   port: 8329
 

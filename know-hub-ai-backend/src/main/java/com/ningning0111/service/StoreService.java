@@ -4,6 +4,8 @@ import com.ningning0111.common.BaseResponse;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @Project: com.ningning0111.service
  * @Author: pgthinker
@@ -12,15 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @Description:
  */
 public interface StoreService {
-    BaseResponse pdfStore(MultipartFile file);
+    BaseResponse fileStore(MultipartFile file);
 
-    BaseResponse txtStore(MultipartFile file);
-
-    BaseResponse excelStore(MultipartFile file);
-
-    BaseResponse htmlStore(MultipartFile file);
-
-    BaseResponse jsonStore(MultipartFile file);
+    BaseResponse filesStore(List<MultipartFile> files);
 
     VectorStore randomGetVectorStore();
 }

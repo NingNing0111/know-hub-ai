@@ -47,7 +47,7 @@ public class StoreServiceImpl implements StoreService {
 
 
     @Override
-    public BaseResponse pdfStore(MultipartFile file) {
+    public BaseResponse fileStore(MultipartFile file) {
         try {
             Resource resource = saveFileToResource(file);
             VectorStore vectorStore = randomGetVectorStore();
@@ -63,25 +63,17 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public BaseResponse txtStore(MultipartFile file) {
-        return null;
+    public BaseResponse filesStore(List<MultipartFile> files) {
+        try {
+            for (MultipartFile file :
+                    files) {
+                fileStore(file);
+            }
+            return ResultUtils.success("上传成功");
+        }catch (Exception e){
+            throw new BusinessException(ErrorCode.OPERATION_ERROR,e.getMessage());
+        }
     }
-
-    @Override
-    public BaseResponse excelStore(MultipartFile file) {
-        return null;
-    }
-
-    @Override
-    public BaseResponse htmlStore(MultipartFile file) {
-        return null;
-    }
-
-    @Override
-    public BaseResponse jsonStore(MultipartFile file) {
-        return null;
-    }
-
 
 
     @Override
