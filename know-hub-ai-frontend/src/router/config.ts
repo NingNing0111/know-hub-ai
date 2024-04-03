@@ -18,6 +18,26 @@ let routes = [
     },
   },
   {
+    path: "/know-hub",
+    name: "knowHub",
+    component: () => import("@/view/know/KnowHubView.vue"),
+    meta: {
+      isMenu: true,
+      description: "我的知识库",
+      icon: "Collection",
+    },
+  },
+  {
+    path: "/upload",
+    name: "upload",
+    component: () => import("@/view/know/UploadView.vue"),
+    meta: {
+      isMenu: true,
+      description: "知识内容上传",
+      icon: "FolderAdd",
+    },
+  },
+  {
     path: "/settings",
     name: "settings",
     component: () => import("@/view/chat/SettingView.vue"),
@@ -25,16 +45,6 @@ let routes = [
       isMenu: true,
       description: "设置",
       icon: "Setting",
-    },
-  },
-  {
-    path: "/know-hub",
-    name: "knowHub",
-    component: () => import("@/view/know/KnowHubView.vue"),
-    meta: {
-      isMenu: true,
-      description: "知识库",
-      icon: "Collection",
     },
   },
 ];

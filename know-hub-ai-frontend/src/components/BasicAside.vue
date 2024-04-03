@@ -6,7 +6,7 @@
   >
     <div class="aside-header">
       <div style="display: flex; justify-content: right">
-        <el-icon :size="30" style="cursor: pointer" @click="openMenu">
+        <el-icon :size="25" style="cursor: pointer" @click="openMenu">
           <Expand v-if="isCollapse" />
           <Fold v-else />
         </el-icon>
