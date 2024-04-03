@@ -32,7 +32,7 @@ let routes = [
     name: "upload",
     component: () => import("@/view/know/UploadView.vue"),
     meta: {
-      isMenu: true,
+      isMenu: false,
       description: "知识内容上传",
       icon: "FolderAdd",
     },

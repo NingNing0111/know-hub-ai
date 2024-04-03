@@ -2,9 +2,9 @@
   <div id="basic-layout">
     <el-container>
       <el-aside :style="asideStyle">
-        <BasicAside @change-aside="changeAside"/>
+        <BasicAside @change-aside="changeAside" />
       </el-aside>
-      <el-main>
+      <el-main style="margin-left: 10px; background-color: #f3f3f3">
         <RouterView />
       </el-main>
     </el-container>
@@ -12,23 +12,19 @@
 </template>
 
 <script setup lang="ts">
-
 const asideStyle = ref({
-  height: '95vh',
-  width: '300px',
-})
-const changeAside = (isCollapse : boolean) => {
-
+  height: "95vh",
+  width: "200px",
+  // transition: "width 0.5s",
+});
+const changeAside = (isCollapse: boolean) => {
   if (isCollapse) {
-    asideStyle.value.width = '100px'
-
+    asideStyle.value.width = "auto";
   } else {
-    asideStyle.value.width = '300px'
-
+    // 动态变到150px
+    asideStyle.value.width = "200px";
   }
-}
-
-
+};
 </script>
 
 <style scoped lang="less">
