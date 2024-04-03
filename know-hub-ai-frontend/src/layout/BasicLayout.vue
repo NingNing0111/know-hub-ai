@@ -1,7 +1,7 @@
 <template>
   <div id="basic-layout">
     <el-container>
-      <el-aside style="height: 95vh">
+      <el-aside style="width: unset; height: 95vh">
         <BasicAside />
       </el-aside>
       <el-main>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>知识库</h1>
+    <h1>对话配置</h1>
   </div>
 </template>
 
