@@ -15,8 +15,7 @@
 
 const asideStyle = ref({
   height: '95vh',
-  // width: '300px',
-  width: 'unset'
+  width: '300px',
 })
 const changeAside = (isCollapse : boolean) => {
 
