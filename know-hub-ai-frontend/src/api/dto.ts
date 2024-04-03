@@ -1,3 +1,6 @@
+/**
+ * 请求对象
+ */
 export interface Message {
   role: string;
   content: string;

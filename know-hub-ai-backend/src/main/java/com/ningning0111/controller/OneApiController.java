@@ -5,12 +5,13 @@ import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.AddApiRequest;
+import com.ningning0111.model.dto.QueryApiRequest;
 import com.ningning0111.service.OneApiService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Project: com.ningning0111.controller
@@ -32,5 +33,15 @@ public class OneApiController {
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"key is empty");
         }
         return oneApiService.addOneApi(request);
+    }
+
+    /**
+     * 查询所有未禁止的key
+     * @param queryApiRequest
+     * @return
+     */
+    @GetMapping("/select")
+    BaseResponse selectApi(@RequestBody QueryApiRequest queryApiRequest){
+        return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
 }

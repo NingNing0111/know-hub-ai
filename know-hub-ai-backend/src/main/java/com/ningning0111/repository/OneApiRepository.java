@@ -1,6 +1,8 @@
 package com.ningning0111.repository;
 
 import com.ningning0111.model.entity.OneApi;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +19,5 @@ import java.util.List;
 public interface OneApiRepository extends JpaRepository<OneApi,Long> {
     // 查询所有未禁用的Key
     List<OneApi> findAllByDisableIsFalse();
+    List<OneApi> findAllByDisableIsFalse(Pageable pageable);
 }

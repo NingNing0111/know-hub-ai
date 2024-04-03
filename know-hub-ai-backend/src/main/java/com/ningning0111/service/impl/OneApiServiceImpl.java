@@ -5,6 +5,7 @@ import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.AddApiRequest;
+import com.ningning0111.model.dto.QueryApiRequest;
 import com.ningning0111.model.entity.OneApi;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.repository.OneApiRepository;
@@ -12,12 +13,12 @@ import com.ningning0111.service.OneApiService;
 import groovy.util.logging.Slf4j;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.Vector;
+import java.awt.print.Pageable;
+import java.util.*;
 
 /**
  * @Project: com.ningning0111.service
@@ -85,4 +86,11 @@ public class OneApiServiceImpl implements OneApiService {
             throw new BusinessException(ErrorCode.OPERATION_ERROR,e.getMessage());
         }
     }
+
+    @Override
+    public BaseResponse selectApi(PageRequest pageRequest) {
+        List<OneApi> oneApis = oneApiRepository.findAllByDisableIsFalse(pageRequest);
+        return ResultUtils.success(oneApis);
+    }
+
 }
