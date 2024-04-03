@@ -26,6 +26,7 @@
 
 import {ElMessage} from "element-plus";
 import axios from "axios";
+import {simpleChatApi} from "@/api/ChatApi.ts";
 
 const chatList = ref<string[]>([])
 const input = ref<string>('')
@@ -33,14 +34,17 @@ const ready = ref<boolean>(true)
 
 const handleInput = (e : KeyboardEvent) => {
   if (!e.shiftKey && e.key === 'Enter') {
-    console.log(e)
     e.preventDefault()
     if (ready.value) {
       chatList.value.push(input.value)
       ready.value = false
 
-      axios.post('').then(() => { // 向后端发送请求
+      simpleChatApi(input.value).then((res) => {
+        console.log(res.data)
         chatList.value.push()
+        ready.value = true
+      }).catch(() => {
+        chatList.value.push('')
         ready.value = true
       })
     } else {
