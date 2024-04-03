@@ -1,10 +1,10 @@
 <template>
+  <!--    @open="handleOpen"-->
+  <!--    @close="handleClose"-->
   <el-menu
     default-active="1"
     class="aside-menu"
     :collapse="isCollapse"
-    @open="handleOpen"
-    @close="handleClose"
   >
     <div class="aside-header">
       <div style="display: flex; justify-content: right">
@@ -29,9 +29,11 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['changeAside'])
 const isCollapse = ref(false);
 const openMenu = () => {
   isCollapse.value = !isCollapse.value;
+  emit('changeAside', isCollapse.value)
 };
 </script>
 
