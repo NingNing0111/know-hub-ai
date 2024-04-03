@@ -1,48 +1,72 @@
 <template>
-  <!--    @open="handleOpen"-->
-  <!--    @close="handleClose"-->
   <el-menu
-    default-active="1"
+    :default-active="defaultPath"
     class="aside-menu"
     :collapse="isCollapse"
   >
     <div class="aside-header">
       <div style="display: flex; justify-content: right">
-        <el-icon :size="30" style="cursor: pointer" @click="openMenu"
-          ><Fold
-        /></el-icon>
+        <el-icon :size="30" style="cursor: pointer" @click="openMenu">
+          <Expand v-if="isCollapse" />
+          <Fold v-else />
+        </el-icon>
       </div>
     </div>
-    <el-menu-item index="1">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>对话</template>
-    </el-menu-item>
-    <el-menu-item index="2">
-      <el-icon><document /></el-icon>
-      <template #title>知识库</template>
-    </el-menu-item>
-    <el-menu-item index="3">
-      <el-icon><document /></el-icon>
-      <template #title>对话配置</template>
+
+    <el-menu-item
+      v-for="item in menuRouterList"
+      :index="item.path"
+      @click="handleSelect(item)"
+    >
+      <el-icon>
+        <component :is="item.meta?.icon"></component>
+      </el-icon>
+      <template #title>{{ item.meta?.description }}</template>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script setup lang="ts">
+import routes from "@/router/config.ts";
+import router from "@/router";
+
 const emit = defineEmits(['changeAside'])
 const isCollapse = ref(false);
+const path = router.currentRoute.value.fullPath;
+const defaultPath = ref(path === "/" ? "/chat" : path);
 const openMenu = () => {
   isCollapse.value = !isCollapse.value;
   emit('changeAside', isCollapse.value)
+};
+
+// 使用计算属性过滤不是菜单项的路由选项
+const menuRouterList = computed(() => {
+  return routes.filter((item) => {
+    return item.meta?.isMenu;
+  });
+});
+
+onMounted(() => {
+  console.log(defaultPath.value);
+});
+
+const handleSelect = (e: any) => {
+  console.log(e);
+  router.push({
+    path: e.path,
+  });
 };
 </script>
 
 <style scoped lang="less">
 .aside-header {
   height: 100px;
-  // background-color: pink;
+  background-color: pink;
 }
 .aside-menu {
-  // background-color: aqua;
+  border-right: none;
+  border: 1px solid rgb(239, 239, 239);
+  height: 100%;
+  box-shadow: 1px 1px 1px 1px rgb(240, 239, 239);
 }
 </style>
