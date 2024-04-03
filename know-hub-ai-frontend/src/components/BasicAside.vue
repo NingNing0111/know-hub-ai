@@ -75,6 +75,9 @@ const handleSelect = (e: any) => {
 #basic-aside {
   height: 100%;
 }
+:deep(.el-menu) {
+  z-index: 10; // 配合 ChatView
+}
 .aside-header {
   display: flex;
   justify-content: right;
