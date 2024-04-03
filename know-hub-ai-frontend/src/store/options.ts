@@ -1,7 +1,6 @@
 // 配置信息全局状态管理
 import { ChatOptions } from "@/api/dto";
 import { defineStore } from "pinia";
-import { stringify } from "querystring";
 export const CHAT_OPTIONS = "know-hub-ai-chat-config";
 export const defaultChatOptions: ChatOptions = {
   model: "gpt-3.5-turbo",
@@ -25,5 +24,11 @@ export const useChatOptionsStore = defineStore("user", {
       return this.globalOptions;
     },
   },
-  actions: {},
+  actions: {
+    setChatOptions(globalOptions: ChatOptions) {
+      // 本地存储
+      localStorage.setItem(CHAT_OPTIONS, JSON.stringify(globalOptions));
+      this.$patch({ globalOptions });
+    },
+  },
 });

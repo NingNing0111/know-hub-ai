@@ -8,4 +8,5 @@ export const enum KnowApi {
 export const enum ChatApi {
   StreamChat = "/chat/stream",
   SimpleChat = "/chat/simple",
+  Models = "/chat/models",
 }

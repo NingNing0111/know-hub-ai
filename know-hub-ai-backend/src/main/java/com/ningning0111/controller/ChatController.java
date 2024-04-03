@@ -7,11 +7,10 @@ import com.ningning0111.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 
 /**
@@ -60,6 +59,12 @@ public class ChatController {
             }
             default -> throw new BusinessException(ErrorCode.PARAMS_ERROR,"暂不支持["+chatTypeStr+"]对话");
         }
+    }
+
+    @GetMapping(value = "/models")
+    public BaseResponse models(){
+        List<String> models = LLMModels.getModels();
+        return ResultUtils.success(models);
     }
 
 

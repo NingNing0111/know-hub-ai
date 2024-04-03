@@ -38,6 +38,16 @@ let routes = [
     },
   },
   {
+    path: "/manage",
+    name: "manage",
+    component: () => import("@/view/api/ApiManageView.vue"),
+    meta: {
+      isMenu: true,
+      description: "API管理",
+      icon: "Key",
+    },
+  },
+  {
     path: "/settings",
     name: "settings",
     component: () => import("@/view/chat/SettingView.vue"),
