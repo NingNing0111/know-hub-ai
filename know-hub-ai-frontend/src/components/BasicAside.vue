@@ -30,11 +30,13 @@
 import routes from "@/router/config.ts";
 import router from "@/router";
 
+const emit = defineEmits(['changeAside'])
 const isCollapse = ref(false);
 const path = router.currentRoute.value.fullPath;
 const defaultPath = ref(path === "/" ? "/chat" : path);
 const openMenu = () => {
   isCollapse.value = !isCollapse.value;
+  emit('changeAside', isCollapse.value)
 };
 
 // 使用计算属性过滤不是菜单项的路由选项
