@@ -1,8 +1,8 @@
 <template>
   <div id="basic-layout">
     <el-container>
-      <el-aside style="width: unset; height: 95vh">
-        <BasicAside />
+      <el-aside :style="asideStyle">
+        <BasicAside @change-aside="changeAside"/>
       </el-aside>
       <el-main>
         <RouterView />
@@ -11,7 +11,25 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+const asideStyle = ref({
+  height: '95vh',
+  width: '300px',
+})
+const changeAside = (isCollapse : boolean) => {
+
+  if (isCollapse) {
+    asideStyle.value.width = '100px'
+
+  } else {
+    asideStyle.value.width = '300px'
+
+  }
+}
+
+
+</script>
 
 <style scoped lang="less">
 #basic-layout {
