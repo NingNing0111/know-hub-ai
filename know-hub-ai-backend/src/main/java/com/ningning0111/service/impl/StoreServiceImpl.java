@@ -17,6 +17,7 @@ import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.PgVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -74,7 +75,6 @@ public class StoreServiceImpl implements StoreService {
             throw new BusinessException(ErrorCode.OPERATION_ERROR,e.getMessage());
         }
     }
-
 
     @Override
     public VectorStore randomGetVectorStore(){

@@ -12,10 +12,17 @@ spring:
   servlet:
     multipart:
       max-file-size: 20MB
-      enabled: true
-
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
 server:
   port: 8329
+
+# api和key分享自：https://pgthinker.me/2023/10/03/196/
+know-hub-ai:
+  baseUrl: https://api.mnzdna.xyz
+  apiKey: sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
 
 
 

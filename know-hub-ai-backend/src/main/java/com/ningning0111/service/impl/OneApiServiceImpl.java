@@ -13,6 +13,7 @@ import com.ningning0111.service.OneApiService;
 import groovy.util.logging.Slf4j;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,10 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class OneApiServiceImpl implements OneApiService {
-
+    @Value("${know-hub-ai.baseUrl}")
+    private String defaultBaseUrl = ApplicationConstant.DEFAULT_BASE_URL;
+    @Value("${know-hub-ai.apiKey}")
+    private String defaultApiKey;
     private static List<OneApi> apiList = new Vector<>();
     private final OneApiRepository oneApiRepository;
 
@@ -42,9 +46,9 @@ public class OneApiServiceImpl implements OneApiService {
         if(findList.isEmpty()){
             long currMillis = System.currentTimeMillis();
             OneApi oneApi = oneApiRepository.save(OneApi.builder()
-                    .apiKey("sk-example")
+                    .apiKey(defaultApiKey)
                     .disable(false)
-                    .baseUrl(ApplicationConstant.DEFAULT_BASE_URL)
+                    .baseUrl(defaultBaseUrl)
                     .createTime(new Date(currMillis))
                     .updateTime(new Date(currMillis))
                     .build());

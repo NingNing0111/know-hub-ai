@@ -1,9 +1,11 @@
 package com.ningning0111.config;
 
+import com.ningning0111.service.StoreService;
 import lombok.Data;
 import org.springframework.ai.autoconfigure.openai.OpenAiAutoConfiguration;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,5 +26,10 @@ public class ApplicationConfig {
     @Bean
     public TokenTextSplitter tokenTextSplitter() {
         return new TokenTextSplitter();
+    }
+
+    @Bean
+    public VectorStore vectorStore(StoreService service) {
+        return service.randomGetVectorStore();
     }
 }
