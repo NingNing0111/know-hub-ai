@@ -1,3 +1,6 @@
+/**
+ * 后端API地址
+ */
 export const enum KnowApi {
   UploadFile = "/know/file/upload",
 }
