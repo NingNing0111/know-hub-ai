@@ -29,7 +29,6 @@ public class ChatController {
     private final ChatService chatService;
 
     @PostMapping(value = "/stream")
-    @CrossOrigin
     public Flux<ChatResponse> streamRagChat(
             @RequestBody ChatRequest chatRequest
     ){
@@ -48,7 +47,6 @@ public class ChatController {
 
 
     @PostMapping(value = "/simple")
-    @CrossOrigin
     public BaseResponse simpleChat(
             @RequestBody ChatRequest chatRequest
     ){
@@ -66,7 +64,6 @@ public class ChatController {
     }
 
     @GetMapping(value = "/models")
-    @CrossOrigin
     public BaseResponse models(){
         List<String> models = LLMModels.getModels();
         return ResultUtils.success(models);

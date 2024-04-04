@@ -19,3 +19,7 @@
 - Spring Boot 3.x
 - Spring AI 0.8.1
 - pgvector 0.5.0
+
+## 效果图
+
+![](./doc/images/RAG效果图.png)
