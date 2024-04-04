@@ -9,6 +9,9 @@
       active-text-color="#20a0ff"
     >
       <div class="menu-header">
+        <el-icon size="50">
+          <el-image :src="Logo"></el-image>
+        </el-icon>
         <h1>Know Hub AI</h1>
         <el-text style="color: #bfcbd9">基于个人知识库的AI对话</el-text>
       </div>
@@ -31,6 +34,13 @@
         </el-icon>
         <template #title>{{ item.meta?.description }}</template>
       </el-menu-item>
+
+      <el-menu-item @click="toGithub">
+        <el-icon>
+          <el-image :src="GitHubIcon"></el-image>
+        </el-icon>
+        <template #title>GitHub</template>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -38,7 +48,13 @@
 <script setup lang="ts">
 import routes from "@/router/config.ts";
 import router from "@/router";
+import GitHubIcon from "@/assets/github.svg";
+import AppConfig from "@/config";
+import Logo from "@/assets/logo.svg";
 
+const toGithub = () => {
+  window.open(AppConfig.GIT_HUB_PROJECT_URL);
+};
 const emit = defineEmits(["changeAside"]);
 const isCollapse = ref(false);
 const path = router.currentRoute.value.fullPath;

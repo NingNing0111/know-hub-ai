@@ -13,6 +13,8 @@
     "@microsoft/fetch-event-source": "^2.0.1",
     "axios": "^1.6.8",
     "element-plus": "^2.6.3",
+    "highlight.js": "^11.9.0",
+    "marked": "^12.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

@@ -1,30 +1,33 @@
 <template>
   <div id="chat-view">
-    <el-scrollbar>
-      <el-card v-for="item in messageList" class="scrollbar-item">
-        <template #header>
-          <div class="card-header" v-if="item.role === 'system'">
-            <el-image :src="System" style="width: 50px; margin-right: 20px" />
-            <span style="font-size: large; font-weight: 800">系统设置</span>
-          </div>
-          <div class="card-header" v-if="item.role === 'assistant'">
-            <el-image :src="Robot" style="width: 50px; margin-right: 20px" />
-            <div>
-              <el-button type="primary" size="small">复制</el-button>
-              <el-button type="warning" size="small">删除</el-button>
+    <el-scrollbar ref="myScrollbar" always>
+      <div ref="innerElement">
+        <el-card v-for="item in messageList" class="scrollbar-item">
+          <template #header>
+            <div class="card-header" v-if="item.role === 'system'">
+              <el-image :src="System" style="width: 50px; margin-right: 20px" />
+              <span style="font-size: large; font-weight: 800">系统设置</span>
             </div>
-          </div>
-          <div class="card-header" v-if="item.role === 'user'">
-            <el-image :src="User" style="width: 50px; margin-right: 20px" />
-            <div>
-              <el-button type="primary" size="small">复制</el-button>
-              <el-button type="warning" size="small">删除</el-button>
+            <div class="card-header" v-if="item.role === 'assistant'">
+              <el-image :src="Robot" style="width: 50px; margin-right: 20px" />
+              <div>
+                <el-button type="primary" size="small">复制</el-button>
+                <el-button type="warning" size="small">删除</el-button>
+              </div>
             </div>
-          </div>
-        </template>
-        <div v-if="item.content !== ''" v-html="item.content"></div>
-        <div v-else>AI思考中...</div>
-      </el-card>
+            <div class="card-header" v-if="item.role === 'user'">
+              <el-image :src="User" style="width: 50px; margin-right: 20px" />
+              <div>
+                <el-button type="primary" size="small">复制</el-button>
+                <el-button type="warning" size="small">删除</el-button>
+              </div>
+            </div>
+          </template>
+          <MDView v-if="item.content !== ''" :content="item.content" />
+          <!-- <div v-if="item.content !== ''" v-html="item.content"></div> -->
+          <div v-else>AI思考中...</div>
+        </el-card>
+      </div>
     </el-scrollbar>
 
     <div class="chat-footer">
@@ -53,12 +56,31 @@ import Robot from "@/assets/robot.svg";
 import User from "@/assets/user.svg";
 import System from "@/assets/system.svg";
 const chatMessageStore = useChatMessageStore();
+import { ElMessage, ElScrollbar } from "element-plus";
 
 const input = ref<string>("");
 const ready = ref<boolean>(true);
 const messageList = computed(() => {
   return chatMessageStore.globalMessage;
 });
+const innerElement = ref<HTMLElement>();
+const myScrollbar = ref<InstanceType<typeof ElScrollbar>>();
+
+const updateToBottom = () => {
+  // console.log(myScrollbar.value?.);
+  console.log(innerElement.value?.scrollHeight);
+
+  myScrollbar.value?.setScrollTop(innerElement.value?.clientHeight as number);
+};
+
+onMounted(() => {
+  updateToBottom();
+});
+
+onUpdated(() => {
+  updateToBottom();
+});
+
 const submitChat = () => {
   streamChatApi(input.value);
   input.value = "";
@@ -71,9 +93,16 @@ const cleanMessage = () => {
 const handleKeydown = (e: KeyboardEvent) => {
   if (!e.shiftKey && e.key === "Enter") {
     e.preventDefault();
+    if (input.value === "") {
+      ElMessage({
+        type: "error",
+        message: "请输入内容",
+      });
+    } else {
+      submitChat();
+    }
     // if (ready.value) {
-      submitChat()
-      // ready.value = false;
+    // ready.value = false;
     // } else {
     //   ElMessage.error("请等待机器人回复后再发送哦");
     // }
