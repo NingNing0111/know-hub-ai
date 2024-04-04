@@ -15,12 +15,7 @@ export const selectApi = (page: number, pageSize: number): Promise<Res> => {
     return service.post('/one-api/select', dto)
 }
 
-export const addOneApi = (): Promise<Res> => {
-    const dto: AddDto = {
-        baseUrl: "https://api.mnzdna.xyz",
-        apiKey: "sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5",
-        describe: "前端"
-    }
+export const addOneApi = (dto: AddDto): Promise<Res> => {
     return service.post('/one-api/add', dto)
 }
 

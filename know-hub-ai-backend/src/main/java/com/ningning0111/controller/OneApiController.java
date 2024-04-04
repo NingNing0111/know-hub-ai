@@ -40,8 +40,9 @@ public class OneApiController {
      * @param queryApiRequest
      * @return
      */
-    @GetMapping("/select")
+    @PostMapping("/select")
     BaseResponse selectApi(@RequestBody QueryApiRequest queryApiRequest){
+        System.out.println(queryApiRequest.toString());
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
 

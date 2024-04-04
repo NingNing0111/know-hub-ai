@@ -24,7 +24,7 @@
                   style="width: 132px"
                   type="primary"
                   size="default"
-                  @click="handleInsert"
+                  @click="insertDialogVisible = true"
               >添加API</el-button
               >
 <!--            </el-col>-->
@@ -54,6 +54,31 @@
       />
     </div>
 
+    <el-dialog
+        class="insertDialog"
+        title="添加API"
+        width="400px"
+        align-center
+        v-model="insertDialogVisible"
+        @opened="handleDialogOpened"
+    >
+      <el-form :model="insertForm" :rules="rules" label-width="80" status-icon hide-required-asterisk>
+        <el-form-item class="item" label="apiKey" prop="apiKey">
+          <el-input v-model.trim="insertForm.apiKey" ref="dialogInput" placeholder="apiKey" @keyup.enter="handleConfirmInsert"/>
+        </el-form-item>
+        <el-form-item class="item" label="baseUrl" prop="baseUrl">
+          <el-input v-model.trim="insertForm.baseUrl" placeholder="baseUrl" @keyup.enter="handleConfirmInsert"/>
+        </el-form-item>
+        <el-form-item class="item" label="describe" prop="describe">
+          <el-input v-model.trim="insertForm.describe" placeholder="describe" @keyup.enter="handleConfirmInsert"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleConfirmInsert">提交</el-button>
+          <el-button @click="insertDialogVisible=false">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
 
     <el-dialog
         class="deleteDialog"
@@ -75,6 +100,7 @@
 <script setup lang="ts">
 
 import {addOneApi, changeApi, deleteById, selectApi} from "@/api/ManageApi.ts";
+import {SelectDto} from "@/api/dto.ts";
 
 const rules = {}
 
@@ -100,18 +126,18 @@ onMounted(async () => {
   loading.value = false
 })
 
-const handleInsert = async () => {
-  await addOneApi()
-  await getData()
-}
-
-// const insertDialogVisible = ref(false)
-// const insertForm = ref({})
-// const handleConfirmInsert = async () => {
+// const handleInsert = async () => {
 //   await addOneApi()
 //   await getData()
-//   insertDialogVisible.value = false
 // }
+
+const insertDialogVisible = ref(false)
+const insertForm = ref<SelectDto>({})
+const handleConfirmInsert = async () => {
+  await addOneApi(insertForm.value)
+  await getData()
+  insertDialogVisible.value = false
+}
 
 // const updateDialogVisible = ref(false)
 // const updateId = ref<number>()
@@ -142,10 +168,10 @@ const handleCurrentChange = () => {
   getData()
 }
 
-// const dialogInputRef = ref()
-// const handleDialogOpened = async () => {
-//   dialogInputRef.value.focus()
-// }
+const dialogInputRef = ref()
+const handleDialogOpened = async () => {
+  dialogInputRef.value.focus()
+}
 </script>
 
 <style scoped>

@@ -28,7 +28,7 @@ export interface SelectDto {
   pageSize: number
 }
 export interface AddDto {
-  "baseUrl": string,
-  "apiKey": string,
-  "describe": string
+  baseUrl: string,
+  apiKey: string,
+  describe: string
 }
