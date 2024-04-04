@@ -12,6 +12,7 @@ import com.ningning0111.repository.OneApiRepository;
 import com.ningning0111.service.OneApiService;
 import groovy.util.logging.Slf4j;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -95,6 +98,45 @@ public class OneApiServiceImpl implements OneApiService {
     public BaseResponse selectApi(PageRequest pageRequest) {
         List<OneApi> oneApis = oneApiRepository.findAllByDisableIsFalse(pageRequest);
         return ResultUtils.success(oneApis);
+    }
+
+    @Override
+    public BaseResponse changeApi(Long id) {
+        OneApi oneApi= oneApiRepository.getReferenceById(id);
+        oneApi.setDisable(!oneApi.getDisable());
+        oneApi.setUpdateTime(new Date());
+        try{
+            oneApiRepository.save(oneApi);
+            return ResultUtils.success("更新成功");
+        }catch (Exception e){
+            throw new BusinessException(ErrorCode.UPDATE_ERROR,e.getMessage());
+        }
+    }
+
+    @Override
+    public BaseResponse selectById(Long id) {
+        OneApi oneApi= oneApiRepository.getReferenceById(id);
+        return ResultUtils.success(oneApi);
+    }
+
+    @Override
+    public BaseResponse deleteById(Long id) {
+        OneApi oneApi= oneApiRepository.getReferenceById(id);
+        if (oneApi.getDisable()){
+            return ResultUtils.error(ErrorCode.DELETE_ERROR);
+        }
+        oneApiRepository.deleteById(id);
+        return ResultUtils.success("删除成功");
+    }
+
+    @Override
+    public BaseResponse deleteByIds(List<Long> ids) {
+        try{
+            oneApiRepository.deleteByIdIn(ids);
+            return ResultUtils.success("删除成功");
+        } catch (Exception e){
+            return ResultUtils.error(ErrorCode.DELETE_ERROR);
+        }
     }
 
 }
