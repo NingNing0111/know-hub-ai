@@ -27,6 +27,7 @@
         resize="none"
         placeholder="请输入对话内容，换行请使用Shift+Enter"
         class="input-box"
+        @keydown="handleKeydown"
       />
       <div style="display: flex; justify-content: right; margin: 10px">
         <el-button type="warning" @click="cleanMessage">清除对话</el-button>
@@ -37,8 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage } from "element-plus";
-import { simpleChatApi, streamChatApi } from "@/api/ChatApi.ts";
+import { streamChatApi } from "@/api/ChatApi.ts";
 import { useChatMessageStore } from "@/store/message";
 
 const chatMessageStore = useChatMessageStore();
@@ -56,28 +56,17 @@ const cleanMessage = () => {
   chatMessageStore.cleanMessage();
 };
 
-// const handleInput = (e: KeyboardEvent) => {
-//   if (!e.shiftKey && e.key === "Enter") {
-//     e.preventDefault();
-//     if (ready.value) {
-//       chatList.value.push(input.value);
-//       ready.value = false;
-
-//       simpleChatApi(input.value)
-//         .then((res) => {
-//           console.log(res.data);
-//           chatList.value.push();
-//           ready.value = true;
-//         })
-//         .catch(() => {
-//           chatList.value.push("");
-//           ready.value = true;
-//         });
-//     } else {
-//       ElMessage.error("请等待机器人回复后再发送哦");
-//     }
-//   }
-// };
+const handleKeydown = (e: KeyboardEvent) => {
+  if (!e.shiftKey && e.key === "Enter") {
+    e.preventDefault();
+    // if (ready.value) {
+      submitChat()
+      // ready.value = false;
+    // } else {
+    //   ElMessage.error("请等待机器人回复后再发送哦");
+    // }
+  }
+};
 </script>
 
 <style scoped lang="less">
