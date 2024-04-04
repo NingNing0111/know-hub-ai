@@ -22,4 +22,10 @@
 
 ## 效果图
 
-![](./doc/images/RAG效果图.png)
+![alt text](./doc/images/rag.png)
+
+![alt text](./doc/images/know-hub.png)
+
+![alt text](./doc/images/api-manage.png)
+
+![alt text](./doc/images/settings.png)
