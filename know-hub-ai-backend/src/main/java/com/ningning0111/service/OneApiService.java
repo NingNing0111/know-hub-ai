@@ -6,6 +6,8 @@ import com.ningning0111.model.dto.QueryApiRequest;
 import com.ningning0111.model.entity.OneApi;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * @Project: com.ningning0111.service
  * @Author: pgthinker
@@ -26,4 +28,12 @@ public interface OneApiService {
     BaseResponse addOneApi(AddApiRequest request);
 
     BaseResponse selectApi(PageRequest pageRequest);
+
+    BaseResponse changeApi(Long id);
+
+    BaseResponse selectById(Long id);
+
+    BaseResponse deleteById(Long id);
+
+    BaseResponse deleteByIds(List<Long> ids);
 }

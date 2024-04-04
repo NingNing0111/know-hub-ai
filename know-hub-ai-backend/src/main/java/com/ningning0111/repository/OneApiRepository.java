@@ -20,4 +20,7 @@ public interface OneApiRepository extends JpaRepository<OneApi,Long> {
     // 查询所有未禁用的Key
     List<OneApi> findAllByDisableIsFalse();
     List<OneApi> findAllByDisableIsFalse(Pageable pageable);
+
+    //批量删除指定id
+    void deleteByIdIn(List<Long> id);
 }

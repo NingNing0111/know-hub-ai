@@ -44,4 +44,45 @@ public class OneApiController {
     BaseResponse selectApi(@RequestBody QueryApiRequest queryApiRequest){
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
+
+    /**
+     * 禁止或解封
+     * @param id
+     * @return
+     */
+    @PutMapping("/change/{id}")
+    BaseResponse changeApi(@PathVariable("id") Long id){
+        return oneApiService.changeApi(id);
+    }
+
+    /**
+     * 根据id查找
+     * @param id
+     * @return
+     */
+    @GetMapping("/select/{id}")
+    BaseResponse selectById(@PathVariable("id") Long id){
+        return oneApiService.selectById(id);
+    }
+
+    /**
+     * 通过id删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete/{id}")
+    BaseResponse deleteById(@PathVariable("id") Long id){
+        return oneApiService.deleteById(id);
+    }
+
+    /**
+     * 通过id批量删除
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/delete")
+    BaseResponse deleteById(@RequestParam("ids") List<Long> ids){
+        return oneApiService.deleteByIds(ids);
+    }
+
 }
