@@ -3,14 +3,23 @@
     <el-scrollbar>
       <el-card v-for="item in messageList" class="scrollbar-item">
         <template #header>
-          <div
-            class="card-header"
-            v-if="item.role === 'system' || item.role === 'assistant'"
-          >
-            <span>{{ "AI" }}</span>
+          <div class="card-header" v-if="item.role === 'system'">
+            <el-image :src="System" style="width: 50px; margin-right: 20px" />
+            <span style="font-size: large; font-weight: 800">系统设置</span>
+          </div>
+          <div class="card-header" v-if="item.role === 'assistant'">
+            <el-image :src="Robot" style="width: 50px; margin-right: 20px" />
+            <div>
+              <el-button type="primary" size="small">复制</el-button>
+              <el-button type="warning" size="small">删除</el-button>
+            </div>
           </div>
           <div class="card-header" v-if="item.role === 'user'">
-            <span>{{ item.role }}</span>
+            <el-image :src="User" style="width: 50px; margin-right: 20px" />
+            <div>
+              <el-button type="primary" size="small">复制</el-button>
+              <el-button type="warning" size="small">删除</el-button>
+            </div>
           </div>
         </template>
         <div v-if="item.content !== ''" v-html="item.content"></div>
@@ -40,20 +49,23 @@
 <script setup lang="ts">
 import { streamChatApi } from "@/api/ChatApi.ts";
 import { useChatMessageStore } from "@/store/message";
-
+import Robot from "@/assets/robot.svg";
+import User from "@/assets/user.svg";
+import System from "@/assets/system.svg";
 const chatMessageStore = useChatMessageStore();
 
 const input = ref<string>("");
 const ready = ref<boolean>(true);
 const messageList = computed(() => {
-  return chatMessageStore.getGlobalMessage;
+  return chatMessageStore.globalMessage;
 });
 const submitChat = () => {
   streamChatApi(input.value);
+  input.value = "";
 };
 
 const cleanMessage = () => {
-  chatMessageStore.cleanMessage();
+  chatMessageStore.resetGlobalMessage();
 };
 
 const handleKeydown = (e: KeyboardEvent) => {
@@ -89,5 +101,11 @@ const handleKeydown = (e: KeyboardEvent) => {
 }
 .chat-footer .input-box {
   margin-top: 50px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

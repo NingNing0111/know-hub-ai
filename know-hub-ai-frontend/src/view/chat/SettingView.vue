@@ -32,7 +32,7 @@
       <el-form-item label="随机性(temperature)">
         <el-slider
           style="max-width: 400px"
-          v-model="chatOptions.temperature"
+          v-model="floatNumber"
           :format-tooltip="formatTooltip"
         />
       </el-form-item>
@@ -50,12 +50,10 @@ const chatOptionsStore = useChatOptionsStore();
 const chatOptions = chatOptionsStore.getChatOptions;
 
 const models = ref<string[]>([]);
-const handleChangeHistoryLength = (e) => {
+const handleChangeHistoryLength = (e: any) => {
   chatOptions.maxHistoryLength = e;
 };
-const formatTooltip = (e: number) => {
-  return e / 100;
-};
+const floatNumber = ref(chatOptions.temperature * 100);
 const loadModels = () => {
   getModelsApi()
     .then((res) => {
@@ -70,11 +68,16 @@ onMounted(() => {
   loadModels();
 });
 
+const formatTooltip = (e: any) => {
+  return e / 100;
+};
+
 const saveSetting = () => {
-  chatOptions.temperature = chatOptions.temperature / 100;
+  chatOptions.temperature = floatNumber.value / 100;
   console.log(chatOptions);
 
-  chatOptionsStore.setChatOptions(chatOptions);
+  // chatOptions.temperature = 0.5;
+  // chatOptionsStore.setChatOptions(chatOptions);
 };
 </script>
 
