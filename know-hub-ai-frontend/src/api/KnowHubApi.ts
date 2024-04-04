@@ -1,7 +1,6 @@
 import { KnowApi } from "./common";
 import { BASE_URL } from "@/http/config";
 import axios from "axios";
-import { UploadFileDTO } from "./dto";
 
 const service = axios.create({
   baseURL: BASE_URL,

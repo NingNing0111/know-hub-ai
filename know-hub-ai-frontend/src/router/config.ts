@@ -40,7 +40,7 @@ let routes = [
   {
     path: "/manage",
     name: "manage",
-    component: () => import("@/view/api/ApiManageView.vue"),
+    component: () => import("@/view/manage/ApiManageView.vue"),
     meta: {
       isMenu: true,
       description: "API管理",

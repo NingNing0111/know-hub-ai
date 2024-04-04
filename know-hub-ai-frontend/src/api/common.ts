@@ -10,3 +10,4 @@ export const enum ChatApi {
   SimpleChat = "/chat/simple",
   Models = "/chat/models",
 }
+

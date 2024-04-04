@@ -22,3 +22,13 @@ export interface ChatDTO {
 export interface UploadFileDTO {
   files: File[];
 }
+
+export interface SelectDto {
+  page: number,
+  pageSize: number
+}
+export interface AddDto {
+  "baseUrl": string,
+  "apiKey": string,
+  "describe": string
+}

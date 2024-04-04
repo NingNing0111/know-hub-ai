@@ -1,11 +1,11 @@
 import { ChatApi } from "./common";
 import { ChatDTO } from "@/api/dto.ts";
-import request from "@/http"; // 使用封装的axios对象
 import { BASE_URL } from "@/http/config";
 
 import { useChatOptionsStore } from "@/store/options";
 import { useChatMessageStore } from "@/store/message";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
+import service from "@/http";
 class FatalError extends Error {}
 class RetriableError extends Error {}
 const chatOptions = useChatOptionsStore();
@@ -18,12 +18,12 @@ export const simpleChatApi = async (input: string): Promise<any> => {
     chatOptions: chatOptions.getChatOptions, // 对话配置从全局状态配置中获取
     prompt: input,
   };
-  return await request.post(ChatApi.SimpleChat, dto);
+  return await service.post(ChatApi.SimpleChat, dto);
 };
 
 // 获取所有对话模型
 export const getModelsApi = async (): Promise<any> => {
-  return await request.get(ChatApi.Models);
+  return await service.get(ChatApi.Models);
 };
 
 // 流式对话

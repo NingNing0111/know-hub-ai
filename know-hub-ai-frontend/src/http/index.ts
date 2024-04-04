@@ -8,22 +8,6 @@ const service = axios.create({
   headers: HEADER,
 });
 
-// 请求封装
-const request = {
-  get(url: string, params?: any) {
-    return service.get(url, { params });
-  },
-  post(url: string, data?: any) {
-    return service.post(url, data);
-  },
-  put(url: string, data?: any) {
-    return service.put(url, data);
-  },
-  delete(url: string, params?: any) {
-    return service.delete(url, { params });
-  },
-};
-
 // 创建请求拦截器
 service.interceptors.request.use(
   (config) => {
@@ -53,4 +37,4 @@ service.interceptors.response.use(
   }
 );
 
-export default request;
+export default service;
