@@ -5,6 +5,7 @@ import com.ningning0111.exception.BusinessException;
 import com.ningning0111.model.dto.ChatRequest;
 import com.ningning0111.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.ChatResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ApplicationConstant.API_VERSION + "/chat")
+@Slf4j
 public class ChatController {
     private final ChatService chatService;
 
-    @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PostMapping(value = "/stream")
+    @CrossOrigin
     public Flux<ChatResponse> streamRagChat(
             @RequestBody ChatRequest chatRequest
     ){
@@ -45,6 +48,7 @@ public class ChatController {
 
 
     @PostMapping(value = "/simple")
+    @CrossOrigin
     public BaseResponse simpleChat(
             @RequestBody ChatRequest chatRequest
     ){
@@ -62,6 +66,7 @@ public class ChatController {
     }
 
     @GetMapping(value = "/models")
+    @CrossOrigin
     public BaseResponse models(){
         List<String> models = LLMModels.getModels();
         return ResultUtils.success(models);

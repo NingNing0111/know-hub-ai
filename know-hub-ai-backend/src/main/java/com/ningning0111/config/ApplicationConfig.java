@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
  * @Description:
  */
 @Configuration
-@Data
 public class ApplicationConfig {
     /**
      * ETL中的DocumentTransformer的实现，将文本数据源转换为多个分割段落

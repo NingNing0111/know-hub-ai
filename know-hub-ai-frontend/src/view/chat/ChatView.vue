@@ -1,108 +1,110 @@
 <template>
   <div id="chat-view">
     <el-scrollbar>
-      <el-card v-for="item in chatList" class="scrollbar-item">
-        {{ item }}
+      <el-card v-for="item in messageList" class="scrollbar-item">
+        <template #header>
+          <div
+            class="card-header"
+            v-if="
+              (item.role === 'system' || item.role === 'assistant') &&
+              item.content !== ''
+            "
+          >
+            <span>{{ "AI" }}</span>
+          </div>
+          <div
+            class="card-header"
+            v-if="item.role === 'user' && item.content !== ''"
+          >
+            <span>{{ item.role }}</span>
+          </div>
+        </template>
+        <div v-html="item.content"></div>
       </el-card>
     </el-scrollbar>
-    <div id="floor">
 
+    <div class="chat-footer">
       <el-input
-          v-model="input"
-          type="textarea"
-          autofocus
-          :autosize="{ minRows: 1, maxRows: 4}"
-          resize="none"
-          placeholder="请输入对话内容，换行请使用Shift+Enter"
-          @keydown="handleInput"
+        v-model="input"
+        type="textarea"
+        autofocus
+        :autosize="{ minRows: 1, maxRows: 4 }"
+        resize="none"
+        placeholder="请输入对话内容，换行请使用Shift+Enter"
+        class="input-box"
       />
-
+      <div style="display: flex; justify-content: right; margin: 10px">
+        <el-button type="warning" @click="cleanMessage">清除对话</el-button>
+        <el-button type="primary" @click="submitChat">发送</el-button>
+      </div>
     </div>
-<!--    :suffix-icon=""-->
   </div>
 </template>
 
 <script setup lang="ts">
+import { ElMessage } from "element-plus";
+import { simpleChatApi, streamChatApi } from "@/api/ChatApi.ts";
+import { useChatMessageStore } from "@/store/message";
+import { Message } from "@/api/dto";
 
-import {ElMessage} from "element-plus";
-import axios from "axios";
-import {simpleChatApi} from "@/api/ChatApi.ts";
+const chatMessageStore = useChatMessageStore();
 
-const chatList = ref<string[]>([])
-const input = ref<string>('')
-const ready = ref<boolean>(true)
+const input = ref<string>("");
+const ready = ref<boolean>(true);
+const messageList = computed(() => {
+  return chatMessageStore.getGlobalMessage;
+});
+const submitChat = () => {
+  streamChatApi(input.value);
+};
 
-const handleInput = (e : KeyboardEvent) => {
-  if (!e.shiftKey && e.key === 'Enter') {
-    e.preventDefault()
-    if (ready.value) {
-      chatList.value.push(input.value)
-      ready.value = false
+const cleanMessage = () => {
+  chatMessageStore.cleanMessage();
+};
 
-      simpleChatApi(input.value).then((res) => {
-        console.log(res.data)
-        chatList.value.push()
-        ready.value = true
-      }).catch(() => {
-        chatList.value.push('')
-        ready.value = true
-      })
-    } else {
-      ElMessage.error('请等待机器人回复后再发送哦')
-    }
-  }
-}
+// const handleInput = (e: KeyboardEvent) => {
+//   if (!e.shiftKey && e.key === "Enter") {
+//     e.preventDefault();
+//     if (ready.value) {
+//       chatList.value.push(input.value);
+//       ready.value = false;
 
+//       simpleChatApi(input.value)
+//         .then((res) => {
+//           console.log(res.data);
+//           chatList.value.push();
+//           ready.value = true;
+//         })
+//         .catch(() => {
+//           chatList.value.push("");
+//           ready.value = true;
+//         });
+//     } else {
+//       ElMessage.error("请等待机器人回复后再发送哦");
+//     }
+//   }
+// };
 </script>
 
 <style scoped lang="less">
-//:deep(el-scrollbar) {
-//  height: 95%;
-//}
 #chat-view {
   height: 100%;
-  //max-height: 800px;
 }
-:deep(.el-card__body) {
-  //background-color: #f3f3f3;
-}
+
 :deep(.el-scrollbar) {
   max-height: calc(100vh - 190px);
-  //max-height: 70vh;
 }
-//rgb(223, 223, 223)
 
-#floor {
-  height: 150px;
-  width: 100%;
-  //width: calc(100% - 190px);
-  //min-width: 400px;
-  background-color: rgb(235, 240, 255);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-}
-:deep(.el-textarea) {
-  margin-left: 220px;
-  width: calc(100% - 350px);
-  //max-width: 1200px;
-  //min-width: 500px;
-}
 .scrollbar-item {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  margin: 10px;
-  border-radius: 4px;
-  background: var(--el-color-primary-light-9);
-  //color: var(--el-color-primary);
-
+  margin-bottom: 30px;
 }
-.scrollbar-item:nth-child(odd) {
-  background-color: var(--el-color-primary-light-7);
+.chat-footer {
+  background-color: transparent;
+  height: 120px;
+  width: 100%;
+  border-top: 2px solid #cecccc;
+}
+.chat-footer .input-box {
+  margin-top: 50px;
 }
 </style>

@@ -32,9 +32,9 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class OneApiServiceImpl implements OneApiService {
-    @Value("${know-hub-ai.baseUrl}")
+    @Value("${spring.ai.openai.base-url}")
     private String defaultBaseUrl = ApplicationConstant.DEFAULT_BASE_URL;
-    @Value("${know-hub-ai.apiKey}")
+    @Value("${spring.ai.openai.api-key}")
     private String defaultApiKey;
     private static List<OneApi> apiList = new Vector<>();
     private final OneApiRepository oneApiRepository;

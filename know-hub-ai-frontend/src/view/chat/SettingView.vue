@@ -71,6 +71,7 @@ onMounted(() => {
 });
 
 const saveSetting = () => {
+  chatOptions.temperature = chatOptions.temperature / 100;
   console.log(chatOptions);
 
   chatOptionsStore.setChatOptions(chatOptions);

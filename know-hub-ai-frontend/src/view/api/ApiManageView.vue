@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>API管理</h1>
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">

@@ -8,7 +8,7 @@ export const defaultChatOptions: ChatOptions = {
   chatType: "simple",
   temperature: 0.5,
 };
-export const useChatOptionsStore = defineStore("user", {
+export const useChatOptionsStore = defineStore("options", {
   state: () => {
     // 尝试从本地获取配置信息
     let optionsToken: string | null = localStorage.getItem(CHAT_OPTIONS);
