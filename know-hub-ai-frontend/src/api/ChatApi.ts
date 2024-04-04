@@ -28,8 +28,7 @@ export const getModelsApi = async (): Promise<any> => {
 
 // 流式对话
 export const streamChatApi = (input: string) => {
-  // 当前AI的回复
-  let currAIMessage = chatMessageStore.getCurrMessage;
+  // 添加用户提问
   chatMessageStore.addMessage({
     role: "user",
     content: input,
@@ -40,14 +39,17 @@ export const streamChatApi = (input: string) => {
     prompt: input,
   };
   const ctrl = new AbortController();
+  // 添加当前AI回复
+  let answer = "";
+  chatMessageStore.addMessage({
+    role: "assistant",
+    content: answer,
+  });
   const onMessage = (e: any) => {
-    // console.log(JSON.parse(e.data).results.at(0).output.content);
-
     let result = JSON.parse(e.data).results.at(0).output.content;
     if (result != null) {
-      currAIMessage += result;
-      chatMessageStore.setCurrMessage(currAIMessage);
-      console.log(currAIMessage);
+      answer += result;
+      chatMessageStore.setCurrMessage(answer);
     }
   };
   const onError = (err: any) => {
@@ -55,12 +57,8 @@ export const streamChatApi = (input: string) => {
     throw err;
   };
   const onClose = () => {
+    // 连接关闭 对话结束
     console.log("连接关闭");
-    chatMessageStore.addMessage({
-      role: "assistant",
-      content: currAIMessage,
-    });
-    chatMessageStore.setCurrMessage("");
     throw new RetriableError();
   };
   const onOpen = async (response: any) => {

@@ -5,21 +5,16 @@
         <template #header>
           <div
             class="card-header"
-            v-if="
-              (item.role === 'system' || item.role === 'assistant') &&
-              item.content !== ''
-            "
+            v-if="item.role === 'system' || item.role === 'assistant'"
           >
             <span>{{ "AI" }}</span>
           </div>
-          <div
-            class="card-header"
-            v-if="item.role === 'user' && item.content !== ''"
-          >
+          <div class="card-header" v-if="item.role === 'user'">
             <span>{{ item.role }}</span>
           </div>
         </template>
-        <div v-html="item.content"></div>
+        <div v-if="item.content !== ''" v-html="item.content"></div>
+        <div v-else>AI思考中...</div>
       </el-card>
     </el-scrollbar>
 
@@ -45,7 +40,6 @@
 import { ElMessage } from "element-plus";
 import { simpleChatApi, streamChatApi } from "@/api/ChatApi.ts";
 import { useChatMessageStore } from "@/store/message";
-import { Message } from "@/api/dto";
 
 const chatMessageStore = useChatMessageStore();
 

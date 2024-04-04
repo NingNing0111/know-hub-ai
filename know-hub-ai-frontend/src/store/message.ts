@@ -27,9 +27,6 @@ export const useChatMessageStore = defineStore("message", {
     getGlobalMessage(): Message[] {
       return this.globalMessage;
     },
-    getCurrMessage(): string {
-      return this.currAIMessage;
-    },
   },
   actions: {
     addMessage(message: Message) {
@@ -43,11 +40,11 @@ export const useChatMessageStore = defineStore("message", {
       this.globalMessage = defaultMessage;
       localStorage.removeItem(MESSAGE_LOCAL_STORE);
     },
+    // 设置当前AI回复
     setCurrMessage(currAIMessage: string) {
       // 当前AI回复放在最后一个对话列表中 this.globalMessage 的类型时Message[]
       let len = this.globalMessage.length;
       this.globalMessage[len - 1].content = currAIMessage;
-      this.$patch({ currAIMessage });
     },
   },
 });
