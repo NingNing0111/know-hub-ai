@@ -37,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage } from "element-plus";
 import { simpleChatApi, streamChatApi } from "@/api/ChatApi.ts";
+import router from "@/router";
 import { useChatMessageStore } from "@/store/message";
 
 const chatMessageStore = useChatMessageStore();
@@ -46,14 +46,15 @@ const chatMessageStore = useChatMessageStore();
 const input = ref<string>("");
 const ready = ref<boolean>(true);
 const messageList = computed(() => {
-  return chatMessageStore.getGlobalMessage;
+  return chatMessageStore.globalMessage;
 });
 const submitChat = () => {
   streamChatApi(input.value);
+  input.value = "";
 };
 
 const cleanMessage = () => {
-  chatMessageStore.cleanMessage();
+  chatMessageStore.resetGlobalMessage();
 };
 
 // const handleInput = (e: KeyboardEvent) => {

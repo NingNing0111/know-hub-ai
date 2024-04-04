@@ -36,15 +36,21 @@ export const useChatMessageStore = defineStore("message", {
         JSON.stringify(this.globalMessage)
       );
     },
-    cleanMessage() {
-      this.globalMessage = defaultMessage;
-      localStorage.removeItem(MESSAGE_LOCAL_STORE);
-    },
+
     // 设置当前AI回复
     setCurrMessage(currAIMessage: string) {
       // 当前AI回复放在最后一个对话列表中 this.globalMessage 的类型时Message[]
       let len = this.globalMessage.length;
       this.globalMessage[len - 1].content = currAIMessage;
+    },
+    setGlobalMessage(globalMessage: Message[]) {
+      this.$patch({ globalMessage });
+    },
+    resetGlobalMessage() {
+      localStorage.removeItem(MESSAGE_LOCAL_STORE);
+      this.globalMessage = [];
+      this.addMessage(defaultMessage.at(0));
+      console.log(this.globalMessage);
     },
   },
 });
