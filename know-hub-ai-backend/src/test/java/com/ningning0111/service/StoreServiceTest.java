@@ -14,14 +14,4 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class StoreServiceTest {
-    @Autowired
-    private StoreService service;
-
-    @Autowired
-    private OneApiRepository oneApiRepository;
-
-    @Test
-    public void test1() {
-        oneApiRepository.deleteById(1L);
-    }
 }
