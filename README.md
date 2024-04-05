@@ -22,10 +22,28 @@
 
 ## 效果图
 
-![alt text](./doc/images/rag.png)
+### 知识库管理
+
+> 支持：PDF、doc、md、excel 等
 
 ![alt text](./doc/images/know-hub.png)
 
+### 正常对话(不使用知识库)
+
+![alt text](./doc/images/no-rag.png)
+
+![alt text](./doc/images/no-rag-1.png)
+
+### RAG 对话(使用知识库)
+
+![alt text](./doc/images/rag.png)
+
+![alt text](./doc/images/rag-1.png)
+
+### API 管理
+
 ![alt text](./doc/images/api-manage.png)
+
+### 对话设置
 
 ![alt text](./doc/images/settings.png)

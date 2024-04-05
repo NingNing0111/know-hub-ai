@@ -1,14 +1,14 @@
 package com.ningning0111.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.ningning0111.conver.JpaConverterListJson;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Project: com.ningning0111.model.entity
@@ -25,10 +25,24 @@ import java.util.Date;
 @NoArgsConstructor
 public class StoreFile {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 创建时间
+     * 文件名称
+     */
+    @Column(columnDefinition = "TEXT")
+    private String fileName;
+
+    /**
+     * 该文件分割出的多段向量文本ID
+     */
+    @Convert(converter = JpaConverterListJson.class)
+    @Column(columnDefinition = "TEXT")
+    private List<String> vectorId;
+
+    /**
+     * 创建时间/上传时间
      */
     private Date createTime;
 

@@ -4,8 +4,8 @@ import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
-import com.ningning0111.model.dto.AddApiRequest;
-import com.ningning0111.model.dto.QueryApiRequest;
+import com.ningning0111.model.dto.AddApiDTO;
+import com.ningning0111.model.dto.QueryApiDTO;
 import com.ningning0111.service.OneApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +27,7 @@ public class OneApiController {
     private final OneApiService oneApiService;
 
     @PostMapping("/add")
-    BaseResponse addOneApi(@RequestBody AddApiRequest request){
+    BaseResponse addOneApi(@RequestBody AddApiDTO request){
         String apiKey = request.apiKey();
         if(apiKey == null){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"key is empty");
@@ -40,8 +40,8 @@ public class OneApiController {
      * @param queryApiRequest
      * @return
      */
-    @PostMapping("/select")
-    BaseResponse selectApi(@RequestBody QueryApiRequest queryApiRequest){
+    @GetMapping("/select")
+    BaseResponse selectApi(QueryApiDTO queryApiRequest){
         System.out.println(queryApiRequest.toString());
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }

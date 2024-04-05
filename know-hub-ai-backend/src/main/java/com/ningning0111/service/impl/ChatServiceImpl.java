@@ -6,11 +6,11 @@ import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.model.dto.ChatOptions;
-import com.ningning0111.model.dto.ChatRequest;
+import com.ningning0111.model.dto.ChatDTO;
 import com.ningning0111.model.entity.OneApi;
 import com.ningning0111.service.ChatService;
 import com.ningning0111.service.OneApiService;
-import com.ningning0111.service.StoreService;
+import com.ningning0111.service.StoreFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.ChatResponse;
@@ -23,7 +23,6 @@ import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -43,10 +42,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
     private final OneApiService oneApiService;
-    private final StoreService storeService;
+    private final StoreFileService storeFileService;
 
+    // 流式普通对话
     @Override
-    public Flux<ChatResponse> simpleChat(ChatRequest chatRequest) {
+    public Flux<ChatResponse> simpleChat(ChatDTO chatRequest) {
         StreamingChatClient streamingChatClient = randomGetStreamingChatClient(chatRequest.chatOptions());
         List<Message> messages = transformAiMessage(chatRequest.messages());
         String prompt = chatRequest.prompt();
@@ -55,9 +55,9 @@ public class ChatServiceImpl implements ChatService {
         messages = checkMessageLength(messages,chatRequest);
         return streamingChatClient.stream(new Prompt(messages));
     }
-
+    // 流式RAG对话
     @Override
-    public Flux<ChatResponse> ragChat(ChatRequest chatRequest) {
+    public Flux<ChatResponse> ragChat(ChatDTO chatRequest) {
         StreamingChatClient streamingChatClient = randomGetStreamingChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());
@@ -66,9 +66,9 @@ public class ChatServiceImpl implements ChatService {
         messages.add(0,systemMessage);
         return streamingChatClient.stream(new Prompt(messages));
     }
-
+    // 非流式的普通对话
     @Override
-    public BaseResponse noStreamSimpleChat(ChatRequest chatRequest) {
+    public BaseResponse noStreamSimpleChat(ChatDTO chatRequest) {
         ChatClient chatClient = randomGetChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());
@@ -78,8 +78,9 @@ public class ChatServiceImpl implements ChatService {
         return ResultUtils.success(resp);
     }
 
+    // 非流式的RAG对话
     @Override
-    public BaseResponse noStreamRagChat(ChatRequest chatRequest) {
+    public BaseResponse noStreamRagChat(ChatDTO chatRequest) {
         ChatClient chatClient = randomGetChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());
@@ -91,8 +92,9 @@ public class ChatServiceImpl implements ChatService {
         return ResultUtils.success(resp);
     }
 
+    // 模糊查询 返回系统提示信息（该信息包含了查询到的文档）
     private Message similaritySearch(String prompt){
-        VectorStore vectorStore = storeService.randomGetVectorStore();
+        VectorStore vectorStore = storeFileService.randomGetVectorStore();
         List<Document> listOfSimilarDocuments = vectorStore.similaritySearch(prompt);
         // 将Document列表中每个元素的content内容进行拼接获得documents
         String documents = listOfSimilarDocuments.stream().map(Document::getContent).collect(Collectors.joining());
@@ -101,6 +103,7 @@ public class ChatServiceImpl implements ChatService {
         return systemMessage;
     }
 
+    // 构建OpenAI流式客户端
     private StreamingChatClient randomGetStreamingChatClient(ChatOptions options){
         OpenAiApi openAiApi = randomOpenAiApi();
         return new OpenAiChatClient(openAiApi, OpenAiChatOptions
@@ -110,6 +113,7 @@ public class ChatServiceImpl implements ChatService {
                 .build());
     }
 
+    // 构建OpenAI非流式对话客户端
     private ChatClient randomGetChatClient(ChatOptions options){
         OpenAiApi openAiApi = randomOpenAiApi();
         return new OpenAiChatClient(openAiApi,OpenAiChatOptions.builder()
@@ -118,12 +122,14 @@ public class ChatServiceImpl implements ChatService {
                 .build());
     }
 
+    // 随机构建一个OpenAI的API
     private OpenAiApi randomOpenAiApi(){
         OneApi oneApi = oneApiService.randomGetOne();
         return new OpenAiApi(oneApi.getBaseUrl(), oneApi.getApiKey());
     }
 
-    private List<Message> checkMessageLength(List<Message> messages,ChatRequest chatRequest){
+    // 保证消息长度在配置的长度范围内
+    private List<Message> checkMessageLength(List<Message> messages, ChatDTO chatRequest){
         if(!messages.isEmpty()&&messages.get(0).getMessageType() == MessageType.SYSTEM){
             messages.remove(0);
         }
@@ -135,6 +141,7 @@ public class ChatServiceImpl implements ChatService {
         return messages;
     }
 
+    // Message转换
     private List<Message> transformAiMessage(List<com.ningning0111.model.dto.Message> messages){
         List<Message> aiMessage = new ArrayList<>();
         for(com.ningning0111.model.dto.Message message: messages){

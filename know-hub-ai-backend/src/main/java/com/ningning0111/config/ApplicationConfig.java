@@ -1,13 +1,11 @@
 package com.ningning0111.config;
 
-import com.ningning0111.service.StoreService;
-import lombok.Data;
-import org.springframework.ai.autoconfigure.openai.OpenAiAutoConfiguration;
-import org.springframework.ai.openai.api.OpenAiApi;
+import com.ningning0111.service.StoreFileService;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * @Project: com.ningning0111.config
@@ -28,7 +26,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public VectorStore vectorStore(StoreService service) {
+    public VectorStore vectorStore(StoreFileService service, JdbcTemplate jdbcTemplate) {
+//        jdbcTemplate.execute("DELETE FROM public.vector_store");
+        jdbcTemplate.execute("drop table if exists vector_store cascade");
         return service.randomGetVectorStore();
     }
 }

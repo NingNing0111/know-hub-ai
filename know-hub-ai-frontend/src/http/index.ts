@@ -27,7 +27,6 @@ service.interceptors.request.use(
 // 创建响应拦截器
 service.interceptors.response.use(
   (res: any) => {
-    console.log(res);
     return res.data;
   },
   (error) => {

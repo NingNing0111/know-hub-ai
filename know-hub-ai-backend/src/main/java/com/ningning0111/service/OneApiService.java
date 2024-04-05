@@ -1,8 +1,7 @@
 package com.ningning0111.service;
 
 import com.ningning0111.common.BaseResponse;
-import com.ningning0111.model.dto.AddApiRequest;
-import com.ningning0111.model.dto.QueryApiRequest;
+import com.ningning0111.model.dto.AddApiDTO;
 import com.ningning0111.model.entity.OneApi;
 import org.springframework.data.domain.PageRequest;
 
@@ -25,7 +24,7 @@ public interface OneApiService {
 
     BaseResponse queryList();
 
-    BaseResponse addOneApi(AddApiRequest request);
+    BaseResponse addOneApi(AddApiDTO request);
 
     BaseResponse selectApi(PageRequest pageRequest);
 

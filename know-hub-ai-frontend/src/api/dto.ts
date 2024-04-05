@@ -24,11 +24,21 @@ export interface UploadFileDTO {
 }
 
 export interface SelectDto {
-  page: number,
-  pageSize: number
+  page: number;
+  pageSize: number;
 }
 export interface AddDto {
-  baseUrl: string,
-  apiKey: string,
-  describe: string
+  baseUrl: string;
+  apiKey: string;
+  describe: string;
+}
+
+export interface QueryFileDto {
+  page: number;
+  pageSize: number;
+  fileName: string | undefined;
+}
+
+export interface DeleteFileDto {
+  ids: number[];
 }

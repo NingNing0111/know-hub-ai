@@ -59,6 +59,7 @@ export const streamChatApi = (input: string) => {
   const onClose = () => {
     // 连接关闭 对话结束
     console.log("连接关闭");
+    chatMessageStore.storeMessage();
     throw new RetriableError();
   };
   const onOpen = async (response: any) => {

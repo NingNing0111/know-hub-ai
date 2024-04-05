@@ -1,7 +1,7 @@
 package com.ningning0111.service;
 
 import com.ningning0111.common.BaseResponse;
-import com.ningning0111.model.dto.ChatRequest;
+import com.ningning0111.model.dto.ChatDTO;
 import org.springframework.ai.chat.ChatResponse;
 import reactor.core.publisher.Flux;
 
@@ -13,11 +13,11 @@ import reactor.core.publisher.Flux;
  * @Description:
  */
 public interface ChatService {
-    Flux<ChatResponse> simpleChat(ChatRequest chatRequest);
+    Flux<ChatResponse> simpleChat(ChatDTO chatRequest);
 
-    Flux<ChatResponse> ragChat(ChatRequest chatRequest);
+    Flux<ChatResponse> ragChat(ChatDTO chatRequest);
 
-    BaseResponse noStreamSimpleChat(ChatRequest chatRequest);
+    BaseResponse noStreamSimpleChat(ChatDTO chatRequest);
 
-    BaseResponse noStreamRagChat(ChatRequest chatRequest);
+    BaseResponse noStreamRagChat(ChatDTO chatRequest);
 }

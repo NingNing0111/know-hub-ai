@@ -1,11 +1,13 @@
 // 配置信息全局状态管理
 import { Message } from "@/api/dto";
 import { defineStore } from "pinia";
+import { useChatOptionsStore } from "./options";
+const optionsStore = useChatOptionsStore();
 export const MESSAGE_LOCAL_STORE = "know-hub-ai-local-store";
-export const defaultMessage: Message[] = [
+const defaultMessage: Message[] = [
   {
     role: "system",
-    content: "你是一个人工智能助手",
+    content: optionsStore.getSystemPrompt,
   },
 ];
 export const useChatMessageStore = defineStore("message", {
@@ -49,8 +51,14 @@ export const useChatMessageStore = defineStore("message", {
     resetGlobalMessage() {
       localStorage.removeItem(MESSAGE_LOCAL_STORE);
       this.globalMessage = [];
-      this.addMessage(defaultMessage.at(0));
+      this.addMessage(defaultMessage.at(0) as Message);
       console.log(this.globalMessage);
+    },
+    storeMessage() {
+      localStorage.setItem(
+        MESSAGE_LOCAL_STORE,
+        JSON.stringify(this.getGlobalMessage)
+      );
     },
   },
 });

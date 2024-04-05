@@ -4,24 +4,18 @@ import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
-import com.ningning0111.model.dto.AddApiRequest;
-import com.ningning0111.model.dto.QueryApiRequest;
+import com.ningning0111.model.dto.AddApiDTO;
 import com.ningning0111.model.entity.OneApi;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.repository.OneApiRepository;
 import com.ningning0111.service.OneApiService;
 import groovy.util.logging.Slf4j;
 import jakarta.annotation.PostConstruct;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -75,7 +69,7 @@ public class OneApiServiceImpl implements OneApiService {
     }
 
     @Override
-    public BaseResponse addOneApi(AddApiRequest request) {
+    public BaseResponse addOneApi(AddApiDTO request) {
         try {
             long currMillis = System.currentTimeMillis();
             OneApi oneApi = OneApi.builder()

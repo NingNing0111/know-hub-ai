@@ -8,20 +8,28 @@ export const defaultChatOptions: ChatOptions = {
   chatType: "simple",
   temperature: 0.5,
 };
+const SYSTEM_PROMPT = "你是一名AI助手，致力于帮助人们解决问题.";
 export const useChatOptionsStore = defineStore("options", {
   state: () => {
     // 尝试从本地获取配置信息
     let optionsToken: string | null = localStorage.getItem(CHAT_OPTIONS);
-
+    let systemPrompt: string =
+      localStorage.getItem(SYSTEM_PROMPT) == null
+        ? SYSTEM_PROMPT
+        : (localStorage.getItem(SYSTEM_PROMPT) as string);
     let globalOptions: ChatOptions =
       optionsToken === null ? defaultChatOptions : JSON.parse(optionsToken);
     return {
       globalOptions,
+      systemPrompt,
     };
   },
   getters: {
     getChatOptions(): ChatOptions {
       return this.globalOptions;
+    },
+    getSystemPrompt(): string {
+      return this.systemPrompt;
     },
   },
   actions: {
@@ -29,6 +37,10 @@ export const useChatOptionsStore = defineStore("options", {
       // 本地存储
       localStorage.setItem(CHAT_OPTIONS, JSON.stringify(globalOptions));
       this.$patch({ globalOptions });
+    },
+    setSystemPrompt(systemPrompt: string) {
+      localStorage.setItem(SYSTEM_PROMPT, systemPrompt);
+      this.$patch({ systemPrompt });
     },
   },
 });

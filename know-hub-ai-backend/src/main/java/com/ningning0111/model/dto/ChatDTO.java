@@ -9,5 +9,5 @@ import java.util.List;
  * @Date: 2024/4/2 19:32
  * @Description: 聊天记录
  */
-public record ChatRequest(List<Message> messages, ChatOptions chatOptions,String prompt) {
+public record ChatDTO(List<Message> messages, ChatOptions chatOptions, String prompt) {
 }

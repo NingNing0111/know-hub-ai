@@ -36,6 +36,14 @@
           :format-tooltip="formatTooltip"
         />
       </el-form-item>
+      <el-form-item label="系统提示词">
+        <el-input
+          type="textarea"
+          v-model="settinsgPrompt"
+          rows="5"
+          resize="none"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button @click="saveSetting" type="primary"> 保存 </el-button>
       </el-form-item>
@@ -49,6 +57,8 @@ import { getModelsApi } from "@/api/ChatApi";
 const chatOptionsStore = useChatOptionsStore();
 const chatOptions = chatOptionsStore.getChatOptions;
 
+const systemPrompt = chatOptionsStore.getSystemPrompt;
+const settinsgPrompt = ref<string>(systemPrompt);
 const models = ref<string[]>([]);
 const handleChangeHistoryLength = (e: any) => {
   chatOptions.maxHistoryLength = e;
@@ -76,8 +86,8 @@ const saveSetting = () => {
   chatOptions.temperature = floatNumber.value / 100;
   console.log(chatOptions);
 
-  // chatOptions.temperature = 0.5;
-  // chatOptionsStore.setChatOptions(chatOptions);
+  chatOptionsStore.setChatOptions(chatOptions);
+  chatOptionsStore.setSystemPrompt(settinsgPrompt.value);
 };
 </script>
 

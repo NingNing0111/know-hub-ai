@@ -2,12 +2,11 @@ package com.ningning0111.controller;
 
 import com.ningning0111.common.*;
 import com.ningning0111.exception.BusinessException;
-import com.ningning0111.model.dto.ChatRequest;
+import com.ningning0111.model.dto.ChatDTO;
 import com.ningning0111.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.ChatResponse;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -30,7 +29,7 @@ public class ChatController {
 
     @PostMapping(value = "/stream")
     public Flux<ChatResponse> streamRagChat(
-            @RequestBody ChatRequest chatRequest
+            @RequestBody ChatDTO chatRequest
     ){
         String chatTypeStr = chatRequest.chatOptions().chatType();
         ChatType chatType = ChatType.getChatType(chatTypeStr);
@@ -48,7 +47,7 @@ public class ChatController {
 
     @PostMapping(value = "/simple")
     public BaseResponse simpleChat(
-            @RequestBody ChatRequest chatRequest
+            @RequestBody ChatDTO chatRequest
     ){
         String chatTypeStr = chatRequest.chatOptions().chatType();
         ChatType chatType = ChatType.getChatType(chatTypeStr);
