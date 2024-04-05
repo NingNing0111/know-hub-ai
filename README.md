@@ -47,3 +47,11 @@
 ### 设置中心
 
 ![alt text](./doc/images/settings.png)
+
+## 部署指南
+
+&emsp;使用`docker-compose.yml`一键部署
+
+```shell
+docker compose up -d
+```
