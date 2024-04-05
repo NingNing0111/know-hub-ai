@@ -44,6 +44,6 @@
 
 ![alt text](./doc/images/api-manage.png)
 
-### 对话设置
+### 设置中心
 
 ![alt text](./doc/images/settings.png)
