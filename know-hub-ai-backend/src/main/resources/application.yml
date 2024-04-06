@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: know-hub-ai
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${PGVECTOR_USERNAME}
+    password: ${PGVECTOR_PASSWORD}
+    url: jdbc:postgresql://${PGVECTOR_HOST}/${PGVECTOR_DATABASE}
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  jpa:
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+    show-sql: true
+    open-in-view: true
+  # api和key分享自：https://pgthinker.me/2023/10/03/196/
+  ai:
+    openai:
+      base-url: ${DEFAULT_BASE_URL}
+      api-key: ${DEFAULT_API_KEY}
+server:
+  port: 8329
+
+
+
+
+

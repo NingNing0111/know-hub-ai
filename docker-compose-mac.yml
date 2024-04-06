@@ -1,0 +1,61 @@
+version: "3"
+services:
+  vector_db:
+    image: ankane/pgvector:v0.5.0
+    container_name: vector_db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=know-hub
+      - PGPASSWORD=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: "pg_isready -U postgres -d vector_store"
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    networks:
+      - know-hub-network
+
+  know-hub-ai-backend:
+    image: ningning0111/know-hub-ai-backend-mac
+    restart: always
+    container_name: know-hub-ai-backend
+    ports:
+      - "8329:8329"
+    environment:
+      - PGVECTOR_HOST=vector_db
+      - PGVECTOR_DATABASE=know-hub
+      - PGVECTOR_USERNAME=postgres
+      - PGVECTOR_PASSWORD=postgres
+      # Key分享自：https://pgthinker.me/2023/10/03/196/
+      - DEFAULT_BASE_URL=https://api.mnzdna.xyz
+      - DEFAULT_API_KEY=sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
+    depends_on:
+      - vector_db
+    networks:
+      - know-hub-network
+
+  know-hub-ai-frontend:
+    image: ningning0111/know-hub-ai-frontend-mac
+    restart: always
+    container_name: know-hub-ai-frontend
+    environment:
+      - VITE_BACKEND_HOST=
+    ports:
+      - "3000:3000"
+    depends_on:
+      - vector_db
+      - know-hub-ai-backend
+    networks:
+      - know-hub-network
+
+networks:
+  know-hub-network:
+    driver: bridge
