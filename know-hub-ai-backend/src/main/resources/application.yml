@@ -3,12 +3,12 @@ spring:
     name: know-hub-ai
   datasource:
     driver-class-name: org.postgresql.Driver
-#    username: ${PGVECTOR_USERNAME}
-#    password: ${PGVECTOR_PASSWORD}
-#    url: jdbc:postgresql://${PGVECTOR_HOST}/${PGVECTOR_DATABASE}
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://120.48.101.178:5432/know-hub?useSSL=false
+    username: ${PGVECTOR_USERNAME}
+    password: ${PGVECTOR_PASSWORD}
+    url: jdbc:postgresql://${PGVECTOR_HOST}/${PGVECTOR_DATABASE}
+#    username: postgres
+#    password: postgres
+#    url: jdbc:postgresql://120.48.101.178:5432/know-hub?useSSL=false
   servlet:
     multipart:
       max-file-size: 20MB
@@ -24,10 +24,10 @@ spring:
   # api和key分享自：https://pgthinker.me/2023/10/03/196/
   ai:
     openai:
-      base-url: https://api.mnzdna.xyz
-      api-key: sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
-#      base-url: ${DEFAULT_BASE_URL}
-#      api-key: ${DEFAULT_API_KEY}
+#      base-url: https://api.mnzdna.xyz
+#      api-key: sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
+      base-url: ${DEFAULT_BASE_URL}
+      api-key: ${DEFAULT_API_KEY}
 server:
   port: 8329
 
