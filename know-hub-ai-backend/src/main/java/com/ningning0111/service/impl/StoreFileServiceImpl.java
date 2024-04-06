@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -71,6 +72,9 @@ public class StoreFileServiceImpl implements StoreFileService {
     @Override
     public BaseResponse fileStore(MultipartFile file) {
         try {
+            if (file == null){
+                return ResultUtils.error(ErrorCode.FILE_ERROR);
+            }
             Resource resource = file.getResource();
             VectorStore vectorStore = randomGetVectorStore();
             TikaDocumentReader tkReader = new TikaDocumentReader(resource);

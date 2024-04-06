@@ -8,6 +8,7 @@ import com.ningning0111.model.dto.AddApiDTO;
 import com.ningning0111.model.dto.QueryApiDTO;
 import com.ningning0111.service.OneApiService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +24,13 @@ import java.util.List;
 @RestController
 @RequestMapping(ApplicationConstant.API_VERSION + "/one-api")
 @RequiredArgsConstructor
+@Slf4j
 public class OneApiController {
     private final OneApiService oneApiService;
 
     @PostMapping("/add")
     BaseResponse addOneApi(@RequestBody AddApiDTO request){
+        log.info("传参数据：{}",request);
         String apiKey = request.apiKey();
         if(apiKey == null){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"key is empty");
@@ -41,8 +44,7 @@ public class OneApiController {
      * @return
      */
     @GetMapping("/select")
-    BaseResponse selectApi(QueryApiDTO queryApiRequest){
-        System.out.println(queryApiRequest.toString());
+    BaseResponse selectApi(@RequestParam QueryApiDTO queryApiRequest){
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
 

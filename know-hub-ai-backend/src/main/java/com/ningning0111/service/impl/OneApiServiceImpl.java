@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
+import cn.hutool.core.util.StrUtil;
 import java.util.*;
 
 /**
@@ -71,6 +71,9 @@ public class OneApiServiceImpl implements OneApiService {
     @Override
     public BaseResponse addOneApi(AddApiDTO request) {
         try {
+            if (StrUtil.isBlank(request.apiKey())){
+                return ResultUtils.error(ErrorCode.APIKEY_ERROR);
+            }
             long currMillis = System.currentTimeMillis();
             OneApi oneApi = OneApi.builder()
                     .apiKey(request.apiKey())
@@ -90,6 +93,9 @@ public class OneApiServiceImpl implements OneApiService {
 
     @Override
     public BaseResponse selectApi(PageRequest pageRequest) {
+        if (StrUtil.isBlank(pageRequest.toString())){
+            return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);
+        }
         List<OneApi> oneApis = oneApiRepository.findAllByDisableIsFalse(pageRequest);
         return ResultUtils.success(oneApis);
     }
@@ -97,6 +103,9 @@ public class OneApiServiceImpl implements OneApiService {
     @Override
     public BaseResponse changeApi(Long id) {
         OneApi oneApi= oneApiRepository.getReferenceById(id);
+        if (oneApi.getId() == null){
+            return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);
+        }
         oneApi.setDisable(!oneApi.getDisable());
         oneApi.setUpdateTime(new Date());
         try{
@@ -119,6 +128,7 @@ public class OneApiServiceImpl implements OneApiService {
         if (oneApi.getDisable()){
             return ResultUtils.error(ErrorCode.DELETE_ERROR);
         }
+        apiList.remove(oneApi);
         oneApiRepository.deleteById(id);
         return ResultUtils.success("删除成功");
     }
@@ -126,6 +136,10 @@ public class OneApiServiceImpl implements OneApiService {
     @Override
     public BaseResponse deleteByIds(List<Long> ids) {
         try{
+            List<OneApi> oneApis = oneApiRepository.findAllByIdIn(ids);
+            for(OneApi oneApi : oneApis){
+                apiList.remove(oneApi);
+            }
             oneApiRepository.deleteByIdIn(ids);
             return ResultUtils.success("删除成功");
         } catch (Exception e){
