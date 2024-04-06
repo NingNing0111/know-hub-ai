@@ -27,7 +27,6 @@ let routes = [
       icon: "Collection",
     },
   },
-
   {
     path: "/manage",
     name: "manage",

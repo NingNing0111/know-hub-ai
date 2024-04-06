@@ -60,6 +60,7 @@ const chatMessageStore = useChatMessageStore();
 import { ElMessage, ElScrollbar } from "element-plus";
 
 const input = ref<string>("");
+const ready = ref<boolean>(true);
 const messageList = computed(() => {
   return chatMessageStore.globalMessage;
 });

@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY . .
 ENV VITE_BACKEND_HOST=
+
 RUN npm install
 
 
