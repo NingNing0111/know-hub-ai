@@ -23,9 +23,10 @@
               </div>
             </div>
           </template>
-          <MDView v-if="item.content !== ''" :content="item.content" />
-          <!-- <div v-if="item.content !== ''" v-html="item.content"></div> -->
-          <div v-else>AI思考中...</div>
+          <div style="margin: 10px">
+            <MDView v-if="item.content !== ''" :content="item.content" />
+            <div v-else>AI思考中...</div>
+          </div>
         </el-card>
       </div>
     </el-scrollbar>
@@ -37,7 +38,7 @@
         autofocus
         :autosize="{ minRows: 1, maxRows: 4 }"
         resize="none"
-        placeholder="请输入对话内容，换行请使用Shift+Enter"
+        placeholder="请输入对话内容，发送请使用Shift+Enter"
         class="input-box"
         @keydown="handleKeydown"
       />
@@ -91,7 +92,7 @@ const cleanMessage = () => {
 };
 
 const handleKeydown = (e: KeyboardEvent) => {
-  if (!e.shiftKey && e.key === "Enter") {
+  if (e.shiftKey && e.key === "Enter") {
     e.preventDefault();
     if (input.value === "") {
       ElMessage({

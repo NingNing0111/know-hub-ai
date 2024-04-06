@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   vector_db:
     image: ankane/pgvector:v0.5.0
@@ -14,7 +14,7 @@ services:
         max-size: 10m
         max-file: "3"
     ports:
-      - "5432:5432"
+      - '5432:5432'
     healthcheck:
       test: "pg_isready -U postgres -d vector_store"
       interval: 2s
@@ -34,7 +34,6 @@ services:
       - PGVECTOR_DATABASE=know-hub
       - PGVECTOR_USERNAME=postgres
       - PGVECTOR_PASSWORD=postgres
-      # Key分享自：https://pgthinker.me/2023/10/03/196/
       - DEFAULT_BASE_URL=https://api.mnzdna.xyz
       - DEFAULT_API_KEY=sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
     depends_on:
@@ -46,9 +45,6 @@ services:
     image: ningning0111/know-hub-ai-frontend
     restart: always
     container_name: know-hub-ai-frontend
-    environment:
-      # 填写后端地址 默认：http://localhost:8329
-      - VITE_BACKEND_HOST=
     ports:
       - "3000:3000"
     depends_on:

@@ -23,8 +23,8 @@ services:
     networks:
       - know-hub-network
 
-  know-hub-backend:
-    image: ningning0111/know-hub-ai-backend
+  know-hub-ai-backend:
+    image: ningning0111/know-hub-ai-backend-mac
     restart: always
     container_name: know-hub-ai-backend
     ports:
@@ -42,18 +42,17 @@ services:
     networks:
       - know-hub-network
 
-  know-hub-frontend:
-    image: ningning0111/know-hub-ai-frontend
+  know-hub-ai-frontend:
+    image: ningning0111/know-hub-ai-frontend-mac
     restart: always
     container_name: know-hub-ai-frontend
     environment:
-      # 填写后端地址 默认：http://localhost:8329
       - VITE_BACKEND_HOST=
     ports:
       - "3000:3000"
     depends_on:
       - vector_db
-      - know-hub-backend
+      - know-hub-ai-backend
     networks:
       - know-hub-network
 

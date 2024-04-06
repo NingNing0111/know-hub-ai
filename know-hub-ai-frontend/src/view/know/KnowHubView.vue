@@ -1,6 +1,11 @@
 <template>
   <div style="display: flex; justify-content: right; margin: 20px">
-    <el-button type="warning" size="large" @click="uploadFile">
+    <el-button
+      type="warning"
+      size="large"
+      @click="uploadFile"
+      :disabled="isUploading"
+    >
       全部上传
     </el-button>
   </div>
@@ -10,6 +15,7 @@
     multiple
     v-model:file-list="fileList"
     :auto-upload="false"
+    v-loading="isUploading"
   >
     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
     <div class="el-upload__text">
@@ -30,10 +36,12 @@
       <el-input placeholder="请输入文件名称" v-model="queryFileDto.fileName" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="loadStoreFileData">搜索</el-button>
+      <el-button type="primary" @click="loadStoreFileData" :disabled="isLoading"
+        >搜索</el-button
+      >
     </el-form-item>
   </el-form>
-  <el-table :data="storeFileData" border>
+  <el-table :data="storeFileData" border v-loading="isLoading">
     <el-table-column prop="id" label="ID" width="180" />
     <el-table-column prop="fileName" label="文件名" width="180" />
     <el-table-column label="上传时间">
@@ -72,9 +80,12 @@ const queryFileDto = ref<QueryFileDto>({
   pageSize: 10,
   fileName: "",
 });
-
+const isUploading = ref(false);
+const isLoading = ref(false);
 const storeFileTotal = ref(0);
+// 查询知识库文件
 const loadStoreFileData = () => {
+  isLoading.value = true;
   queryFileApi(queryFileDto.value)
     .then((res) => {
       let code = res.code;
@@ -95,15 +106,20 @@ const loadStoreFileData = () => {
         type: "error",
         message: err,
       });
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 };
 
 const fileList = ref<UploadUserFile[]>();
+
 const uploadFile = () => {
   const files: File[] = [];
   fileList.value?.forEach((e) => {
     files.push(e.raw as File);
   });
+  isUploading.value = true;
   uploadFileApi(files)
     .then((res) => {
       let code = res.data.code;
@@ -127,6 +143,9 @@ const uploadFile = () => {
         type: "error",
         message: err,
       });
+    })
+    .finally(() => {
+      isUploading.value = false;
     });
 };
 const deleteStoreFile = (e: any) => {

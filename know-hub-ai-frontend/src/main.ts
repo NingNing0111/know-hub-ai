@@ -11,7 +11,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 // 导入pinia
 import { createPinia } from "pinia";
 import hljs from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css"; //样式
+import "highlight.js/styles/atom-one-light.css"; //样式
 const pinia = createPinia();
 
 const app = createApp(App);

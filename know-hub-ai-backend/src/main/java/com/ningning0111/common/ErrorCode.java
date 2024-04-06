@@ -19,6 +19,10 @@ public enum ErrorCode {
     OPERATION_ERROR(50001, "操作失败"),
     UPDATE_ERROR(50002,"更新失败"),
     DELETE_ERROR(50004,"删除失败"),
+    APIKEY_ERROR(50005,"apikey不存在"),
+    PROMPT_ERROR(50006,"prompt为空"),
+    MODEL_ERROR(50007,"模型为空"),
+    FILE_ERROR(50008,"请求文件为空"),
     API_REQUEST_ERROR(50010, "接口调用失败");
 
     /**

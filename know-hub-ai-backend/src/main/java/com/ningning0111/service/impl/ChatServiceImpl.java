@@ -25,6 +25,7 @@ import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class ChatServiceImpl implements ChatService {
     // 流式普通对话
     @Override
     public Flux<ChatResponse> simpleChat(ChatDTO chatRequest) {
+        if (StrUtil.isBlank(chatRequest.prompt())){
+            return Flux.error(new RuntimeException(String.valueOf(ErrorCode.PROMPT_ERROR)));
+        }
         StreamingChatClient streamingChatClient = randomGetStreamingChatClient(chatRequest.chatOptions());
         List<Message> messages = transformAiMessage(chatRequest.messages());
         String prompt = chatRequest.prompt();
@@ -58,6 +62,9 @@ public class ChatServiceImpl implements ChatService {
     // 流式RAG对话
     @Override
     public Flux<ChatResponse> ragChat(ChatDTO chatRequest) {
+        if (StrUtil.isBlank(chatRequest.prompt())){
+            return Flux.error(new RuntimeException(String.valueOf(ErrorCode.PROMPT_ERROR)));
+        }
         StreamingChatClient streamingChatClient = randomGetStreamingChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());
@@ -69,6 +76,9 @@ public class ChatServiceImpl implements ChatService {
     // 非流式的普通对话
     @Override
     public BaseResponse noStreamSimpleChat(ChatDTO chatRequest) {
+        if (StrUtil.isBlank(chatRequest.prompt())){
+            return ResultUtils.error(ErrorCode.PROMPT_ERROR);
+        }
         ChatClient chatClient = randomGetChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());
@@ -81,6 +91,9 @@ public class ChatServiceImpl implements ChatService {
     // 非流式的RAG对话
     @Override
     public BaseResponse noStreamRagChat(ChatDTO chatRequest) {
+        if (StrUtil.isBlank(chatRequest.prompt())){
+            return ResultUtils.error(ErrorCode.PROMPT_ERROR);
+        }
         ChatClient chatClient = randomGetChatClient(chatRequest.chatOptions());
         String prompt = chatRequest.prompt();
         List<Message> messages = transformAiMessage(chatRequest.messages());

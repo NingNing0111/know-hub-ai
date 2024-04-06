@@ -23,4 +23,6 @@ public interface OneApiRepository extends JpaRepository<OneApi,Long> {
 
     //批量删除指定id
     void deleteByIdIn(List<Long> id);
+    //查询ids
+    List<OneApi> findAllByIdIn(List<Long> ids);
 }

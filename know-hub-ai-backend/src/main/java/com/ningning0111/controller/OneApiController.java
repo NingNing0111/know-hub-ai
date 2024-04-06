@@ -10,6 +10,7 @@ import com.ningning0111.service.OneApiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,14 @@ import java.util.List;
 @RestController
 @RequestMapping(ApplicationConstant.API_VERSION + "/one-api")
 @RequiredArgsConstructor
+@Slf4j
 public class OneApiController {
     private final OneApiService oneApiService;
 
     @Operation(summary = "add",description = "添加一个apikey")
     @PostMapping("/add")
     BaseResponse addOneApi(@RequestBody AddApiDTO request){
+        log.info("传参数据：{}",request);
         String apiKey = request.apiKey();
         if(apiKey == null){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"key is empty");
@@ -46,8 +49,7 @@ public class OneApiController {
      */
     @Operation(summary = "select",description = "查询所有未禁止的key")
     @GetMapping("/select")
-    BaseResponse selectApi(QueryApiDTO queryApiRequest){
-        System.out.println(queryApiRequest.toString());
+    BaseResponse selectApi(@RequestParam QueryApiDTO queryApiRequest){
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
 

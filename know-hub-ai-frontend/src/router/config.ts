@@ -28,16 +28,6 @@ let routes = [
     },
   },
   {
-    path: "/upload",
-    name: "upload",
-    component: () => import("@/view/know/UploadView.vue"),
-    meta: {
-      isMenu: false,
-      description: "知识内容上传",
-      icon: "FolderAdd",
-    },
-  },
-  {
     path: "/manage",
     name: "manage",
     component: () => import("@/view/manage/ApiManageView.vue"),
