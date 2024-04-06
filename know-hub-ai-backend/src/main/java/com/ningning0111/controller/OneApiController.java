@@ -7,6 +7,8 @@ import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.AddApiDTO;
 import com.ningning0111.model.dto.QueryApiDTO;
 import com.ningning0111.service.OneApiService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ import java.util.List;
  * @Date: 2024/4/2 17:42
  * @Description:
  */
+@Tag(name="OneApiController",description = "One")
 @RestController
 @RequestMapping(ApplicationConstant.API_VERSION + "/one-api")
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ import java.util.List;
 public class OneApiController {
     private final OneApiService oneApiService;
 
+    @Operation(summary = "add",description = "添加一个apikey")
     @PostMapping("/add")
     BaseResponse addOneApi(@RequestBody AddApiDTO request){
         log.info("传参数据：{}",request);
@@ -43,6 +47,7 @@ public class OneApiController {
      * @param queryApiRequest
      * @return
      */
+    @Operation(summary = "select",description = "查询所有未禁止的key")
     @GetMapping("/select")
     BaseResponse selectApi(@RequestParam QueryApiDTO queryApiRequest){
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
@@ -53,6 +58,7 @@ public class OneApiController {
      * @param id
      * @return
      */
+    @Operation(summary = "change",description = "禁止或解封")
     @PutMapping("/change/{id}")
     BaseResponse changeApi(@PathVariable("id") Long id){
         return oneApiService.changeApi(id);
@@ -63,6 +69,7 @@ public class OneApiController {
      * @param id
      * @return
      */
+    @Operation(summary = "selectById",description = "根据id查找")
     @GetMapping("/select/{id}")
     BaseResponse selectById(@PathVariable("id") Long id){
         return oneApiService.selectById(id);
@@ -73,6 +80,7 @@ public class OneApiController {
      * @param id
      * @return
      */
+    @Operation(summary = "deleteById",description = "通过id删除")
     @DeleteMapping("/delete/{id}")
     BaseResponse deleteById(@PathVariable("id") Long id){
         return oneApiService.deleteById(id);
@@ -83,6 +91,7 @@ public class OneApiController {
      * @param ids
      * @return
      */
+    @Operation(summary = "deleteByIds",description = "通过id批量删除")
     @DeleteMapping("/delete")
     BaseResponse deleteById(@RequestParam("ids") List<Long> ids){
         return oneApiService.deleteByIds(ids);
