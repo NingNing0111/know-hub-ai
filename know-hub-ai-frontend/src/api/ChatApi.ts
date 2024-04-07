@@ -47,26 +47,21 @@ export const streamChatApi = (input: string) => {
   });
   const onMessage = (e: any) => {
     let result = JSON.parse(e.data).results.at(0).output.content;
-    console.log(result);
     if (result != null) {
       answer += result;
       chatMessageStore.setCurrMessage(answer);
     }
   };
   const onError = (err: any) => {
-    // console.log("发生错误", err);
+    chatMessageStore.setIsChating(false);
     throw err;
   };
   const onClose = () => {
-    // 连接关闭 对话结束
-    console.log("连接关闭");
+    chatMessageStore.setIsChating(false);
     chatMessageStore.storeMessage();
-    // throw new RetriableError();
   };
   const onOpen = async (response: any) => {
-    console.log("请求参数", dto);
-
-    console.log(response);
+    chatMessageStore.setIsChating(true);
     if (response.ok) {
       return;
     } else if (

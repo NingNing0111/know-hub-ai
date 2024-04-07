@@ -2,7 +2,7 @@
   <div id="chat-view">
     <el-scrollbar ref="myScrollbar" always>
       <div ref="innerElement">
-        <el-card v-for="item in messageList" class="scrollbar-item">
+        <el-card v-for="(item, index) in messageList" class="scrollbar-item">
           <template #header>
             <div class="card-header" v-if="item.role === 'system'">
               <el-image :src="System" style="width: 50px; margin-right: 20px" />
@@ -11,8 +11,15 @@
             <div class="card-header" v-if="item.role === 'assistant'">
               <el-image :src="Robot" style="width: 50px; margin-right: 20px" />
               <div>
-                <el-button type="primary" size="small">复制</el-button>
-                <el-button type="warning" size="small">删除</el-button>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="toCopy(item.content)"
+                  >复制</el-button
+                >
+                <el-button type="warning" size="small" @click="toDelete(index)"
+                  >删除</el-button
+                >
               </div>
             </div>
             <div class="card-header" v-if="item.role === 'user'">
@@ -44,7 +51,9 @@
       />
       <div style="display: flex; justify-content: right; margin: 10px">
         <el-button type="warning" @click="cleanMessage">清除对话</el-button>
-        <el-button type="primary" @click="submitChat">发送</el-button>
+        <el-button type="primary" @click="submitChat" :disabled="isChating"
+          >发送</el-button
+        >
       </div>
     </div>
   </div>
@@ -56,23 +65,36 @@ import { useChatMessageStore } from "@/store/message";
 import Robot from "@/assets/robot.svg";
 import User from "@/assets/user.svg";
 import System from "@/assets/system.svg";
-const chatMessageStore = useChatMessageStore();
 import { ElMessage, ElScrollbar } from "element-plus";
+import { copy } from "@/utils";
 
+const chatMessageStore = useChatMessageStore();
 const input = ref<string>("");
-const ready = ref<boolean>(true);
 const messageList = computed(() => {
   return chatMessageStore.globalMessage;
 });
 const innerElement = ref<HTMLElement>();
 const myScrollbar = ref<InstanceType<typeof ElScrollbar>>();
-
+const toCopy = (content: string) => {
+  copy(content);
+  ElMessage({
+    type: "success",
+    message: "复制成功",
+  });
+};
+const toDelete = (index: number) => {
+  ElMessage({
+    type: "error",
+    message: "index:" + index + ",该功能待实现",
+  });
+};
 const updateToBottom = () => {
-  // console.log(myScrollbar.value?.);
-  console.log(innerElement.value?.scrollHeight);
-
   myScrollbar.value?.setScrollTop(innerElement.value?.clientHeight as number);
 };
+
+const isChating = computed(() => {
+  return chatMessageStore.getIsChating;
+});
 
 onMounted(() => {
   updateToBottom();
@@ -83,8 +105,16 @@ onUpdated(() => {
 });
 
 const submitChat = () => {
-  streamChatApi(input.value);
-  input.value = "";
+  if (input.value === "") {
+    ElMessage({
+      type: "error",
+      message: "请输入内容",
+    });
+  } else {
+    chatMessageStore.setIsChating(true);
+    streamChatApi(input.value);
+    input.value = "";
+  }
 };
 
 const cleanMessage = () => {
@@ -94,19 +124,7 @@ const cleanMessage = () => {
 const handleKeydown = (e: KeyboardEvent) => {
   if (e.shiftKey && e.key === "Enter") {
     e.preventDefault();
-    if (input.value === "") {
-      ElMessage({
-        type: "error",
-        message: "请输入内容",
-      });
-    } else {
-      submitChat();
-    }
-    // if (ready.value) {
-    // ready.value = false;
-    // } else {
-    //   ElMessage.error("请等待机器人回复后再发送哦");
-    // }
+    submitChat();
   }
 };
 </script>

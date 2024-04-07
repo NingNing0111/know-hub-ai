@@ -54,6 +54,7 @@
 <script setup lang="ts">
 import { useChatOptionsStore } from "@/store/options";
 import { getModelsApi } from "@/api/ChatApi";
+import { ElMessage } from "element-plus";
 const chatOptionsStore = useChatOptionsStore();
 const chatOptions = chatOptionsStore.getChatOptions;
 
@@ -88,6 +89,10 @@ const saveSetting = () => {
 
   chatOptionsStore.setChatOptions(chatOptions);
   chatOptionsStore.setSystemPrompt(settinsgPrompt.value);
+  ElMessage({
+    type: "success",
+    message: "保存成功",
+  });
 };
 </script>
 

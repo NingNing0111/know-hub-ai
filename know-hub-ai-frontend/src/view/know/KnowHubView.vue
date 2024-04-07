@@ -23,7 +23,12 @@
     </div>
     <template #tip>
       <div style="text-align: center">
-        <el-text>文件最大可上传<em style="color: blue">20MB</em></el-text>
+        <el-text
+          >文件支持 <i>pdf、doc、md、excel、text</i>等，最大可上传<em
+            style="color: blue"
+            >20MB</em
+          ></el-text
+        >
       </div>
     </template>
   </el-upload>

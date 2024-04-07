@@ -14,6 +14,8 @@ export const useChatMessageStore = defineStore("message", {
   state: () => {
     // 当前AI回复的信息
     let currAIMessage: string = "";
+    // 是否正在对话
+    let isChating = false;
 
     // 尝试从本地获取配置信息
     let messagesJson: string | null = localStorage.getItem(MESSAGE_LOCAL_STORE);
@@ -23,14 +25,21 @@ export const useChatMessageStore = defineStore("message", {
     return {
       globalMessage,
       currAIMessage,
+      isChating,
     };
   },
   getters: {
     getGlobalMessage(): Message[] {
       return this.globalMessage;
     },
+    getIsChating(): boolean {
+      return this.isChating;
+    },
   },
   actions: {
+    setIsChating(isChating: boolean) {
+      this.$patch({ isChating });
+    },
     addMessage(message: Message) {
       this.globalMessage.push(message);
       localStorage.setItem(
@@ -38,7 +47,6 @@ export const useChatMessageStore = defineStore("message", {
         JSON.stringify(this.globalMessage)
       );
     },
-
     // 设置当前AI回复
     setCurrMessage(currAIMessage: string) {
       // 当前AI回复放在最后一个对话列表中 this.globalMessage 的类型时Message[]
