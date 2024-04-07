@@ -93,9 +93,7 @@ public class OneApiServiceImpl implements OneApiService {
 
     @Override
     public BaseResponse selectApi(PageRequest pageRequest) {
-        if (StrUtil.isBlank(pageRequest.toString())){
-            return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);
-        }
+
         List<OneApi> oneApis = oneApiRepository.findAllByDisableIsFalse(pageRequest);
         return ResultUtils.success(oneApis);
     }
@@ -107,7 +105,7 @@ public class OneApiServiceImpl implements OneApiService {
             return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);
         }
         oneApi.setDisable(!oneApi.getDisable());
-        oneApi.setUpdateTime(new Date());
+        oneApi.setUpdateTime(new Date(System.currentTimeMillis()));
         try{
             oneApiRepository.save(oneApi);
             return ResultUtils.success("更新成功");

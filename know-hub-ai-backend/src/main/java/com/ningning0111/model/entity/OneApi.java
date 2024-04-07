@@ -44,6 +44,9 @@ public class OneApi {
 
     private String baseUrl;
     private String apiKey;
+    /**
+     * 描述 可为空
+     */
     private String describe;
 
 }

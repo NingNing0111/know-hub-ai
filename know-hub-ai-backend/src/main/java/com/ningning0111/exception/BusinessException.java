@@ -7,7 +7,7 @@ import com.ningning0111.common.ErrorCode;
  * @Author: pgthinker
  * @GitHub: https://github.com/ningning0111
  * @Date: 2024/3/3 12:19
- * @Description:
+ * @Description: 全局自定义异常
  */
 public class BusinessException extends RuntimeException {
 

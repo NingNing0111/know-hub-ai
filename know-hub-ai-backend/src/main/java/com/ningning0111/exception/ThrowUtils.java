@@ -7,7 +7,7 @@ import com.ningning0111.common.ErrorCode;
  * @Author: pgthinker
  * @GitHub: https://github.com/ningning0111
  * @Date: 2024/3/3 12:20
- * @Description:
+ * @Description: 异常抛出工具类
  */
 public class ThrowUtils {
 

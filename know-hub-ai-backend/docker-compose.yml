@@ -41,18 +41,6 @@ services:
     networks:
       - know-hub-network
 
-  know-hub-frontend:
-    image: ningning0111/know-hub-ai-frontend
-    restart: always
-    container_name: know-hub-ai-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - vector_db
-      - know-hub-backend
-    networks:
-      - know-hub-network
-
 networks:
   know-hub-network:
     driver: bridge

@@ -1,8 +1,10 @@
 package com.ningning0111.config;
 
 import com.ningning0111.service.StoreFileService;
+import jakarta.validation.Valid;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +18,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 @Configuration
 public class ApplicationConfig {
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String ddlAuto;
     /**
      * ETL中的DocumentTransformer的实现，将文本数据源转换为多个分割段落
      * @return
@@ -25,10 +29,17 @@ public class ApplicationConfig {
         return new TokenTextSplitter();
     }
 
+    /**
+     * 自动删除向量数据库中的向量数据表并创建
+     * @param service
+     * @param jdbcTemplate
+     * @return
+     */
     @Bean
     public VectorStore vectorStore(StoreFileService service, JdbcTemplate jdbcTemplate) {
-//        jdbcTemplate.execute("DELETE FROM public.vector_store");
-        jdbcTemplate.execute("drop table if exists vector_store cascade");
+        if(ddlAuto == "create"){
+            jdbcTemplate.execute("drop table if exists vector_store cascade");
+        }
         return service.randomGetVectorStore();
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -36,7 +37,7 @@ public class ChatController {
     ){
         String chatTypeStr = chatRequest.chatOptions().chatType();
         ChatType chatType = ChatType.getChatType(chatTypeStr);
-        switch (chatType){
+        switch (Objects.requireNonNull(chatType)){
             case RAG -> {
                 return chatService.ragChat(chatRequest);
             }
@@ -54,7 +55,7 @@ public class ChatController {
     ){
         String chatTypeStr = chatRequest.chatOptions().chatType();
         ChatType chatType = ChatType.getChatType(chatTypeStr);
-        switch (chatType){
+        switch (Objects.requireNonNull(chatType)){
             case RAG -> {
                 return chatService.noStreamRagChat(chatRequest);
             }

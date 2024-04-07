@@ -2,6 +2,8 @@ package com.ningning0111.controller;
 
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
+import com.ningning0111.common.ErrorCode;
+import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.QueryFileDTO;
 import com.ningning0111.service.StoreFileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,13 +33,17 @@ public class KnowStoreController {
     @Operation(summary="文件上传",description = "文件上传")
     @PostMapping(value="/file/upload",headers = "content-type=multipart/form-data")
     public BaseResponse addPdf(@RequestParam("file") List<MultipartFile> file){
-
+        if(file.isEmpty()){
+            return ResultUtils.error(ErrorCode.PARAMS_ERROR,"文件为空");
+        }
         return storeFileService.filesStore(file);
     }
     @Operation(summary = "文件查询",description = "文件查询")
     @GetMapping("/contents")
     public BaseResponse queryFiles(QueryFileDTO request){
-        log.error("{}",request.fileName());
+        if(request.page() == null || request.pageSize() == null){
+            return ResultUtils.error(ErrorCode.PARAMS_ERROR,"page 或 pageSize为空");
+        }
         return storeFileService.queryPage(request);
     }
     @Operation(summary = "文件删除",description = "文件删除")

@@ -1,5 +1,6 @@
 package com.ningning0111.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
@@ -23,7 +24,7 @@ import java.util.List;
  * @Date: 2024/4/2 17:42
  * @Description:
  */
-@Tag(name="OneApiController",description = "One")
+@Tag(name="OneApiController",description = "API管理接口")
 @RestController
 @RequestMapping(ApplicationConstant.API_VERSION + "/one-api")
 @RequiredArgsConstructor
@@ -50,6 +51,9 @@ public class OneApiController {
     @Operation(summary = "select",description = "查询所有未禁止的key")
     @GetMapping("/select")
     BaseResponse selectApi(@RequestParam QueryApiDTO queryApiRequest){
+        if (queryApiRequest.pageSize() == null || queryApiRequest.page() == null){
+            return ResultUtils.error(ErrorCode.PARAMS_ERROR,"page 或 pageSize为空");
+        }
         return oneApiService.selectApi(PageRequest.of(queryApiRequest.page()-1, queryApiRequest.pageSize()));
     }
 
@@ -61,6 +65,7 @@ public class OneApiController {
     @Operation(summary = "change",description = "禁止或解封")
     @PutMapping("/change/{id}")
     BaseResponse changeApi(@PathVariable("id") Long id){
+
         return oneApiService.changeApi(id);
     }
 
