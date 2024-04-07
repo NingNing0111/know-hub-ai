@@ -39,10 +39,10 @@ public class ChatController {
         ChatType chatType = ChatType.getChatType(chatTypeStr);
         switch (Objects.requireNonNull(chatType)){
             case RAG -> {
-                return chatService.ragChat(chatRequest);
+                return chatService.ragChat(chatRequest).flatMapSequential(Flux::just);
             }
             case SIMPLE -> {
-                return chatService.simpleChat(chatRequest);
+                return chatService.simpleChat(chatRequest).flatMapSequential(Flux::just);
             }
             default -> throw new BusinessException(ErrorCode.PARAMS_ERROR,"暂不支持["+chatTypeStr+"]对话");
         }

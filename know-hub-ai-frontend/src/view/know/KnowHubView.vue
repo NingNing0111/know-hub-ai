@@ -149,7 +149,7 @@ const uploadFile = () => {
     });
 };
 const deleteStoreFile = (e: any) => {
-  ElMessageBox.confirm("确定要删除这个知识库吗？", "Warning", {
+  ElMessageBox.confirm("确定要删除这个知识库吗？", "警告", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning",

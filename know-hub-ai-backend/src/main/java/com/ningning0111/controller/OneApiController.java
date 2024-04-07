@@ -50,7 +50,7 @@ public class OneApiController {
      */
     @Operation(summary = "select",description = "查询所有未禁止的key")
     @GetMapping("/select")
-    BaseResponse selectApi(@RequestParam QueryApiDTO queryApiRequest){
+    BaseResponse selectApi(QueryApiDTO queryApiRequest){
         if (queryApiRequest.pageSize() == null || queryApiRequest.page() == null){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"page 或 pageSize为空");
         }

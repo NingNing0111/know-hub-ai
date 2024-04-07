@@ -1,5 +1,5 @@
 const BACKEND_HOST =
-  import.meta.env.VITE_BACKEND_HOST || "http://localhost:8306";
+  import.meta.env.VITE_BACKEND_HOST || "http://localhost:8329";
 
 // 后端接口地址
 export const BASE_URL = BACKEND_HOST + "/api/v1";
