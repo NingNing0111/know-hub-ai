@@ -76,7 +76,7 @@
 &emsp;Mac M1 环境(ARM)，使用`docker-compose-mac.yml`一键本地部署
 
 ```shell
-docker compose -f docker-compose-mac.yml
+docker compose -f docker-compose-mac.yml up -d
 ```
 
 &emsp;Linux(AMD)使用`docker-compose.yml`一键部署
@@ -84,3 +84,7 @@ docker compose -f docker-compose-mac.yml
 ```shell
 docker compose up -d
 ```
+
+## 其它
+
+- knife4j：[http://localhost:8329/doc.html]()，默认
