@@ -4,17 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootTest
 class KnowHubAiApplicationTests {
-
     @Autowired
-    private ChatClient chatClient;
+    private JdbcTemplate jdbcTemplate;
+
+
 
     @Test
     void contextLoads() {
-        String hi = chatClient.call("鲁迅为什么打周树人");
-        System.out.println(hi);
+
     }
 
 
