@@ -1,13 +1,16 @@
 package com.ningning0111.config;
 
 import com.ningning0111.service.StoreFileService;
-import jakarta.validation.Valid;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.Objects;
+
 
 /**
  * @Project: com.ningning0111.config
@@ -18,8 +21,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 @Configuration
 public class ApplicationConfig {
+
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlAuto;
+    private final JdbcTemplate jdbcTemplate;
+
+    public ApplicationConfig(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     /**
      * ETL中的DocumentTransformer的实现，将文本数据源转换为多个分割段落
      * @return
@@ -36,10 +46,16 @@ public class ApplicationConfig {
      * @return
      */
     @Bean
-    public VectorStore vectorStore(StoreFileService service, JdbcTemplate jdbcTemplate) {
-        if(ddlAuto == "create"){
+    public VectorStore vectorStore(@Qualifier("storeFileServiceImpl") StoreFileService service, JdbcTemplate jdbcTemplate) {
+        if(Objects.equals(ddlAuto, "create")){
             jdbcTemplate.execute("drop table if exists vector_store cascade");
         }
+
         return service.randomGetVectorStore();
     }
+
+
+
+
+
 }

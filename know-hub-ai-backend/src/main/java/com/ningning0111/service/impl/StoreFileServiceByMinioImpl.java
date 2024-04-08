@@ -16,7 +16,7 @@ import java.util.List;
  * @description：知识库（Minio文件存储服务版）
  * 写不动了以后慢慢写
  */
-@Service
+@Service("storeFileServiceByMinioImpl")
 @Slf4j
 public class StoreFileServiceByMinioImpl implements StoreFileService {
     @Override

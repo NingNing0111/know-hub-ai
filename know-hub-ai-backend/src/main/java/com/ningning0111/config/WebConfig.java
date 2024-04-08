@@ -36,13 +36,11 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+        // knife4j资源处理配置
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-
         /** 配置knife4j 显示文档 */
         registry.addResourceHandler("doc.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
-
         /**
          * 配置swagger-ui显示文档
          */

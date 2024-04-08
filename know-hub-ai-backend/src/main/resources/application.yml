@@ -3,16 +3,16 @@ spring:
     name: know-hub-ai
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: ${PGVECTOR_USERNAME}
-    password: ${PGVECTOR_PASSWORD}
-    url: jdbc:postgresql://${PGVECTOR_HOST}/${PGVECTOR_DATABASE}
+    username: ${PGVECTOR_USERNAME:postgres}
+    password: ${PGVECTOR_PASSWORD:postgres}
+    url: jdbc:postgresql://${PGVECTOR_HOST:localhost}/${PGVECTOR_DATABASE:know-hub}
+    type: org.postgresql.ds.PGSimpleDataSource
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
   jpa:
     hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
       ddl-auto: create
 
 
@@ -24,6 +24,12 @@ spring:
       base-url: ${DEFAULT_BASE_URL}
       api-key: ${DEFAULT_API_KEY}
 
+# MinIO
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://127.0.0.1:9000/}
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:minioadmin}
+  bucket-name: ${BUCKET_NAME:know-hub}
 
 server:
   port: 8329

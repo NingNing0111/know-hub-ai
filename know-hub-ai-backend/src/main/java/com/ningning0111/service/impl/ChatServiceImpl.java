@@ -23,6 +23,8 @@ import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import cn.hutool.core.util.StrUtil;
@@ -40,10 +42,15 @@ import java.util.stream.Collectors;
  * @Description:
  */
 @Service
-@RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
     private final OneApiService oneApiService;
     private final StoreFileService storeFileService;
+
+    @Autowired
+    public ChatServiceImpl(OneApiService oneApiService, @Qualifier("storeFileServiceImpl") StoreFileService storeFileService) {
+        this.oneApiService = oneApiService;
+        this.storeFileService = storeFileService;
+    }
 
     // 流式普通对话
     @Override

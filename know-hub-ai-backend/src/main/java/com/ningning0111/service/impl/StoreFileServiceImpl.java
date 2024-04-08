@@ -21,6 +21,8 @@ import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.PgVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +43,7 @@ import java.util.stream.Collectors;
  * @Date: 2024/4/5 20:25
  * @Description:
  */
-@Service
+@Service("storeFileServiceImpl")
 @RequiredArgsConstructor
 @Slf4j
 public class StoreFileServiceImpl implements StoreFileService {

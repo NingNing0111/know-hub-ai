@@ -9,6 +9,8 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=know-hub
       - PGPASSWORD=postgres
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     logging:
       options:
         max-size: 10m
@@ -41,6 +43,28 @@ services:
       - vector_db
     networks:
       - know-hub-network
+
+  minio:
+    image: minio/minio:latest
+    restart: always
+    container_name: minio
+    privileged: true
+    command: server --address ":9000" --console-address ":9001" /data
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - know-hub-network
+    volumes:
+      - './config:/root/.minio'
+      - './data:/data'
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_DEFAULT_BUCKETS=know-hub
+
+
+
 
 networks:
   know-hub-network:
