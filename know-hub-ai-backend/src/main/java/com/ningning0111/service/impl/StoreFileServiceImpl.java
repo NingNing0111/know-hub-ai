@@ -3,6 +3,7 @@ package com.ningning0111.service.impl;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
+import com.ningning0111.config.KnowHubAIConfig;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.model.dto.QueryFileDTO;
 import com.ningning0111.model.entity.OneApi;
@@ -10,6 +11,7 @@ import com.ningning0111.model.entity.StoreFile;
 import com.ningning0111.repository.StoreFileRepository;
 import com.ningning0111.service.OneApiService;
 import com.ningning0111.service.StoreFileService;
+import com.ningning0111.utils.MinioUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +53,8 @@ public class StoreFileServiceImpl implements StoreFileService {
     private final JdbcTemplate jdbcTemplate;
     private final TokenTextSplitter tokenTextSplitter;
     private final StoreFileRepository storeFileRepository;
+    private final KnowHubAIConfig knowHubAIConfig;
+    private final MinioUtil minioUtil;
     @Override
     public BaseResponse queryPage(QueryFileDTO request) {
         Page<StoreFile> pageFile = storeFileRepository.findByFileNameContaining(request.fileName(), PageRequest.of(request.page(), request.pageSize()));

@@ -26,6 +26,7 @@ public interface StoreFileService {
 
     BaseResponse filesStore(List<MultipartFile> files);
 
+    // 初始化向量数据库操作接口
     VectorStore randomGetVectorStore();
 
 }

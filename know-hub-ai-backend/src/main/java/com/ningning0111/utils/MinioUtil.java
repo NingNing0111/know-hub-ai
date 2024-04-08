@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
+@Lazy // 懒加载 需要用到时 才注入
 public class MinioUtil {
     @Value("${minio.endpoint}")
     private String ENDPOINT;

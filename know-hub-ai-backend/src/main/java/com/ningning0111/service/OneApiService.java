@@ -22,7 +22,7 @@ public interface OneApiService {
 
     OneApi randomGetOne();
 
-    BaseResponse queryList();
+
 
     BaseResponse addOneApi(AddApiDTO request);
 

@@ -6,7 +6,15 @@ spring:
     username: ${PGVECTOR_USERNAME:postgres}
     password: ${PGVECTOR_PASSWORD:postgres}
     url: jdbc:postgresql://${PGVECTOR_HOST:localhost}/${PGVECTOR_DATABASE:know-hub}
-    type: org.postgresql.ds.PGSimpleDataSource
+    # 8h待机自动断开数据库连接解决方案
+    tomcat:
+      max-active: 100
+      min-idle: 10
+      min-evictable-idle-time-millis: 1800000
+      test-on-borrow: true
+      test-on-return: true
+      test-while-idle: true
+      validation-query: select 1
   servlet:
     multipart:
       max-file-size: 20MB
@@ -21,8 +29,10 @@ spring:
   # api和key分享自：https://pgthinker.me/2023/10/03/196/
   ai:
     openai:
-      base-url: ${DEFAULT_BASE_URL}
-      api-key: ${DEFAULT_API_KEY}
+      base-url: https://api.mnzdna.xyz
+      api-key: sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
+#      base-url: ${DEFAULT_BASE_URL}
+#      api-key: ${DEFAULT_API_KEY}
 
 # MinIO
 minio:
@@ -31,9 +41,13 @@ minio:
   secret-key: ${MINIO_SECRET_KEY:minioadmin}
   bucket-name: ${BUCKET_NAME:know-hub}
 
+
 server:
   port: 8329
 
+# know-hub-ai的配置
+know-hub-ai:
+  minio-enabled: ${MINIO_DISABLED:false}
 
 
 

@@ -11,6 +11,7 @@ import com.ningning0111.repository.OneApiRepository;
 import com.ningning0111.service.OneApiService;
 import groovy.util.logging.Slf4j;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -33,13 +34,18 @@ public class OneApiServiceImpl implements OneApiService {
     private String defaultBaseUrl = ApplicationConstant.DEFAULT_BASE_URL;
     @Value("${spring.ai.openai.api-key}")
     private String defaultApiKey;
+    // 基于内存存储所有可用的key，减少每次对话对数据库的操作
     private static List<OneApi> apiList = new Vector<>();
     private final OneApiRepository oneApiRepository;
 
+    /**
+     * 从数据库中加载api信息到内存中
+     */
     @PostConstruct
     @Override
     public void reloadOneApiInfo() {
         List<OneApi> findList = oneApiRepository.findAllByDisableIsFalse();
+        // 如果数据库内没有数据，则加载配置的api
         if(findList.isEmpty()){
             long currMillis = System.currentTimeMillis();
             OneApi oneApi = oneApiRepository.save(OneApi.builder()
@@ -56,6 +62,7 @@ public class OneApiServiceImpl implements OneApiService {
         }
     }
 
+    // 随机获取一个可用的api
     @Override
     public OneApi randomGetOne() {
         int size = apiList.size();
@@ -63,11 +70,13 @@ public class OneApiServiceImpl implements OneApiService {
         return apiList.get(randIndex);
     }
 
-    @Override
-    public BaseResponse queryList() {
-        return null;
-    }
 
+    /**
+     * 添加api
+     * @param request
+     * @return
+     */
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public BaseResponse addOneApi(AddApiDTO request) {
         try {

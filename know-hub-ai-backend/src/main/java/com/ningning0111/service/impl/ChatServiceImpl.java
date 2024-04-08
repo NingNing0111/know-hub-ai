@@ -112,7 +112,7 @@ public class ChatServiceImpl implements ChatService {
         return ResultUtils.success(resp);
     }
 
-    // 模糊查询 返回系统提示信息（该信息包含了查询到的文档）
+    // 向量数据库检索 返回系统提示信息（该信息包含了查询到的一组文档）
     private Message similaritySearch(String prompt){
         VectorStore vectorStore = storeFileService.randomGetVectorStore();
         List<Document> listOfSimilarDocuments = vectorStore.similaritySearch(prompt);
