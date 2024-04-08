@@ -42,3 +42,15 @@ export interface QueryFileDto {
 export interface DeleteFileDto {
   ids: number[];
 }
+
+export interface DrawOptions {
+  model: string;
+  width: number;
+  height: number;
+  format: string;
+}
+
+export interface DrawImageDto {
+  prompt: string;
+  options: DrawOptions;
+}

@@ -13,8 +13,18 @@ let routes = [
     component: () => import("@/view/chat/ChatView.vue"),
     meta: {
       isMenu: true,
-      description: "对话",
+      description: "AI对话",
       icon: "ChatDotRound",
+    },
+  },
+  {
+    path: "/draw",
+    name: "绘图",
+    component: () => import("@/view/draw/Draw.vue"),
+    meta: {
+      isMenu: true,
+      description: "AI绘画",
+      icon: "PictureRounded",
     },
   },
   {

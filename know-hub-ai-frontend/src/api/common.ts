@@ -21,3 +21,7 @@ export const enum OneApi {
   DeleteOneApi = "/delete/",
   DeleteApi = "/delete",
 }
+
+export const enum DrawApi {
+  DrawApi = "/draw/",
+}

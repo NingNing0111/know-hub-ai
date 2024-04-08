@@ -10,12 +10,11 @@
   - Simple：普通对话
 - [x] 聊天配置：可设置最大聊天历史长度、对话模型、对话方式、系统提示词等
 - [x] API 管理：添加或删除 API
+- [x] AI 绘图
 
 ## 开发计划
 
 - [ ] 对象存储：知识库的文件存储在云上，目前选定开源软件[Minio](https://github.com/minio/minio)作为对象存储平台
-
-- [ ] AI 绘图
 
 - [ ] 基于语音输入实现对话
 
@@ -62,6 +61,12 @@
 ![alt text](./doc/images/rag.png)
 
 ![alt text](./doc/images/rag-1.png)
+
+### AI 绘画
+
+![alt text](./doc/images/draw1.png)
+
+![alt text](./doc/images/draw2.png)
 
 ### API 管理
 
