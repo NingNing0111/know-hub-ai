@@ -6,6 +6,7 @@ import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.AddApiDTO;
+import com.ningning0111.model.dto.OneApiDTO;
 import com.ningning0111.model.dto.QueryApiDTO;
 import com.ningning0111.service.OneApiService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -100,6 +101,21 @@ public class OneApiController {
     @DeleteMapping("/delete")
     BaseResponse deleteById(@RequestParam("ids") List<Long> ids){
         return oneApiService.deleteByIds(ids);
+    }
+
+    /**
+     * 修改
+     * @param oneApiDTO
+     * @return
+     */
+    @Operation(summary = "change",description = "修改")
+    @PostMapping("/change")
+    BaseResponse change(@RequestBody OneApiDTO oneApiDTO){
+        if (oneApiDTO.disable() instanceof Boolean){
+            return oneApiService.change(oneApiDTO);
+        }else {
+            return ResultUtils.error(ErrorCode.DATABASE_ERROR);
+        }
     }
 
 }

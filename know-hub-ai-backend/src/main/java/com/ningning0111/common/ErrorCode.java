@@ -22,6 +22,7 @@ public enum ErrorCode {
     APIKEY_ERROR(50005,"apikey不存在"),
     PROMPT_ERROR(50006,"prompt为空"),
     MODEL_ERROR(50007,"模型为空"),
+    DATABASE_ERROR(50009,"数据类型错误"),
     FILE_ERROR(50008,"请求文件为空"),
     API_REQUEST_ERROR(50010, "接口调用失败");
 

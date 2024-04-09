@@ -2,6 +2,7 @@ package com.ningning0111.service;
 
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.model.dto.AddApiDTO;
+import com.ningning0111.model.dto.OneApiDTO;
 import com.ningning0111.model.entity.OneApi;
 import org.springframework.data.domain.PageRequest;
 
@@ -35,4 +36,6 @@ public interface OneApiService {
     BaseResponse deleteById(Long id);
 
     BaseResponse deleteByIds(List<Long> ids);
+
+    BaseResponse change(OneApiDTO oneApiDTO);
 }

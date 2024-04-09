@@ -1,12 +1,13 @@
 package com.ningning0111.repository;
 
 import com.ningning0111.model.entity.OneApi;
-import org.springframework.data.domain.Page;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Project: com.ningning0111.repository
@@ -25,4 +26,5 @@ public interface OneApiRepository extends JpaRepository<OneApi,Long> {
     void deleteByIdIn(List<Long> id);
     //查询ids
     List<OneApi> findAllByIdIn(List<Long> ids);
+
 }

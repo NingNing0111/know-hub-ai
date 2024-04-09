@@ -5,6 +5,7 @@ import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
 import com.ningning0111.model.dto.AddApiDTO;
+import com.ningning0111.model.dto.OneApiDTO;
 import com.ningning0111.model.entity.OneApi;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.repository.OneApiRepository;
@@ -152,6 +153,18 @@ public class OneApiServiceImpl implements OneApiService {
         } catch (Exception e){
             return ResultUtils.error(ErrorCode.DELETE_ERROR);
         }
+    }
+
+    @Override
+    public BaseResponse change(OneApiDTO oneApiDTO) {
+        OneApi oneApi = oneApiRepository.getReferenceById(oneApiDTO.id());
+        oneApi.setApiKey(oneApi.getApiKey());
+        oneApi.setBaseUrl(oneApiDTO.baseUrl());
+        oneApi.setDisable(oneApiDTO.disable());
+        oneApi.setUpdateTime(new Date(System.currentTimeMillis()));
+        oneApi.setDescribe(oneApiDTO.describe());
+        oneApiRepository.save(oneApi);
+        return ResultUtils.success(oneApiDTO);
     }
 
 }
