@@ -10,15 +10,23 @@
   - Simple：普通对话
 - [x] 聊天配置：可设置最大聊天历史长度、对话模型、对话方式、系统提示词等
 - [x] API 管理：添加或删除 API
-- [x] AI 绘图
+- [x] AI 绘图(Dall-e-\*)系列
 
 ## 开发计划
 
 - [ ] 对象存储：知识库的文件存储在云上，目前选定开源软件[Minio](https://github.com/minio/minio)作为对象存储平台
 
+- [ ] 知识库下载：基于对象存储的实现
+
 - [ ] 基于语音输入实现对话
 
-- [ ] ...
+- [ ] Api 分类管理：（embedding、image、chat 等三类模型），接口统一为 OpenAI
+
+- [ ] MJ 绘图
+
+- [ ] 桌面应用端开发
+
+- [ ] 多用户的后端服务
 
 ## 功能模块图
 
@@ -92,4 +100,4 @@ docker compose up -d
 
 ## 其它
 
-- knife4j：[http://localhost:8329/doc.html]()，默认
+- knife4j：[http://localhost:8329/doc.html](#)，默认
