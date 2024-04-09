@@ -1,10 +1,12 @@
 package com.ningning0111.utils;
 
 import cn.hutool.core.date.DateUtil;
+import com.ningning0111.config.KnowHubAIConfig;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @Lazy // 懒加载 需要用到时 才注入
+@RequiredArgsConstructor
 public class MinioUtil {
     @Value("${minio.endpoint}")
     private String ENDPOINT;
@@ -37,6 +40,7 @@ public class MinioUtil {
     private String ACCESS_KEY;
     @Value("${minio.secret-key}")
     private String SECRET_KEY ;
+    private final KnowHubAIConfig knowHubAIConfig;
     public static String BUCKET_NAME ;
     public static MinioClient minioClient;
     @Value("${minio.bucket-name}")
@@ -49,14 +53,17 @@ public class MinioUtil {
      */
     @PostConstruct
     public void init() {
-        try {
-            log.info("Minio Initialize........................");
-            minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESS_KEY, SECRET_KEY).build();
-            createBucket(BUCKET_NAME);
-            log.info("Minio Initialize........................successful");
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error("初始化minio配置异常: 【{}】", e.fillInStackTrace());
+        // 如果开启了minio，则初始化minio客户端
+        if(knowHubAIConfig.isMinioEnabled()){
+            try {
+                log.info("Minio Initialize........................");
+                minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESS_KEY, SECRET_KEY).build();
+                createBucket(BUCKET_NAME);
+                log.info("Minio Initialize........................successful");
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("初始化minio配置异常: 【{}】", e.fillInStackTrace());
+            }
         }
     }
     /**

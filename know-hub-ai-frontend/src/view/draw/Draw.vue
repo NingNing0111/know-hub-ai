@@ -29,6 +29,18 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item>
+        <el-text
+          >dall-e-2模型支持：<i>256 x 256、512 x 512、1024 x 1024</i></el-text
+        >
+      </el-form-item>
+      <el-form-item>
+        <el-text
+          >dall-e-3模型支持：<i
+            >1024 x 1024、1024 x 1792、1792 x 1024</i
+          ></el-text
+        >
+      </el-form-item>
       <el-form-item label="图片宽度:">
         <el-radio-group v-model="drawDto.options.width" class="ml-4">
           <template v-if="drawDto.options.model === 'dall-e-2'">

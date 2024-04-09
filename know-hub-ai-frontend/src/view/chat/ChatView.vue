@@ -25,8 +25,15 @@
             <div class="card-header" v-if="item.role === 'user'">
               <el-image :src="User" style="width: 50px; margin-right: 20px" />
               <div>
-                <el-button type="primary" size="small">复制</el-button>
-                <el-button type="warning" size="small">删除</el-button>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="toCopy(item.content)"
+                  >复制</el-button
+                >
+                <el-button type="warning" size="small" @click="toDelete(index)"
+                  >删除</el-button
+                >
               </div>
             </div>
           </template>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -53,12 +54,15 @@ public class DrawController {
         Integer height = options.height();
         Integer width = options.width();
         if(StrUtil.equals(options.model(),OpenAiImageApi.ImageModel.DALL_E_2.getValue())){
-            if(!dall2Size.contains(height) || !dall2Size.contains(width)){
+
+            // height 或 width不在指定范围内 或者 高 或 宽在指定范围内 但不相等 则不支持
+            if(dall2Size.contains(height) && !Objects.equals(height, width) || !dall2Size.contains(height) || !dall2Size.contains(width)){
                 return ResultUtils.error(ErrorCode.PARAMS_ERROR,"图片尺寸不支持");
             }
         }
         if(StrUtil.equals(options.model(),OpenAiImageApi.ImageModel.DALL_E_3.getValue())){
-            if(!dall3Size.contains(height) || !dall3Size.contains(width)){
+            // height 或 width 不在指定范围内 或者 高宽相等并且等于1792 则大小不支持
+            if(!dall3Size.contains(height) || !dall3Size.contains(width) || height == 1792 && height.equals(width)){
                 return ResultUtils.error(ErrorCode.PARAMS_ERROR,"图片尺寸不支持");
             }
         }
