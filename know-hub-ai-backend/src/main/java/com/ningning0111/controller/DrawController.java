@@ -1,6 +1,7 @@
 package com.ningning0111.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.ningning0111.aop.SystemControllerLog;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
@@ -37,7 +38,6 @@ public class DrawController {
     private final DrawService drawService;
     private final Set<Integer> dall2Size = new HashSet<>(List.of(256,512,1024));
     private final Set<Integer> dall3Size = new HashSet<>(List.of(1024,1792));
-
     @Operation(summary = "draw",description = "绘画接口")
     @PostMapping("/")
     public BaseResponse drawImage(@RequestBody DrawImageDTO drawImageDTO){

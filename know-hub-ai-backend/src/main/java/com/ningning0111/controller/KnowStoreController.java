@@ -1,5 +1,6 @@
 package com.ningning0111.controller;
 
+import com.ningning0111.aop.SystemControllerLog;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
@@ -34,6 +35,7 @@ public class KnowStoreController {
         this.storeFileService = storeFileService;
     }
 
+    @SystemControllerLog(description = "文件上传")
     @Operation(summary="文件上传",description = "文件上传")
     @PostMapping(value="/file/upload",headers = "content-type=multipart/form-data")
     public BaseResponse addPdf(@RequestParam("file") List<MultipartFile> file){
@@ -50,6 +52,8 @@ public class KnowStoreController {
         }
         return storeFileService.queryPage(request);
     }
+
+    @SystemControllerLog(description = "文件删除")
     @Operation(summary = "文件删除",description = "文件删除")
     @DeleteMapping("/delete")
     public BaseResponse deleteFiles(@RequestParam List<Long> ids){
