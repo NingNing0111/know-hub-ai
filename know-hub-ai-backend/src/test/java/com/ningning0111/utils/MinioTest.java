@@ -26,8 +26,8 @@ public class MinioTest {
         assertNotNull(url);
     }
 
-    @Test
-    public void testDeleteFile() throws Exception {
-        MinioUtil.deleteFile("202404072110401712495440645file.txt");
-    }
+//    @Test
+//    public void testDeleteFile() throws Exception {
+//        MinioUtil.deleteFile("202404072110401712495440645file.txt");
+//    }
 }

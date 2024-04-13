@@ -1,6 +1,7 @@
 package com.ningning0111.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.ningning0111.aop.SystemControllerLog;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
@@ -32,7 +33,7 @@ import java.util.List;
 @Slf4j
 public class OneApiController {
     private final OneApiService oneApiService;
-
+    @SystemControllerLog(description = "添加一个apikey")
     @Operation(summary = "add",description = "添加一个apikey")
     @PostMapping("/add")
     BaseResponse addOneApi(@RequestBody AddApiDTO request){
@@ -49,6 +50,7 @@ public class OneApiController {
      * @param queryApiRequest
      * @return
      */
+    @SystemControllerLog(description = "查询所有未禁止的key")
     @Operation(summary = "select",description = "查询所有未禁止的key")
     @GetMapping("/select")
     BaseResponse selectApi(QueryApiDTO queryApiRequest){
@@ -63,6 +65,7 @@ public class OneApiController {
      * @param id
      * @return
      */
+    @SystemControllerLog(description = "禁止或解封api")
     @Operation(summary = "change",description = "禁止或解封")
     @PutMapping("/change/{id}")
     BaseResponse changeApi(@PathVariable("id") Long id){
@@ -86,6 +89,7 @@ public class OneApiController {
      * @param id
      * @return
      */
+    @SystemControllerLog(description = "删除api")
     @Operation(summary = "deleteById",description = "通过id删除")
     @DeleteMapping("/delete/{id}")
     BaseResponse deleteById(@PathVariable("id") Long id){
@@ -97,6 +101,7 @@ public class OneApiController {
      * @param ids
      * @return
      */
+    @SystemControllerLog(description = "批量删除api")
     @Operation(summary = "deleteByIds",description = "通过id批量删除")
     @DeleteMapping("/delete")
     BaseResponse deleteById(@RequestParam("ids") List<Long> ids){
@@ -108,6 +113,7 @@ public class OneApiController {
      * @param oneApiDTO
      * @return
      */
+    @SystemControllerLog(description = "修改api")
     @Operation(summary = "change",description = "修改")
     @PostMapping("/change")
     BaseResponse change(@RequestBody OneApiDTO oneApiDTO){
