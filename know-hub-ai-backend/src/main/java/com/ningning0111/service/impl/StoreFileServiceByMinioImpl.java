@@ -6,8 +6,10 @@ import com.ningning0111.common.ResultUtils;
 import com.ningning0111.config.KnowHubAIConfig;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.model.dto.QueryFileDTO;
+import com.ningning0111.model.entity.MinioFile;
 import com.ningning0111.model.entity.OneApi;
 import com.ningning0111.model.entity.StoreFile;
+import com.ningning0111.repository.MinioFileRepository;
 import com.ningning0111.repository.StoreFileRepository;
 import com.ningning0111.service.OneApiService;
 import com.ningning0111.service.StoreFileService;
@@ -34,12 +36,13 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.ningning0111.utils.MatchUtil;
 
 /**
  * @author ：何汉叁
  * @date ：2024/4/7 21:16
  * @description：知识库（Minio文件存储服务版）
- * 下次再写
+ * 获取文件功能未加
  */
 @Service("storeFileServiceByMinioImpl")
 @Slf4j
@@ -51,23 +54,27 @@ public class StoreFileServiceByMinioImpl implements StoreFileService {
     private final StoreFileRepository storeFileRepository;
     private final KnowHubAIConfig knowHubAIConfig;
     private final MinioUtil minioUtil;
+    private final MinioFileRepository minioRepository;
+    private final MatchUtil matchUtil;
     @Override
     public BaseResponse queryPage(QueryFileDTO request) {
-        Page<StoreFile> pageFile = storeFileRepository.findByFileNameContaining(request.fileName(), PageRequest.of(request.page(), request.pageSize()));
-        return ResultUtils.success(pageFile);
+        List<MinioFile> fileList = minioRepository.findByFileNameContaining(request.fileName(), PageRequest.of(request.page(), request.pageSize()));
+        return ResultUtils.success(fileList);
     }
 
+    /**
+     * minioFileName: 存储在Minio的文件名
+     */
     @Transactional(rollbackOn = Exception.class)
     @Override
     public BaseResponse deleteFiles(List<Long> ids) {
-        List<StoreFile> storeFiles = storeFileRepository.findAllById(ids);
+        List<MinioFile> minioFiles = minioRepository.findAllById(ids);
         List<String> vectorIds = new LinkedList<>();
-        for(StoreFile file: storeFiles){
-            vectorIds.addAll(file.getVectorId());
+        for(MinioFile file: minioFiles){
+            String minioFileName = matchUtil.getMinioFileName(file.getUrl());
+            minioUtil.deleteFile(minioFileName);
         }
-        VectorStore vectorStore = randomGetVectorStore();
-        vectorStore.delete(vectorIds);
-        storeFileRepository.deleteAllById(ids);
+        minioRepository.deleteAllById(ids);
         return ResultUtils.success("删除成功");
     }
 
@@ -77,20 +84,15 @@ public class StoreFileServiceByMinioImpl implements StoreFileService {
             if (file == null){
                 return ResultUtils.error(ErrorCode.FILE_ERROR);
             }
-            Resource resource = file.getResource();
-            VectorStore vectorStore = randomGetVectorStore();
-            TikaDocumentReader tkReader = new TikaDocumentReader(resource);
-            List<Document> documents = tkReader.get();
-            List<Document> applyList = tokenTextSplitter.apply(documents);
+            String name = file.getOriginalFilename();
+            String url = minioUtil.uploadFile(file);
             long currMillis = System.currentTimeMillis();
-            vectorStore.accept(applyList);
-            storeFileRepository.save(StoreFile.builder()
-                    .fileName(resource.getFilename())
-                    .vectorId(applyList.stream().map(Document::getId).collect(Collectors.toList()))
+            minioRepository.save(MinioFile.builder()
+                    .fileName(name)
+                    .url(url)
                     .createTime(new Date(currMillis))
                     .updateTime(new Date(currMillis))
                     .build());
-
             return ResultUtils.success("上传成功");
         }catch (Exception e){
             e.printStackTrace();

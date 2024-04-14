@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author ：何汉叁
  * @date ：2024/4/10 21:31
@@ -14,5 +16,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MinioFileRepository extends JpaRepository<MinioFile, Long> {
-    Page<MinioFile> findByFileNameContaining(String keyword, Pageable pageable);
+    List<MinioFile> findByFileNameContaining(String keyword, Pageable pageable);
 }
