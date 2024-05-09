@@ -1,6 +1,5 @@
 package com.ningning0111.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.ningning0111.aop.SystemControllerLog;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
@@ -117,7 +116,7 @@ public class OneApiController {
     @Operation(summary = "change",description = "修改")
     @PostMapping("/change")
     BaseResponse change(@RequestBody OneApiDTO oneApiDTO){
-        if (oneApiDTO.disable() instanceof Boolean){
+        if (oneApiDTO.disable() != null){
             return oneApiService.change(oneApiDTO);
         }else {
             return ResultUtils.error(ErrorCode.DATABASE_ERROR);

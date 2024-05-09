@@ -1,7 +1,6 @@
 package com.ningning0111.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.ningning0111.aop.SystemControllerLog;
 import com.ningning0111.common.ApplicationConstant;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;

@@ -47,7 +47,7 @@ public class ChatServiceImpl implements ChatService {
     private final StoreFileService storeFileService;
 
     @Autowired
-    public ChatServiceImpl(OneApiService oneApiService, @Qualifier("storeFileServiceImpl") StoreFileService storeFileService) {
+    public ChatServiceImpl(OneApiService oneApiService,StoreFileService storeFileService) {
         this.oneApiService = oneApiService;
         this.storeFileService = storeFileService;
     }

@@ -36,7 +36,7 @@ services:
       - PGVECTOR_PASSWORD=postgres
       # Key分享自：https://pgthinker.me/2023/10/03/196/
       - DEFAULT_BASE_URL=https://api.mnzdna.xyz
-      - DEFAULT_API_KEY=sk-W0KF2fh5BTX3fEUvBf1262B948354c03B079C94956CfD4B5
+      - DEFAULT_API_KEY=sk-W9kYeE3JfWM86sr66e29FfC7B3194406B96fAd460353Dc7a
     depends_on:
       - vector_db
     networks:

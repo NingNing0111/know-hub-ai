@@ -39,6 +39,13 @@ public class MinioFile {
     private String url;
 
     /**
+     * 该文件分割出的多段向量文本ID
+     */
+    @Convert(converter = JpaConverterListJson.class)
+    @Column(columnDefinition = "TEXT")
+    private List<String> vectorId;
+
+    /**
      * 创建时间/上传时间
      */
     private Date createTime;

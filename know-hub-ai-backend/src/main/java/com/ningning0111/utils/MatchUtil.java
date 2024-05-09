@@ -10,11 +10,8 @@ import org.springframework.stereotype.Component;
  * @date ：2024/4/13 19:34
  * @description：截取url的文件名
  */
-@Slf4j
-@Component
-@RequiredArgsConstructor
 public class MatchUtil {
-    public String getMinioFileName(String url) {
+    public static String getMinioFileName(String url) {
         int endIndex = url.contains("?") ? url.indexOf("?") : url.length();
         return url.substring(url.lastIndexOf("/") + 1,endIndex);
     }

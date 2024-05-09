@@ -1,7 +1,9 @@
 package com.ningning0111.config;
 
 import com.ningning0111.service.StoreFileService;
+import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.ai.transformers.TransformersEmbeddingClient;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,13 +48,14 @@ public class ApplicationConfig {
      * @return
      */
     @Bean
-    public VectorStore vectorStore(@Qualifier("storeFileServiceImpl") StoreFileService service, JdbcTemplate jdbcTemplate) {
+    public VectorStore vectorStore( StoreFileService service, JdbcTemplate jdbcTemplate) {
         if(Objects.equals(ddlAuto, "create")){
             jdbcTemplate.execute("drop table if exists vector_store cascade");
         }
-
         return service.randomGetVectorStore();
     }
+
+
 
 
 

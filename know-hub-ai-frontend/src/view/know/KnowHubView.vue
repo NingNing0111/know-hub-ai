@@ -67,6 +67,12 @@
           size="small"
           >删除</el-button
         >
+        <el-button
+          @click="openFilePreview(scope.row)"
+          type="primary"
+          size="small"
+          >预览</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -78,6 +84,7 @@ import { uploadFileApi, queryFileApi, deleteFileApi } from "@/api/KnowHubApi";
 import { StoreFile } from "@/api/data";
 import { QueryFileDto } from "@/api/dto";
 import { format } from "date-fns";
+import { url } from "inspector";
 
 const storeFileData = ref<StoreFile[]>([]);
 const queryFileDto = ref<QueryFileDto>({
@@ -94,8 +101,10 @@ const loadStoreFileData = () => {
   queryFileApi(queryFileDto.value)
     .then((res) => {
       let code = res.code;
+
       if (code == 0) {
         const data = res.data;
+
         storeFileTotal.value = data.totalElements;
         storeFileData.value = data.content;
       } else {
@@ -187,7 +196,9 @@ const deleteStoreFile = (e: any) => {
     .catch(() => {});
   loadStoreFileData();
 };
-
+const openFilePreview = (e: any) => {
+  window.open(e.url, "_blank");
+};
 onMounted(() => {
   loadStoreFileData();
 });

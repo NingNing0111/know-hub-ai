@@ -3,14 +3,11 @@ package com.ningning0111.service.impl;
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.common.ErrorCode;
 import com.ningning0111.common.ResultUtils;
-import com.ningning0111.config.KnowHubAIConfig;
 import com.ningning0111.exception.BusinessException;
 import com.ningning0111.model.dto.QueryFileDTO;
 import com.ningning0111.model.entity.MinioFile;
 import com.ningning0111.model.entity.OneApi;
-import com.ningning0111.model.entity.StoreFile;
 import com.ningning0111.repository.MinioFileRepository;
-import com.ningning0111.repository.StoreFileRepository;
 import com.ningning0111.service.OneApiService;
 import com.ningning0111.service.StoreFileService;
 import com.ningning0111.utils.MinioUtil;
@@ -33,62 +30,76 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.ningning0111.utils.MatchUtil;
 
 /**
- * @author ：何汉叁
+ * @author ：何汉叁、NingNing0111
  * @date ：2024/4/7 21:16
  * @description：知识库（Minio文件存储服务版）
  * 获取文件功能未加
  */
-@Service("storeFileServiceByMinioImpl")
+@Service()
 @Slf4j
 @RequiredArgsConstructor
 public class StoreFileServiceByMinioImpl implements StoreFileService {
     private final OneApiService oneApiService;
     private final JdbcTemplate jdbcTemplate;
     private final TokenTextSplitter tokenTextSplitter;
-    private final StoreFileRepository storeFileRepository;
-    private final KnowHubAIConfig knowHubAIConfig;
-    private final MinioUtil minioUtil;
     private final MinioFileRepository minioRepository;
-    private final MatchUtil matchUtil;
+    private final MinioUtil minioUtil;
+
+    /**
+     * 查询文件
+     * @param request
+     * @return
+     */
     @Override
     public BaseResponse queryPage(QueryFileDTO request) {
-        List<MinioFile> fileList = minioRepository.findByFileNameContaining(request.fileName(), PageRequest.of(request.page(), request.pageSize()));
+        Page<MinioFile> fileList = minioRepository.findByFileNameContaining(request.fileName(), PageRequest.of(request.page(), request.pageSize()));
         return ResultUtils.success(fileList);
     }
 
     /**
-     * minioFileName: 存储在Minio的文件名
+     * 删除指定ID列表的所有文件
+     * @param ids
+     * @return
      */
     @Transactional(rollbackOn = Exception.class)
     @Override
     public BaseResponse deleteFiles(List<Long> ids) {
         List<MinioFile> minioFiles = minioRepository.findAllById(ids);
-        List<String> vectorIds = new LinkedList<>();
-        for(MinioFile file: minioFiles){
-            String minioFileName = matchUtil.getMinioFileName(file.getUrl());
-            minioUtil.deleteFile(minioFileName);
-        }
         minioRepository.deleteAllById(ids);
+
+        VectorStore vectorStore = randomGetVectorStore();
+
+        for(MinioFile file: minioFiles){
+            String minioFileName = MatchUtil.getMinioFileName(file.getUrl());
+            minioUtil.deleteFile(minioFileName);
+            vectorStore.delete(file.getVectorId());
+
+        }
         return ResultUtils.success("删除成功");
     }
 
     @Override
     public BaseResponse fileStore(MultipartFile file) {
         try {
-            if (file == null){
-                return ResultUtils.error(ErrorCode.FILE_ERROR);
-            }
+            Resource resource = file.getResource();
+            VectorStore vectorStore = randomGetVectorStore();
+            TikaDocumentReader tkReader = new TikaDocumentReader(resource);
+            List<Document> documents = tkReader.get();
+            List<Document> applyList = tokenTextSplitter.apply(documents);
+            vectorStore.accept(applyList);
+
             String name = file.getOriginalFilename();
             String url = minioUtil.uploadFile(file);
+            log.info(url);
             long currMillis = System.currentTimeMillis();
             minioRepository.save(MinioFile.builder()
                     .fileName(name)
+                    .vectorId(applyList.stream().map(Document::getId).collect(Collectors.toList()))
                     .url(url)
                     .createTime(new Date(currMillis))
                     .updateTime(new Date(currMillis))

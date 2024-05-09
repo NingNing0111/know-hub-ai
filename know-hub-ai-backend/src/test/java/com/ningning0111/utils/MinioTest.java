@@ -24,11 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class MinioTest {
     @Autowired
     StoreFileServiceByMinioImpl storeFileServiceByMinioImpl;
+
+    @Autowired
+    MinioUtil minioUtil;
     @Test
     public void testUploadFile() throws Exception {
         InputStream is = new FileInputStream("C:/Users/33135/Desktop/file.txt"); // 替换为你的测试文件路径
         MultipartFile multipartFile = new MockMultipartFile("file.txt", "file.txt", "text/plain", is);
-        String url = MinioUtil.uploadFile(multipartFile);
+        String url = minioUtil.uploadFile(multipartFile);
         System.out.println(url);
         assertNotNull(url);
     }
@@ -51,6 +54,6 @@ public class MinioTest {
     }
     @Test
     public void testDeleteFile() throws Exception {
-        MinioUtil.deleteFile("202404072110401712495440645file.txt");
+        minioUtil.deleteFile("202404072110401712495440645file.txt");
     }
 }

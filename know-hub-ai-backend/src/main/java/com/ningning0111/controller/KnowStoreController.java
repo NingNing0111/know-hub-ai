@@ -31,7 +31,7 @@ public class KnowStoreController {
 
     private final StoreFileService storeFileService;
 
-    public KnowStoreController(@Qualifier("storeFileServiceImpl") StoreFileService storeFileService) {
+    public KnowStoreController(StoreFileService storeFileService) {
         this.storeFileService = storeFileService;
     }
 
@@ -39,11 +39,12 @@ public class KnowStoreController {
     @Operation(summary="文件上传",description = "文件上传")
     @PostMapping(value="/file/upload",headers = "content-type=multipart/form-data")
     public BaseResponse addPdf(@RequestParam("file") List<MultipartFile> file){
-        if(file.isEmpty()){
+        if(file==null||file.isEmpty()){
             return ResultUtils.error(ErrorCode.PARAMS_ERROR,"文件为空");
         }
         return storeFileService.filesStore(file);
     }
+
     @Operation(summary = "文件查询",description = "文件查询")
     @GetMapping("/contents")
     public BaseResponse queryFiles(QueryFileDTO request){
