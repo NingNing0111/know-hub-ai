@@ -51,8 +51,8 @@ services:
     privileged: true
     command: server --address ":9000" --console-address ":9001" /data
     ports:
-      - '9000:9000'
-      - '9001:9001'
+      - '9010:9000'
+      - '9011:9001'
     networks:
       - know-hub-network
     volumes:
