@@ -1,11 +1,8 @@
 package com.ningning0111.config;
 
 import com.ningning0111.service.StoreFileService;
-import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
-import org.springframework.ai.transformers.TransformersEmbeddingClient;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

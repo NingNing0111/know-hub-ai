@@ -38,11 +38,6 @@ spring:
     open-in-view: true
   # api和key分享自：https://pgthinker.me/2023/10/03/196/
   ai:
-    embedding:
-      transformer:
-        tokenizer:
-          options:
-            padding: true
     openai:
       api-key: sk-W9kYeE3JfWM86sr66e29FfC7B3194406B96fAd460353Dc7a
       base-url: https://api.mnzdna.xyz
@@ -51,7 +46,7 @@ spring:
 
 # MinIO
 minio:
-  endpoint: ${MINIO_ENDPOINT:http://127.0.0.1:9000/}
+  endpoint: ${MINIO_ENDPOINT:http://127.0.0.1:9010/}
   access-key: ${MINIO_ACCESS_KEY:minioadmin}
   secret-key: ${MINIO_SECRET_KEY:minioadmin}
   bucket-name: ${BUCKET_NAME:know-hub}
