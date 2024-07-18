@@ -98,6 +98,16 @@ docker compose -f docker-compose-mac.yml up -d
 docker compose up -d
 ```
 
+### 说明
+
+&emsp;若只想搭建项目环境，可以使用这个[docker-compose.yml](https://github.com/NingNing0111/know-hub-ai/blob/master/know-hub-ai-backend/env/docker-compose.yml)文件，执行下述命令即可部署 pgvector 和 minio：
+
+```
+docker compose up -d
+```
+
+&emsp;项目采用 Spring Data JPA 作为 ORM 框架，本地开发时，可通过在`application.yml`文件中配置`spring.jpa.hibernate.ddl-auto`为`create`(项目下载后默认配置)即可在 SpringBoot 启动时自动创建表。
+
 ## 其它
 
-- knife4j：[http://localhost:8329/doc.html](#)，默认
+- knife4j 接口文档：[http://localhost:8329/doc.html](#)

@@ -39,10 +39,8 @@ spring:
   # api和key分享自：https://pgthinker.me/2023/10/03/196/
   ai:
     openai:
-      api-key: sk-W9kYeE3JfWM86sr66e29FfC7B3194406B96fAd460353Dc7a
-      base-url: https://api.mnzdna.xyz
-#      base-url: ${DEFAULT_BASE_URL}
-#      api-key: ${DEFAULT_API_KEY}
+      base-url: ${DEFAULT_BASE_URL:sk-KgvugzpKzki15GFxB72e7782De844b23B3E4Fc6dDf40B29a}
+      api-key: ${DEFAULT_API_KEY:https://api.mnzdna.xyz}
 
 # MinIO
 minio:
@@ -50,9 +48,6 @@ minio:
   access-key: ${MINIO_ACCESS_KEY:minioadmin}
   secret-key: ${MINIO_SECRET_KEY:minioadmin}
   bucket-name: ${BUCKET_NAME:know-hub}
-
 server:
   port: 8329
   address: 0.0.0.0
-
-
