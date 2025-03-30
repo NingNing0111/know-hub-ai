@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.pgthinker.system.mapper.SystemUserMapper">
+
+    <resultMap id="BaseResultMap" type="me.pgthinker.system.model.entity.SystemUser">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+            <result property="creator" column="creator" jdbcType="VARCHAR"/>
+            <result property="updater" column="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,password,
+        create_time,update_time,deleted,
+        creator,updater
+    </sql>
+
+    <!-- 角色 ResultMap -->
+    <resultMap id="RoleResultMap" type="me.pgthinker.system.model.entity.SystemRole">
+        <id property="id" column="role_id" jdbcType="BIGINT"/>
+        <result property="name" column="role_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 权限 ResultMap -->
+    <resultMap id="PermissionResultMap" type="me.pgthinker.system.model.entity.SystemPermission">
+        <id property="id" column="permission_id" jdbcType="BIGINT"/>
+        <result property="name" column="permission_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 用户完整 ResultMap -->
+    <resultMap id="UserResultMap" type="me.pgthinker.system.model.entity.SystemUser" extends="BaseResultMap">
+        <!-- 角色映射 -->
+        <collection property="roles" ofType="me.pgthinker.system.model.entity.SystemRole">
+            <id property="id" column="role_id" jdbcType="BIGINT"/>
+            <result property="name" column="role_name" jdbcType="VARCHAR"/>
+        </collection>
+        <!-- 权限映射 -->
+        <collection property="permissions" ofType="me.pgthinker.system.model.entity.SystemPermission">
+            <id property="id" column="permission_id" jdbcType="BIGINT"/>
+            <result property="name" column="permission_name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserWithRolesAndPermissions" resultMap="UserResultMap">
+        SELECT u.*,
+               r."id" AS role_id, r.name AS role_name,
+               p."id" AS permission_id, p.name AS permission_name
+        FROM system_user u
+                 LEFT JOIN "system_user_role" ur ON u."id" = ur.user_id
+                 LEFT JOIN "system_role" r ON ur.role_id = r."id"
+                 LEFT JOIN "system_role_permission" rp ON r."id" = rp.role_id
+                 LEFT JOIN "system_permission" p ON rp.permission_id = p."id"
+        WHERE u.username = #{username}
+    </select>
+</mapper>
