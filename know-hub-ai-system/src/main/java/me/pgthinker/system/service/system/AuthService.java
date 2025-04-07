@@ -1,4 +1,4 @@
-package me.pgthinker.system.service;
+package me.pgthinker.system.service.system;
 
 import me.pgthinker.system.controller.vo.AuthVO;
 import me.pgthinker.system.controller.vo.UserLoginVO;

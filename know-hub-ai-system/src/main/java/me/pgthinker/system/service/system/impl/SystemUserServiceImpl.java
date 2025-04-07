@@ -1,9 +1,9 @@
-package me.pgthinker.system.service.impl;
+package me.pgthinker.system.service.system.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.pgthinker.system.mapper.SystemUserMapper;
-import me.pgthinker.system.model.entity.SystemUser;
-import me.pgthinker.system.service.SystemUserService;
+import me.pgthinker.system.model.entity.user.SystemUser;
+import me.pgthinker.system.service.system.SystemUserService;
 import org.springframework.stereotype.Service;
 
 /**

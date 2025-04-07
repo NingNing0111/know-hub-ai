@@ -1,4 +1,4 @@
-package me.pgthinker.system.service.impl;
+package me.pgthinker.system.service.system.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.PostConstruct;
@@ -12,12 +12,11 @@ import me.pgthinker.system.controller.vo.UserLoginVO;
 import me.pgthinker.system.mapper.SystemRoleMapper;
 import me.pgthinker.system.mapper.SystemUserMapper;
 import me.pgthinker.system.mapper.SystemUserRoleMapper;
-import me.pgthinker.system.model.entity.SystemRole;
-import me.pgthinker.system.model.entity.SystemUser;
-import me.pgthinker.system.model.entity.SystemUserRole;
+import me.pgthinker.system.model.entity.user.SystemRole;
+import me.pgthinker.system.model.entity.user.SystemUser;
+import me.pgthinker.system.model.entity.user.SystemUserRole;
 import me.pgthinker.system.security.service.JwtService;
-import me.pgthinker.system.service.AuthService;
-import me.pgthinker.system.service.SystemRoleService;
+import me.pgthinker.system.service.system.AuthService;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

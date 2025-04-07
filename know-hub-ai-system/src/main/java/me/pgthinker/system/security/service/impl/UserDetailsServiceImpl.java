@@ -2,8 +2,7 @@ package me.pgthinker.system.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.pgthinker.system.mapper.SystemUserMapper;
-import me.pgthinker.system.model.entity.SystemUser;
-import me.pgthinker.system.service.SystemUserService;
+import me.pgthinker.system.model.entity.user.SystemUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

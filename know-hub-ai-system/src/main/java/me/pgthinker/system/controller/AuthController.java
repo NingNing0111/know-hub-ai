@@ -6,7 +6,7 @@ import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.ResultUtils;
 import me.pgthinker.system.controller.vo.AuthVO;
 import me.pgthinker.system.controller.vo.UserLoginVO;
-import me.pgthinker.system.service.AuthService;
+import me.pgthinker.system.service.system.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 /**

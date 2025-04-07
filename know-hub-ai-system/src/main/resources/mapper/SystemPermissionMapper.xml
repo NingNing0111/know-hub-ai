@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="me.pgthinker.system.mapper.SystemPermissionMapper">
 
-    <resultMap id="BaseResultMap" type="me.pgthinker.system.model.entity.SystemPermission">
+    <resultMap id="BaseResultMap" type="me.pgthinker.system.model.entity.user.SystemPermission">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>

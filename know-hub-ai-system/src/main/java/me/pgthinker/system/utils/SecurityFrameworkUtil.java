@@ -3,7 +3,7 @@ package me.pgthinker.system.utils;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.exception.BusinessException;
-import me.pgthinker.system.model.entity.SystemUser;
+import me.pgthinker.system.model.entity.user.SystemUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

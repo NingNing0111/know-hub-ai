@@ -1,7 +1,7 @@
 package me.pgthinker.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import me.pgthinker.system.model.entity.SystemRolePermission;
+import me.pgthinker.system.model.entity.user.SystemRolePermission;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

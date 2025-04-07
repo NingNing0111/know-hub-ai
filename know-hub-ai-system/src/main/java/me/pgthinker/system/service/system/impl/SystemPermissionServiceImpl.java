@@ -1,9 +1,9 @@
-package me.pgthinker.system.service.impl;
+package me.pgthinker.system.service.system.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.pgthinker.system.mapper.SystemPermissionMapper;
-import me.pgthinker.system.model.entity.SystemPermission;
-import me.pgthinker.system.service.SystemPermissionService;
+import me.pgthinker.system.model.entity.user.SystemPermission;
+import me.pgthinker.system.service.system.SystemPermissionService;
 import org.springframework.stereotype.Service;
 
 /**

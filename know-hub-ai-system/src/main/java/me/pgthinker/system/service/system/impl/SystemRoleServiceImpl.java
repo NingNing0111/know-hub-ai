@@ -1,9 +1,9 @@
-package me.pgthinker.system.service.impl;
+package me.pgthinker.system.service.system.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import me.pgthinker.system.mapper.SystemRoleMapper;
-import me.pgthinker.system.model.entity.SystemRole;
-import me.pgthinker.system.service.SystemRoleService;
+import me.pgthinker.system.model.entity.user.SystemRole;
+import me.pgthinker.system.service.system.SystemRoleService;
 import org.springframework.stereotype.Service;
 
 /**
