@@ -3,14 +3,14 @@ package me.pgthinker.system.model.entity.ai;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.pgthinker.core.pojo.BaseEntity;
-import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.model.Media;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +22,8 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ChatMessage extends BaseEntity implements Serializable {
+@TableName(value = "chat_message", autoResultMap = true)
+public class ChatMessage extends BaseEntity{
 
     /**
      * 聊天信息ID
@@ -34,9 +35,9 @@ public class ChatMessage extends BaseEntity implements Serializable {
      */
     private String conversationId;
     /**
-     * 对话ID
+     * 消息序号
      */
-    private Integer messageId;
+    private Integer messageNo;
     /**
      * 对话内容
      */
@@ -53,7 +54,7 @@ public class ChatMessage extends BaseEntity implements Serializable {
      * 附带的资源Id, 会附带多个
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> resourceIds;
+    private List<String> resourceIds = new ArrayList<>();
 
 
 }

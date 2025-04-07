@@ -38,3 +38,5 @@ build/
 .DS_Store
 
 shadcn-admin
+
+/**/llm-dev.yml

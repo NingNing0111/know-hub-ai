@@ -6,9 +6,10 @@ import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.service.objectstore.ObjectStoreService;
 import me.pgthinker.core.service.objectstore.StorageFile;
-import me.pgthinker.mapper.doc.OriginFileSourceMapper;
-import me.pgthinker.model.domain.doc.OriginFileResource;
-import me.pgthinker.utils.FileUtil;
+import me.pgthinker.core.utils.FileUtil;
+import me.pgthinker.system.config.MinioProperties;
+import me.pgthinker.system.mapper.OriginFileResourceMapper;
+import me.pgthinker.system.model.entity.ai.OriginFileResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,26 +24,26 @@ import java.util.List;
  * @Date: 2025/3/29 02:38
  * @Description:
  */
-@Service
 @Slf4j
+@Service
 public class MinIOService implements ObjectStoreService {
 
 	private final MinioProperties minioProperties;
 
 	private final MinioClient minioClient;
 
-	private final OriginFileSourceMapper originFileSourceMapper;
+	private final OriginFileResourceMapper originFileResourceMapper;
 
 	/**
 	 * 初始化MinioClient
 	 */
-	public MinIOService(MinioProperties minioProperties, OriginFileSourceMapper originFileSourceMapper) {
+	public MinIOService(MinioProperties minioProperties, OriginFileResourceMapper originFileResourceMapper) {
 		this.minioProperties = minioProperties;
 		this.minioClient = MinioClient.builder()
 			.endpoint(minioProperties.getEndpoint())
 			.credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey())
 			.build();
-		this.originFileSourceMapper = originFileSourceMapper;
+		this.originFileResourceMapper = originFileResourceMapper;
 	}
 
 	@Override
@@ -115,21 +116,6 @@ public class MinIOService implements ObjectStoreService {
 	}
 
 	@Override
-	public String getFileUrl(String bucketName, String objectName) {
-		try {
-			return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
-				.method(Method.GET)
-				.bucket(bucketName)
-				.object(objectName)
-				.build());
-		}
-		catch (Exception e) {
-			log.error("Get file URL failed", e);
-			throw new RuntimeException("Failed to generate file URL");
-		}
-	}
-
-	@Override
 	public InputStream getFile(String bucketName, String objectName) {
 		try {
 			return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
@@ -173,7 +159,7 @@ public class MinIOService implements ObjectStoreService {
 	@Override
 	public StorageFile getFileInfo(String bucketName, String objectName) {
 		try {
-			OriginFileResource originFileResource = originFileSourceMapper
+			OriginFileResource originFileResource = originFileResourceMapper
 				.selectById(FileUtil.generatorFileId(bucketName, objectName));
 			if (originFileResource != null) {
 				return originFileResource;

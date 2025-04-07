@@ -14,6 +14,7 @@ import me.pgthinker.core.pojo.BaseEntity;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName(value = "chat_conversation")
 public class ChatConversation extends BaseEntity {
     private String id;
     /**

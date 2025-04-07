@@ -22,7 +22,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-@TableName(value = "file_source", autoResultMap = true)
+@TableName(value = "origin_file_source", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
 public class OriginFileResource extends BaseEntity implements StorageFile {
     @Serial

@@ -1,5 +1,6 @@
 package me.pgthinker.system.service.ai;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import me.pgthinker.system.model.entity.ai.ChatMessage;
 import org.springframework.ai.chat.messages.Message;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Date: 2025/4/8 03:33
  * @Description:
  */
-public interface ChatMessageService {
+public interface ChatMessageService extends IService<ChatMessage> {
     /**
      * 将ChatMessage转换为Spring AI的Message
      * @param chatMessages

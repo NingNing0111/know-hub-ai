@@ -55,6 +55,7 @@ security:
     - "/doc.html"
     - "/webjars/**"
     - "/auth/login"
+    - "/ai/chat/**"
   admin-init: true
   password: 123123
 

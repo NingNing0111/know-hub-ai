@@ -1,1 +1,16 @@
 debug: true
+
+spring:
+  config:
+    import: classpath:llm-dev.yml
+  ai:
+    openai:
+      base-url: https://api.mnzdna.xyz
+      api-key: sk-KgvugzpKzki15GFxB72e7782De844b23B3E4Fc6dDf40B29a
+# MinIO
+minio:
+  endpoint: http://127.0.0.1:9032/
+  access-key: admin
+  secret-key: admin123
+  default-bucket: permission-demo
+  default-expiry: 3600 # 临时访问连接1h有效 60 * 6
