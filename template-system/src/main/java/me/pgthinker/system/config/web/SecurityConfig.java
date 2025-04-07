@@ -3,6 +3,7 @@ package me.pgthinker.system.config.web;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.pgthinker.core.exception.GlobalExceptionHandler;
 import me.pgthinker.system.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,6 +75,11 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
+	}
+
+	@Bean
+	public GlobalExceptionHandler globalExceptionHandler(){
+		return new GlobalExceptionHandler();
 	}
 
 }

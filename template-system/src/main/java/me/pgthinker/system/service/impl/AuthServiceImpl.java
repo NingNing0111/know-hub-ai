@@ -116,7 +116,7 @@ public class AuthServiceImpl implements AuthService {
 		authVO.setUsername(user.getUsername());
 		authVO.setRoles(user.getRoles().stream().map(SystemRole::getName).toList());
 		authVO.setToken(null);
-		return null;
+		return authVO;
 	}
 
 }

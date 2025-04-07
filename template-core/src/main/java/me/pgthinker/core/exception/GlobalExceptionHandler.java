@@ -5,6 +5,7 @@ import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.common.ResultUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * @Project: me.pgthinker.core.exception
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @Date: 2025/3/30 17:08
  * @Description:
  */
+@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
@@ -23,6 +25,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(RuntimeException.class)
 	public BaseResponse<?> runtimeExceptionHandler(RuntimeException e) {
+		e.printStackTrace();
 		return ResultUtils.error(CoreCode.SYSTEM_ERROR, e.getMessage());
 	}
 

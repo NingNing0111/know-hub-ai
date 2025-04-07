@@ -7,10 +7,7 @@ import me.pgthinker.core.common.ResultUtils;
 import me.pgthinker.system.controller.vo.AuthVO;
 import me.pgthinker.system.controller.vo.UserLoginVO;
 import me.pgthinker.system.service.AuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Project: me.pgthinker.system.controller
@@ -29,6 +26,12 @@ public class AuthController {
     @PermitAll
     public BaseResponse<AuthVO> login(@RequestBody UserLoginVO userLoginVO) {
         return ResultUtils.success(authService.login(userLoginVO));
+    }
 
+
+    @GetMapping("/userInfo")
+    @PermitAll
+    public BaseResponse<AuthVO> userInfo() {
+        return ResultUtils.success(authService.userInfo());
     }
 }

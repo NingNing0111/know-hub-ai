@@ -1,0 +1,39 @@
+{
+  "private": true,
+  "author": "NingNing0111 <zdncode@gmail.com>",
+  "type": "module",
+  "name": "",
+  "scripts": {
+    "dev": "max dev",
+    "build": "max build",
+    "format": "prettier --cache --write .",
+    "prepare": "husky",
+    "postinstall": "max setup",
+    "setup": "max setup",
+    "start": "npm run dev",
+    "openapi": "npx max openapi"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/pro-components": "^2.4.4",
+    "@umijs/max": "^4.4.6",
+    "antd": "^5.4.0",
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.7",
+    "echarts-for-react": "^3.0.2",
+    "form-data": "^4.0.2",
+    "swagger-ui-dist": "^5.20.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@umijs/max-plugin-openapi": "^2.0.3",
+    "husky": "^9",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "typescript": "^5.0.3"
+  }
+}

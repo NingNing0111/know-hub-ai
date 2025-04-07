@@ -16,7 +16,7 @@ public interface CoreCode {
 
 	ErrorCode PARAMS_ERROR = new ErrorCode(400, "请求参数错误");
 
-	ErrorCode NO_AUTH_ERROR = new ErrorCode(401, "无权限");
+	ErrorCode NO_AUTH_ERROR = new ErrorCode(403, "无权限");
 
 	ErrorCode FORBIDDEN_ERROR = new ErrorCode(402, "禁止访问");
 

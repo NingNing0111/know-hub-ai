@@ -5,6 +5,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import me.pgthinker.core.common.CoreCode;
+import me.pgthinker.core.common.ErrorCode;
+import me.pgthinker.core.exception.BusinessException;
 import me.pgthinker.system.config.web.SecurityProperties;
 import me.pgthinker.system.security.service.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,8 +75,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				}
 			}
 			catch (Exception e) {
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
-				return;
+				e.printStackTrace();
+				throw new BusinessException(new ErrorCode(CoreCode.NO_AUTH_ERROR.getCode(), "无权限访问"));
 			}
 		}
 
