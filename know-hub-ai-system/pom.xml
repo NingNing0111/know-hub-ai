@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>me.pgthinker</groupId>
-        <artifactId>springboot-react-template</artifactId>
+        <artifactId>knowhub-ai</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>template-system</artifactId>
+    <artifactId>know-hub-ai-system</artifactId>
     <name>${project.artifactId}</name>
     <description>system</description>
 
@@ -18,7 +18,7 @@
         <dependencies>
             <dependency>
                 <groupId>me.pgthinker</groupId>
-                <artifactId>template-bom</artifactId>
+                <artifactId>know-hub-ai-bom</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -29,7 +29,7 @@
     <dependencies>
         <dependency>
             <groupId>me.pgthinker</groupId>
-            <artifactId>template-core</artifactId>
+            <artifactId>know-hub-ai-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

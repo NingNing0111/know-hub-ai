@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.pgthinker</groupId>
-    <artifactId>springboot-react-template</artifactId>
+    <artifactId>knowhub-ai</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>template-bom</module>
-        <module>template-core</module>
-        <module>template-system</module>
+        <module>know-hub-ai-bom</module>
+        <module>know-hub-ai-core</module>
+        <module>know-hub-ai-system</module>
     </modules>
 
     <properties>
@@ -50,7 +50,7 @@
         <dependencies>
             <dependency>
                 <groupId>me.pgthinker</groupId>
-                <artifactId>template-core</artifactId>
+                <artifactId>know-hub-ai-core</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

@@ -1,6 +1,5 @@
 package me.pgthinker.core.exception;
 
-import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.common.ErrorCode;
 
 /**
