@@ -1,0 +1,46 @@
+.base-box {
+  width: 280px;
+  height: 100%; /* Set the height to the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 10px;
+  box-shadow: 0 1px 1px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+}
+
+.menu-box {
+  width: 100%;
+  border-inline-end: none;
+  overflow-y: scroll;
+  /* Optimize the scrollbar background */
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f5f5f5;
+}
+
+.menu-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-box::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.menu-box::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+  border: 3px solid #f5f5f5;
+}
+
+.menu-style {
+  border-inline-end: none;
+  border-right: none;
+  border-radius: 15px;
+  padding: 8px 0px;
+}
+
+.bottom-box {
+  margin-top: auto;
+  width: 100%;
+  border-radius: 6px;
+}

@@ -38,4 +38,18 @@
 
 为了保证代码格式统一，需要在提交代码前，执行插件`spring-javaformat:apply`对整个项目的代码进行格式化。
 
-![img.png](doc/img.png)
+![format](doc/images/format.png)
+
+
+## 效果
+
+![img.png](doc/images/1.png)
+
+![img.png](doc/images/2.png)
+
+![img.png](doc/images/3.png)
+
+
+## 开发中
+
+![img.png](doc/images/dev-1.png)
