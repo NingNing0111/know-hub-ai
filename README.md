@@ -33,3 +33,6 @@
 - fork整个项目，包含new分支
 - 拉去项目:`git clone -b new 仓库地址`
 
+为了保证代码格式统一，需要在提交代码前，执行插件`spring-javaformat:apply`对整个项目的代码进行格式化。
+
+![img.png](doc/img.png)
