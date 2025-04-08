@@ -4,10 +4,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.system.service.ai.LLMService;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.document.MetadataMode;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.openai.OpenAiEmbeddingOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,6 +56,17 @@ public class LLMServiceImpl implements LLMService {
 	@Value("${chat.multimodal.model}")
 	private String multimodalModel;
 
+	@Value("${embedding.base-url}")
+	private String embeddingBaseUrl;
+
+	@Value("${embedding.api-key}")
+	private String embeddingApiKey;
+
+	@Value("${embedding.model}")
+	private String embeddingModel;
+
+	private final JdbcTemplate jdbcTemplate;
+
 	@Override
 	public ChatModel getChatModel() {
 		OpenAiApi openAiApi = OpenAiApi.builder().baseUrl(simpleBaseUrl).apiKey(simpleApiKey).build();
@@ -74,6 +92,17 @@ public class LLMServiceImpl implements LLMService {
 			.openAiApi(openAiApi)
 			.defaultOptions(OpenAiChatOptions.builder().model(multimodalModel).build())
 			.build();
+	}
+
+	@Override
+	public EmbeddingModel getEmbeddingModel() {
+		OpenAiApi openAiApi = OpenAiApi.builder().baseUrl(embeddingBaseUrl).apiKey(embeddingApiKey).build();
+		return new OpenAiEmbeddingModel(openAiApi, MetadataMode.EMBED, OpenAiEmbeddingOptions.builder().model(embeddingModel).build());
+	}
+
+	@Override
+	public VectorStore getVectorStore() {
+		return PgVectorStore.builder(jdbcTemplate, this.getEmbeddingModel()).build();
 	}
 
 }

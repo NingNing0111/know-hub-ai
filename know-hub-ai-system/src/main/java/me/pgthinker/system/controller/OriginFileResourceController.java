@@ -27,7 +27,7 @@ public class OriginFileResourceController {
     }
 
     @PostMapping(value = "/knowledge/{knowledgeId}", headers = "content-type=multipart/form-data")
-    public BaseResponse<String> uploadFile(@RequestParam(name = "file") MultipartFile file, @PathVariable(name = "knowledgeId") String knowledgeId ) {
+    public BaseResponse<Long> uploadFile(@RequestParam(name = "file") MultipartFile file, @PathVariable(name = "knowledgeId") String knowledgeId ) {
         return ResultUtils.success(originFileResourceService.uploadFile(file, knowledgeId));
     }
 }

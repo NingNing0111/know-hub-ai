@@ -1,6 +1,8 @@
 package me.pgthinker.system.service.ai;
 
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.vectorstore.VectorStore;
 
 /**
  * @Project: me.pgthinker.service.doc
@@ -28,5 +30,13 @@ public interface LLMService {
 	 * @return
 	 */
 	ChatModel getMultimodalModel();
+
+	/**
+	 * 向量化模型
+	 * @return
+	 */
+	EmbeddingModel getEmbeddingModel();
+
+	VectorStore getVectorStore();
 
 }

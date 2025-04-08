@@ -14,3 +14,8 @@ chat:
     base-url: https://api.example.com
     api-key: sk-xxx
     model: gpt-4o-mini
+
+embedding:
+  base-url: https://api.example.com
+  api-key: sk-xxx
+  model: text-embedding-ada-002

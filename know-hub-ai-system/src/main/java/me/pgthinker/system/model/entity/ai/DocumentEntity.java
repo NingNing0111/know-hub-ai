@@ -13,7 +13,7 @@ import me.pgthinker.core.pojo.BaseEntity;
  * @Author: NingNing0111
  * @Github: https://github.com/ningning0111
  * @Date: 2025/4/8 08:32
- * @Description:
+ * @Description: 知识库的附件
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -38,11 +38,10 @@ public class DocumentEntity extends BaseEntity {
     private String path;
 
     /**
-     *
+     * 是否存储到了向量数据库中
      */
-    @TableField(value = "uploader")
-    private Long uploader;
-
+    @TableField(value = "is_embedding")
+    private Boolean isEmbedding;
     /**
      *
      */
