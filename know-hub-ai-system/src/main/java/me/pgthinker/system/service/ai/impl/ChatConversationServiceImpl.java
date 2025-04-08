@@ -3,6 +3,7 @@ package me.pgthinker.system.service.ai.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.pgthinker.system.controller.vo.ChatConversationVO;
 import me.pgthinker.system.mapper.ChatConversationMapper;
 import me.pgthinker.system.model.entity.ai.ChatConversation;
 import me.pgthinker.system.service.ai.ChatConversationService;
@@ -18,6 +19,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMapper, ChatConversation> implements ChatConversationService {
 
+    @Override
+    public ChatConversationVO getConversation(String conversationId) {
+        return null;
+    }
+
+    @Override
+    public ChatConversationVO createConversation(ChatConversationVO conversation) {
+        return null;
+    }
 }
 
 

@@ -36,19 +36,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserDetailsService userDetailsService;
 
-	private final SecurityProperties securityProperties;
 
 	private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-
+		String servletPath = request.getServletPath();
 		// 1. 从Header提取Token
 		final String authHeader = request.getHeader("Authorization");
-		//
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-			filterChain.doFilter(request, response);
+			// 如果是AI对话 没有jwt 则无权限
+			if(pathMatcher.match("/ai/chat/**", servletPath)){
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			}else{
+				filterChain.doFilter(request, response);
+			}
 			return;
 		}
 
@@ -76,10 +79,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-				throw new BusinessException(new ErrorCode(CoreCode.NO_AUTH_ERROR.getCode(), "无权限访问"));
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 		}
-
 		filterChain.doFilter(request, response);
 	}
 

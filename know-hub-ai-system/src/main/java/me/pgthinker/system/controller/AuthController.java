@@ -28,9 +28,7 @@ public class AuthController {
         return ResultUtils.success(authService.login(userLoginVO));
     }
 
-
     @GetMapping("/userInfo")
-    @PermitAll
     public BaseResponse<AuthVO> userInfo() {
         return ResultUtils.success(authService.userInfo());
     }

@@ -170,3 +170,13 @@ COMMENT ON COLUMN chat_message.create_time IS '记录创建时间';
 COMMENT ON COLUMN chat_message.update_time IS '记录更新时间';
 COMMENT ON COLUMN chat_message.deleted IS '是否被逻辑删除（软删除）';
 
+
+CREATE TABLE knowledge_base
+(
+    id          varchar(32)  PRIMARY KEY       NOT NULL,
+    name        varchar(100) NOT NULL,
+    description TEXT,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录创建时间
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录更新时间
+    deleted     BOOLEAN   DEFAULT FALSE              -- 是否被逻辑删除（软删除）
+);
