@@ -19,25 +19,26 @@ import me.pgthinker.core.pojo.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "knowledge_base")
 public class KnowledgeBase extends BaseEntity {
-    /**
-     *
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
-    private String id;
 
-    /**
-     *
-     */
-    @TableField(value = "name")
-    private String name;
+	/**
+	 *
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_UUID)
+	private String id;
 
-    /**
-     *
-     */
-    @TableField(value = "description")
-    private String description;
+	/**
+	 *
+	 */
+	@TableField(value = "name")
+	private String name;
 
+	/**
+	 *
+	 */
+	@TableField(value = "description")
+	private String description;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+	@TableField(exist = false)
+	private static final long serialVersionUID = 1L;
+
 }

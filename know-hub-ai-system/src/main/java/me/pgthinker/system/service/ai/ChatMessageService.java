@@ -14,17 +14,19 @@ import java.util.List;
  * @Description:
  */
 public interface ChatMessageService extends IService<ChatMessage> {
-    /**
-     * 将ChatMessage转换为Spring AI的Message
-     * @param chatMessages
-     * @return
-     */
-     List<Message> toMessage(List<ChatMessage> chatMessages);
 
-    /**
-     * 将Spring AI的Message 转换为ChatMessage
-     * @param messages
-     * @return
-     */
-    List<ChatMessage> fromMessage(List<Message> messages);
+	/**
+	 * 将ChatMessage转换为Spring AI的Message
+	 * @param chatMessages
+	 * @return
+	 */
+	List<Message> toMessage(List<ChatMessage> chatMessages);
+
+	/**
+	 * 将Spring AI的Message 转换为ChatMessage
+	 * @param messages
+	 * @return
+	 */
+	List<ChatMessage> fromMessage(List<Message> messages);
+
 }

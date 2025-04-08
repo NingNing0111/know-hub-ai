@@ -19,15 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/resource")
 public class OriginFileResourceController {
 
-    private final OriginFileResourceService originFileResourceService;
+	private final OriginFileResourceService originFileResourceService;
 
-    @PostMapping(value = "/chat",headers = "content-type=multipart/form-data")
-    public BaseResponse<String> chatFile(@RequestParam(name = "file") MultipartFile file) {
-        return ResultUtils.success(originFileResourceService.uploadFile(file));
-    }
+	@PostMapping(value = "/chat", headers = "content-type=multipart/form-data")
+	public BaseResponse<String> chatFile(@RequestParam(name = "file") MultipartFile file) {
+		return ResultUtils.success(originFileResourceService.uploadFile(file));
+	}
 
-    @PostMapping(value = "/knowledge/{knowledgeId}", headers = "content-type=multipart/form-data")
-    public BaseResponse<Long> uploadFile(@RequestParam(name = "file") MultipartFile file, @PathVariable(name = "knowledgeId") String knowledgeId ) {
-        return ResultUtils.success(originFileResourceService.uploadFile(file, knowledgeId));
-    }
+	@PostMapping(value = "/knowledge/{knowledgeId}", headers = "content-type=multipart/form-data")
+	public BaseResponse<Long> uploadFile(@RequestParam(name = "file") MultipartFile file,
+			@PathVariable(name = "knowledgeId") String knowledgeId) {
+		return ResultUtils.success(originFileResourceService.uploadFile(file, knowledgeId));
+	}
+
 }

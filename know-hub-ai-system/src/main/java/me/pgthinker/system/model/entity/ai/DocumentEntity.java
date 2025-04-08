@@ -19,32 +19,35 @@ import me.pgthinker.core.pojo.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "document_entity")
 public class DocumentEntity extends BaseEntity {
-    /**
-     *
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
-    /**
-     *
-     */
-    @TableField(value = "file_name")
-    private String fileName;
+	/**
+	 *
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
 
-    /**
-     *
-     */
-    @TableField(value = "path")
-    private String path;
+	/**
+	 *
+	 */
+	@TableField(value = "file_name")
+	private String fileName;
 
-    /**
-     * 是否存储到了向量数据库中
-     */
-    @TableField(value = "is_embedding")
-    private Boolean isEmbedding;
-    /**
-     *
-     */
-    @TableField(value = "base_id")
-    private Object baseId;
+	/**
+	 *
+	 */
+	@TableField(value = "path")
+	private String path;
+
+	/**
+	 * 是否存储到了向量数据库中
+	 */
+	@TableField(value = "is_embedding")
+	private Boolean isEmbedding;
+
+	/**
+	 *
+	 */
+	@TableField(value = "base_id")
+	private Object baseId;
+
 }

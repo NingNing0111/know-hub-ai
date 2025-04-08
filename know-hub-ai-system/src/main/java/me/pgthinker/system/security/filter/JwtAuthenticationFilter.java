@@ -36,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final UserDetailsService userDetailsService;
 
-
 	private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	@Override
@@ -47,9 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		final String authHeader = request.getHeader("Authorization");
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 			// 如果是AI对话 没有jwt 则无权限
-			if(pathMatcher.match("/ai/chat/**", servletPath)){
+			if (pathMatcher.match("/ai/chat/**", servletPath)) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			}else{
+			}
+			else {
 				filterChain.doFilter(request, response);
 			}
 			return;
@@ -84,7 +84,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 		filterChain.doFilter(request, response);
 	}
-
-
 
 }

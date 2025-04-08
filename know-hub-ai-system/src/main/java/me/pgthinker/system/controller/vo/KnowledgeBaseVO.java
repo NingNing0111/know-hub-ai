@@ -12,16 +12,17 @@ import lombok.Data;
  */
 @Data
 public class KnowledgeBaseVO {
-    private String id;
 
-    @NotBlank(message = "知识库名称不能为空")
-    private String name;
+	private String id;
 
-    private String description;
+	@NotBlank(message = "知识库名称不能为空")
+	private String name;
 
-    // 创建人
-    private Long author;
+	private String description;
 
-    private String authorName;
+	// 创建人
+	private Long author;
+
+	private String authorName;
 
 }

@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
 import me.pgthinker.system.service.ai.AIChatService;
 import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 /**
@@ -22,10 +19,16 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class AIChatController {
 
-    private final AIChatService chatService;
+	private final AIChatService chatService;
 
-    @PostMapping("/chat/simple")
-    public Flux<ChatResponse> chat(@RequestBody ChatMessageVO chatMessageVO) {
-        return chatService.simpleChat(chatMessageVO);
-    }
+	@PostMapping("/chat/simple")
+	public Flux<ChatResponse> chat(@RequestBody ChatMessageVO chatMessageVO) {
+		return chatService.simpleChat(chatMessageVO);
+	}
+
+	@PostMapping("/chat/{knowledgeBaseId}")
+	public Flux<ChatResponse> chat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
+		return chatService.ragChat(chatMessageVO, knowledgeBaseId);
+	}
+
 }

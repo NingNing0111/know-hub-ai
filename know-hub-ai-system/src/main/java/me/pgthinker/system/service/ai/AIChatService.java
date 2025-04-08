@@ -14,18 +14,33 @@ import reactor.core.publisher.Flux;
  */
 public interface AIChatService {
 
-    /**
-     * 简单的流式对话
-     * @param chatMessageVO
-     * @return
-     */
-    Flux<ChatResponse> simpleChat(ChatMessageVO chatMessageVO);
+	/**
+	 * 简单的流式对话
+	 * @param chatMessageVO
+	 * @return
+	 */
+	Flux<ChatResponse> simpleChat(ChatMessageVO chatMessageVO);
 
-    /**
-     * RAG对话
-     * @param chatMessageVO
-     * @param baseId 知识库ID
-     * @return
-     */
-    Flux<ChatResponse> ragChat(ChatMessageVO chatMessageVO, String baseId);
+	/**
+	 * 多模态对话
+	 * @param chatMessageVO
+	 * @return
+	 */
+	Flux<ChatResponse> multimodalChat(ChatMessageVO chatMessageVO);
+
+	/**
+	 * RAG对话
+	 * @param chatMessageVO
+	 * @param baseId 知识库ID
+	 * @return
+	 */
+	Flux<ChatResponse> simpleRAGChat(ChatMessageVO chatMessageVO, String baseId);
+
+	/**
+	 * 多模态的RAG对话
+	 * @param chatMessageVO
+	 * @return
+	 */
+	Flux<ChatResponse> multimodalRAGChat(ChatMessageVO chatMessageVO, String baseId);
+
 }

@@ -22,26 +22,26 @@ import java.util.List;
 @RequestMapping("/knowledge")
 public class KnowledgeBaseController {
 
-    private final KnowledgeBaseService knowledgeBaseService;
+	private final KnowledgeBaseService knowledgeBaseService;
 
+	@PostMapping("/create")
+	public BaseResponse<String> createKnowledgeBase(@RequestBody KnowledgeBaseVO knowledgeBase) {
+		return ResultUtils.success(knowledgeBaseService.addKnowledgeBase(knowledgeBase));
+	}
 
-    @PostMapping("/create")
-    public BaseResponse<String> createKnowledgeBase(@RequestBody KnowledgeBaseVO knowledgeBase) {
-        return ResultUtils.success(knowledgeBaseService.addKnowledgeBase(knowledgeBase));
-    }
+	@PostMapping("/remove")
+	public BaseResponse<Integer> removeKnowledgeBase(@RequestBody KnowledgeBaseVO knowledgeBase) {
+		return ResultUtils.success(knowledgeBaseService.removeKnowledgeBase(knowledgeBase));
+	}
 
-    @PostMapping("/remove")
-    public BaseResponse<Integer> removeKnowledgeBase(@RequestBody KnowledgeBaseVO knowledgeBase) {
-        return ResultUtils.success(knowledgeBaseService.removeKnowledgeBase(knowledgeBase));
-    }
+	@GetMapping("/list")
+	public BaseResponse<List<KnowledgeBaseVO>> listKnowledgeBase() {
+		return ResultUtils.success(knowledgeBaseService.knowLedgelist());
+	}
 
-    @GetMapping("/list")
-    public BaseResponse<List<KnowledgeBaseVO>> listKnowledgeBase() {
-        return ResultUtils.success(knowledgeBaseService.knowLedgelist());
-    }
+	@GetMapping("/simple")
+	public BaseResponse<List<SimpleBaseVO>> simpleKnowledgeBase() {
+		return ResultUtils.success(knowledgeBaseService.simpleList());
+	}
 
-    @GetMapping("/simple")
-    public BaseResponse<List<SimpleBaseVO>> simpleKnowledgeBase() {
-        return ResultUtils.success(knowledgeBaseService.simpleList());
-    }
 }

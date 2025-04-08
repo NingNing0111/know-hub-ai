@@ -13,15 +13,17 @@ import java.util.List;
  * @Description:
  */
 public interface KnowledgeBaseService {
-    // 添加知识库
-    String addKnowledgeBase(KnowledgeBaseVO knowledgeBaseVO);
 
-    // 删除知识库
-    Integer removeKnowledgeBase(KnowledgeBaseVO knowledgeBaseVO);
+	// 添加知识库
+	String addKnowledgeBase(KnowledgeBaseVO knowledgeBaseVO);
 
-    // 所有知识库
-    List<KnowledgeBaseVO> knowLedgelist();
+	// 删除知识库
+	Integer removeKnowledgeBase(KnowledgeBaseVO knowledgeBaseVO);
 
-    // 简单的列表
-    List<SimpleBaseVO> simpleList();
+	// 所有知识库
+	List<KnowledgeBaseVO> knowLedgelist();
+
+	// 简单的列表
+	List<SimpleBaseVO> simpleList();
+
 }

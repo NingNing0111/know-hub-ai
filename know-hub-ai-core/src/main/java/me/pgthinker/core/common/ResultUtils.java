@@ -16,7 +16,7 @@ public class ResultUtils {
 	 * @return
 	 */
 	public static <T> BaseResponse<T> success(T data) {
-		return new BaseResponse<>(CoreCode.SUCCESS.getCode(),data, CoreCode.SUCCESS.getMsg());
+		return new BaseResponse<>(CoreCode.SUCCESS.getCode(), data, CoreCode.SUCCESS.getMsg());
 	}
 
 	/**

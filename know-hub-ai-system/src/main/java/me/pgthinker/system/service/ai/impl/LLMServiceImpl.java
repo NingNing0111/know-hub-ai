@@ -97,7 +97,8 @@ public class LLMServiceImpl implements LLMService {
 	@Override
 	public EmbeddingModel getEmbeddingModel() {
 		OpenAiApi openAiApi = OpenAiApi.builder().baseUrl(embeddingBaseUrl).apiKey(embeddingApiKey).build();
-		return new OpenAiEmbeddingModel(openAiApi, MetadataMode.EMBED, OpenAiEmbeddingOptions.builder().model(embeddingModel).build());
+		return new OpenAiEmbeddingModel(openAiApi, MetadataMode.EMBED,
+				OpenAiEmbeddingOptions.builder().model(embeddingModel).build());
 	}
 
 	@Override

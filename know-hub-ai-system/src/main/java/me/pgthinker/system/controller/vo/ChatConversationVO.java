@@ -15,8 +15,13 @@ import java.util.List;
  */
 @Data
 public class ChatConversationVO {
-    private String id;
-    private String title;
-    private Date createTime;
-    private List<ChatMessageVO> messages;
+
+	private String id;
+
+	private String title;
+
+	private Date createTime;
+
+	private List<ChatMessageVO> messages;
+
 }

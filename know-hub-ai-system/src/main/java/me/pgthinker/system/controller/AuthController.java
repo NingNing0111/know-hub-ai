@@ -20,16 +20,18 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    private final AuthService authService;
 
-    @PostMapping("/login")
-    @PermitAll
-    public BaseResponse<AuthVO> login(@RequestBody UserLoginVO userLoginVO) {
-        return ResultUtils.success(authService.login(userLoginVO));
-    }
+	private final AuthService authService;
 
-    @GetMapping("/userInfo")
-    public BaseResponse<AuthVO> userInfo() {
-        return ResultUtils.success(authService.userInfo());
-    }
+	@PostMapping("/login")
+	@PermitAll
+	public BaseResponse<AuthVO> login(@RequestBody UserLoginVO userLoginVO) {
+		return ResultUtils.success(authService.login(userLoginVO));
+	}
+
+	@GetMapping("/userInfo")
+	public BaseResponse<AuthVO> userInfo() {
+		return ResultUtils.success(authService.userInfo());
+	}
+
 }

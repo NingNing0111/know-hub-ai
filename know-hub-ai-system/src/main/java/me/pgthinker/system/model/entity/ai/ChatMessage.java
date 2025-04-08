@@ -23,38 +23,48 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "chat_message", autoResultMap = true)
-public class ChatMessage extends BaseEntity{
+public class ChatMessage extends BaseEntity {
 
-    /**
-     * 聊天信息ID
-     */
-    @TableId(type = IdType.AUTO)
-    private String id;
-    /**
-     * 所属对话
-     */
-    private String conversationId;
-    /**
-     * 消息序号
-     */
-    private Integer messageNo;
-    /**
-     * 对话内容
-     */
-    private String content;
-    /**
-     * 角色
-     */
-    private String role;
-    /**
-     * 对话是否附带资源 资源一般就包含图片、文件、视频等等
-     */
-    private Boolean hasMedia;
-    /**
-     * 附带的资源Id, 会附带多个
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> resourceIds = new ArrayList<>();
+	/**
+	 * 聊天信息ID
+	 */
+	@TableId(type = IdType.AUTO)
+	private String id;
 
+	/**
+	 * 所属对话
+	 */
+	private String conversationId;
+
+	/**
+	 * 消息序号
+	 */
+	private Integer messageNo;
+
+	/**
+	 * 对话内容
+	 */
+	private String content;
+
+	/**
+	 * 角色
+	 */
+	private String role;
+
+	/**
+	 * 对话是否附带资源 资源一般就包含图片、文件、视频等等
+	 */
+	private Boolean hasMedia;
+
+	/**
+	 * 附带的资源Id, 会附带多个
+	 */
+	@TableField(typeHandler = JacksonTypeHandler.class)
+	private List<String> resourceIds = new ArrayList<>();
+
+	/**
+	 * 是否删除
+	 */
+	private Boolean isClean;
 
 }

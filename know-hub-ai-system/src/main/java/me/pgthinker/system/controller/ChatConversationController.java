@@ -19,15 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ChatConversationController {
 
-    private final ChatConversationService chatConversationService;
+	private final ChatConversationService chatConversationService;
 
-    @PostMapping("/create")
-    public BaseResponse<ChatConversationVO> createChatConversation(@RequestBody ChatConversationVO chatConversationVO) {
-        return ResultUtils.success(chatConversationService.createConversation(chatConversationVO));
-    }
+	@PostMapping("/create")
+	public BaseResponse<ChatConversationVO> createChatConversation(@RequestBody ChatConversationVO chatConversationVO) {
+		return ResultUtils.success(chatConversationService.createConversation(chatConversationVO));
+	}
 
-    @GetMapping("/list")
-    public BaseResponse<ChatConversationVO> listChatConversation(@RequestParam(name = "id") String id) {
-        return ResultUtils.success(chatConversationService.getConversation(id));
-    }
+	@GetMapping("/list")
+	public BaseResponse<ChatConversationVO> listChatConversation(@RequestParam(name = "id") String id) {
+		return ResultUtils.success(chatConversationService.getConversation(id));
+	}
+
 }

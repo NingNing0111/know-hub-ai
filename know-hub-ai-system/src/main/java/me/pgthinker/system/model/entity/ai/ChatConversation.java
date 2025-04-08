@@ -16,13 +16,17 @@ import me.pgthinker.core.pojo.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "chat_conversation")
 public class ChatConversation extends BaseEntity {
-    private String id;
-    /**
-     * 系统提示词 标题
-     */
-    private String title;
-    /**
-     * 对话人
-     */
-    private Long userId;
+
+	private String id;
+
+	/**
+	 * 系统提示词 标题
+	 */
+	private String title;
+
+	/**
+	 * 对话人
+	 */
+	private Long userId;
+
 }

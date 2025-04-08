@@ -25,29 +25,31 @@ import java.util.List;
 @TableName(value = "origin_file_source", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
 public class OriginFileResource extends BaseEntity implements StorageFile {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.INPUT)
-    private String id;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-    private String fileName;
+	@TableId(type = IdType.INPUT)
+	private String id;
 
-    private String path;
+	private String fileName;
 
-    private Boolean isImage;
+	private String path;
 
-    private String bucketName;
+	private Boolean isImage;
 
-    private String objectName;
+	private String bucketName;
 
-    private String contentType;
+	private String objectName;
 
-    private Long size;
+	private String contentType;
 
-    private String md5;
+	private Long size;
 
-    // 文档里的图片名称列表
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> images = new ArrayList<>();
+	private String md5;
+
+	// 文档里的图片名称列表
+	@TableField(typeHandler = JacksonTypeHandler.class)
+	private List<String> images = new ArrayList<>();
+
 }

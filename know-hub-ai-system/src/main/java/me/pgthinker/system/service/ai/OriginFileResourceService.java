@@ -16,25 +16,26 @@ import java.util.List;
  */
 public interface OriginFileResourceService extends IService<OriginFileResource> {
 
-    /**
-     * 根据id转换Media
-     * @param resourceIds
-     * @return
-     */
-    List<Media> fromResourceId(List<String> resourceIds);
+	/**
+	 * 根据id转换Media
+	 * @param resourceIds
+	 * @return
+	 */
+	List<Media> fromResourceId(List<String> resourceIds);
 
-    /**
-     * 对话附件
-     * @param file
-     * @return
-     */
-    String uploadFile(MultipartFile file);
+	/**
+	 * 对话附件
+	 * @param file
+	 * @return
+	 */
+	String uploadFile(MultipartFile file);
 
-    /**
-     * 知识库附件
-     * @param file
-     * @param knowledgeId
-     * @return
-     */
-    Long uploadFile(MultipartFile file, String knowledgeId);
+	/**
+	 * 知识库附件
+	 * @param file
+	 * @param knowledgeId
+	 * @return
+	 */
+	Long uploadFile(MultipartFile file, String knowledgeId);
+
 }

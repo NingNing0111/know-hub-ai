@@ -78,7 +78,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public GlobalExceptionHandler globalExceptionHandler(){
+	public GlobalExceptionHandler globalExceptionHandler() {
 		return new GlobalExceptionHandler();
 	}
 
