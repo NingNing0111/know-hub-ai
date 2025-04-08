@@ -67,7 +67,7 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
     public Long uploadFile(MultipartFile file, String knowledgeId) {
         Resource resource = file.getResource();
         // 1. 先上传文件至MinIO
-        OriginFileResource upload = upload(file,KNOWLEDGE_BUCKET_NAME);
+        OriginFileResource upload = this.upload(file,KNOWLEDGE_BUCKET_NAME);
         // 2. 存储到数据库
         DocumentEntity documentEntity = new DocumentEntity();
         documentEntity.setFileName(file.getOriginalFilename());
