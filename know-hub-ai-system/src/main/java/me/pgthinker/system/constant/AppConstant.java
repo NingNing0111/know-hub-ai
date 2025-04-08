@@ -15,4 +15,6 @@ public interface AppConstant {
 
 	Integer CHAT_MAX_LENGTH = 20;
 
+	Integer RAG_TOP_K = 5;
+
 }

@@ -22,13 +22,24 @@ public class AIChatController {
 	private final AIChatService chatService;
 
 	@PostMapping("/chat/simple")
-	public Flux<ChatResponse> chat(@RequestBody ChatMessageVO chatMessageVO) {
+	public Flux<ChatResponse> simpleChat(@RequestBody ChatMessageVO chatMessageVO) {
 		return chatService.simpleChat(chatMessageVO);
 	}
 
-	@PostMapping("/chat/{knowledgeBaseId}")
-	public Flux<ChatResponse> chat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
-		return chatService.ragChat(chatMessageVO, knowledgeBaseId);
+	@PostMapping("/chat/multimodal")
+	public Flux<ChatResponse> multimodalChat(@RequestBody ChatMessageVO chatMessageVO) {
+		return chatService.multimodalChat(chatMessageVO);
 	}
+
+	@PostMapping("/chat/simple/rag/{knowledgeBaseId}")
+	public Flux<ChatResponse> simpleRAGChat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
+		return chatService.simpleRAGChat(chatMessageVO, knowledgeBaseId);
+	}
+
+	@PostMapping("/chat/multimodal/rag/{knowledgeBaseId}")
+	public Flux<ChatResponse> multimodalRAGChat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
+		return chatService.multimodalRAGChat(chatMessageVO, knowledgeBaseId);
+	}
+
 
 }
