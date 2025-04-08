@@ -1,0 +1,82 @@
+package me.pgthinker.system.service.ai.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import me.pgthinker.core.common.CoreCode;
+import me.pgthinker.core.exception.BusinessException;
+import me.pgthinker.core.service.objectstore.ObjectStoreService;
+import me.pgthinker.system.controller.vo.DocumentVO;
+import me.pgthinker.system.mapper.DocumentEntityMapper;
+import me.pgthinker.system.mapper.KnowledgeBaseMapper;
+import me.pgthinker.system.mapper.OriginFileResourceMapper;
+import me.pgthinker.system.model.entity.ai.DocumentEntity;
+import me.pgthinker.system.model.entity.ai.KnowledgeBase;
+import me.pgthinker.system.model.entity.ai.OriginFileResource;
+import me.pgthinker.system.service.ai.DocumentEntityService;
+import me.pgthinker.system.service.ai.KnowledgeBaseService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import javax.swing.text.Document;
+import java.util.List;
+
+/**
+ * @Project: me.pgthinker.system.service.ai.impl
+ * @Author: NingNing0111
+ * @Github: https://github.com/ningning0111
+ * @Date: 2025/4/8 23:34
+ * @Description:
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class DocumentEntityServiceImpl implements DocumentEntityService {
+
+    private final DocumentEntityMapper documentEntityMapper;
+    private final OriginFileResourceMapper originFileResourceMapper;
+    private final KnowledgeBaseMapper knowledgeBaseMapper;
+    private final ObjectStoreService objectStoreService;
+
+
+    @Override
+    public Page<DocumentVO> listDocuments(DocumentVO document) {
+        if(document.getKnowledgeBaseId() == null) {
+            throw new BusinessException(CoreCode.PARAMS_ERROR);
+        }
+        LambdaQueryWrapper<DocumentEntity> qw = new LambdaQueryWrapper<>();
+        if(document.getFileName() != null) {
+            qw.like(DocumentEntity::getFileName, document.getFileName());
+        }
+        qw.eq(DocumentEntity::getBaseId, document.getKnowledgeBaseId());
+        qw.orderByDesc(DocumentEntity::getCreateTime);
+        Page<DocumentEntity> page = Page.of(document.getPageNo(), document.getPageSize());
+        Page<DocumentEntity> documentPage = documentEntityMapper.selectPage(page, qw);
+        List<DocumentVO> vos = transfer(documentPage.getRecords());
+        Page<DocumentVO> res = new Page<>();
+        BeanUtils.copyProperties(documentPage, res);
+        res.setRecords(vos);
+        return res;
+    }
+
+
+    private List<DocumentVO> transfer(List<DocumentEntity> documentEntities) {
+        return documentEntities.stream().map(item -> {
+            String resourceId = item.getResourceId();
+            OriginFileResource originFileResource = originFileResourceMapper.selectById(resourceId);
+            String path = objectStoreService.getTmpFileUrl(originFileResource.getBucketName(), originFileResource.getFileName());
+            KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(item.getBaseId());
+            DocumentVO documentVO = new DocumentVO();
+            documentVO.setId(item.getId());
+            documentVO.setFileName(item.getFileName());
+            documentVO.setIsEmbedding(item.getIsEmbedding());
+            documentVO.setBaseId(item.getBaseId());
+            documentVO.setPath(path);
+            documentVO.setKnowledgeBaseName(knowledgeBase.getName());
+            documentVO.setFileType(originFileResource.getContentType());
+            documentVO.setUploadTime(item.getCreateTime());
+            return documentVO;
+        }).toList();
+    }
+}

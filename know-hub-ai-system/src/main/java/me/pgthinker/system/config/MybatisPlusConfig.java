@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @Date: 2025/3/13 13:08
  * @Description:
  */
+@Slf4j
 @Configuration
 public class MybatisPlusConfig {
 
@@ -57,10 +59,10 @@ public class MybatisPlusConfig {
 				}
 				SecurityFrameworkUtil.tryGetLoginUser().ifPresent(user -> {
 					if (creator) {
-						this.setFieldValByName("creator", user.getId(), metaObject);
+						this.setFieldValByName("creator", String.valueOf(user.getId()), metaObject);
 					}
 					if (updater) {
-						this.setFieldValByName("updater", user.getId(), metaObject);
+						this.setFieldValByName("updater", String.valueOf(user.getId()), metaObject);
 					}
 				});
 			}
@@ -74,7 +76,7 @@ public class MybatisPlusConfig {
 				}
 				SecurityFrameworkUtil.tryGetLoginUser().ifPresent(user -> {
 					if (updater) {
-						this.setFieldValByName("updater", user.getId(), metaObject);
+						this.setFieldValByName("updater", String.valueOf(user.getId()), metaObject);
 					}
 				});
 

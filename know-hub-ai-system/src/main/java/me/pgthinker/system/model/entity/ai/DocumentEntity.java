@@ -48,6 +48,12 @@ public class DocumentEntity extends BaseEntity {
 	 *
 	 */
 	@TableField(value = "base_id")
-	private Object baseId;
+	private String baseId;
+
+	/**
+	 * 资源ID
+	 */
+	@TableField(value = "resource_id")
+	private String resourceId;
 
 }

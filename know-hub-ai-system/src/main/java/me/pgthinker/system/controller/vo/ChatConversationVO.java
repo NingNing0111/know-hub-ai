@@ -3,7 +3,6 @@ package me.pgthinker.system.controller.vo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +19,7 @@ public class ChatConversationVO {
 
 	private String title;
 
-	private Date createTime;
+	private LocalDateTime createTime;
 
 	private List<ChatMessageVO> messages;
 

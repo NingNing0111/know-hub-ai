@@ -64,7 +64,7 @@ const LoginPage = () => {
             backgroundColor: 'rgba(0, 0, 0,0.65)',
             backdropFilter: 'blur(4px)',
           }}
-          subTitle="一个Umi.js + SpringBoot的开发模板"
+          subTitle={process.env.UMI_APP_SUB_TITLE}
         >
           <Tabs
             centered

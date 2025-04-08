@@ -3,6 +3,8 @@ package me.pgthinker.system.service.ai.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.system.service.ai.LLMService;
+import org.springframework.ai.autoconfigure.vectorstore.CommonVectorStoreProperties;
+import org.springframework.ai.autoconfigure.vectorstore.pgvector.PgVectorStoreProperties;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.MetadataMode;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -67,6 +69,8 @@ public class LLMServiceImpl implements LLMService {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	private final PgVectorStoreProperties pgVectorStoreProperties;
+
 	@Override
 	public ChatModel getChatModel() {
 		OpenAiApi openAiApi = OpenAiApi.builder().baseUrl(simpleBaseUrl).apiKey(simpleApiKey).build();
@@ -103,7 +107,18 @@ public class LLMServiceImpl implements LLMService {
 
 	@Override
 	public VectorStore getVectorStore() {
-		return PgVectorStore.builder(jdbcTemplate, this.getEmbeddingModel()).build();
+		return PgVectorStore.builder(jdbcTemplate, this.getEmbeddingModel())
+				.initializeSchema(pgVectorStoreProperties.isInitializeSchema())
+				.dimensions(pgVectorStoreProperties.getDimensions())
+				.distanceType(pgVectorStoreProperties.getDistanceType())
+				.indexType(pgVectorStoreProperties.getIndexType())
+				.maxDocumentBatchSize(pgVectorStoreProperties.getMaxDocumentBatchSize())
+				.schemaName(pgVectorStoreProperties.getSchemaName())
+				.vectorTableName(pgVectorStoreProperties.getTableName())
+				.removeExistingVectorStoreTable(pgVectorStoreProperties.isRemoveExistingVectorStoreTable())
+				.idType(pgVectorStoreProperties.getIdType())
+				.vectorTableValidationsEnabled(pgVectorStoreProperties.isSchemaValidation())
+				.build();
 	}
 
 }

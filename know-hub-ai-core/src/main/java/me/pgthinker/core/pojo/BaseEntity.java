@@ -1,9 +1,11 @@
 package me.pgthinker.core.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -19,14 +21,14 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@TableField(value = "create_time")
-	private Date createTime;
+	@TableField(value = "create_time",fill = FieldFill.INSERT)
+	private LocalDateTime createTime;
 
 	/**
 	 * 更新时间
 	 */
-	@TableField(value = "update_time")
-	private Date updateTime;
+	@TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateTime;
 
 	/**
 	 * 是否删除
@@ -37,13 +39,13 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建人
 	 */
-	@TableField(value = "creator")
+	@TableField(value = "creator", fill = FieldFill.INSERT)
 	private String creator;
 
 	/**
 	 * 更新人
 	 */
-	@TableField(value = "updater")
+	@TableField(value = "updater",fill = FieldFill.INSERT_UPDATE)
 	private String updater;
 
 }

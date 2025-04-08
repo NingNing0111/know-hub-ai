@@ -38,9 +38,7 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 security:
 #  下面几个配置使用默认的即可

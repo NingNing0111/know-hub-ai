@@ -37,7 +37,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 		knowledgeBase.setName(knowledgeBaseVO.getName());
 		knowledgeBase.setDescription(knowledgeBaseVO.getDescription());
 		this.save(knowledgeBase);
-		return knowledgeBaseVO.getId();
+		return knowledgeBase.getId();
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -68,9 +68,10 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 		knowledgeBaseVO.setDescription(knowledgeBase.getDescription());
 		knowledgeBaseVO.setId(knowledgeBase.getId());
 		knowledgeBaseVO.setName(knowledgeBase.getName());
+		knowledgeBaseVO.setCreateTime(knowledgeBase.getCreateTime());
 		String creator = knowledgeBase.getCreator();
 		if (creator != null) {
-			SystemUser user = userMapper.getUserWithRolesAndPermissions(creator);
+			SystemUser user = userMapper.selectById(Long.parseLong(creator));
 			knowledgeBaseVO.setAuthor(user.getId());
 			knowledgeBaseVO.setAuthorName(user.getUsername());
 		}

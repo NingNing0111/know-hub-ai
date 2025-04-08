@@ -22,12 +22,12 @@ public class OriginFileResourceController {
 	private final OriginFileResourceService originFileResourceService;
 
 	@PostMapping(value = "/chat", headers = "content-type=multipart/form-data")
-	public BaseResponse<String> chatFile(@RequestParam(name = "file") MultipartFile file) {
+	public BaseResponse<String> uploadChatFile(@RequestParam(name = "file") MultipartFile file) {
 		return ResultUtils.success(originFileResourceService.uploadFile(file));
 	}
 
 	@PostMapping(value = "/knowledge/{knowledgeId}", headers = "content-type=multipart/form-data")
-	public BaseResponse<Long> uploadFile(@RequestParam(name = "file") MultipartFile file,
+	public BaseResponse<Long> uploadKnowledgeFile(@RequestParam(name = "file") MultipartFile file,
 			@PathVariable(name = "knowledgeId") String knowledgeId) {
 		return ResultUtils.success(originFileResourceService.uploadFile(file, knowledgeId));
 	}

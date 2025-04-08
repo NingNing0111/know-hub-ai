@@ -3,6 +3,8 @@ package me.pgthinker.system.controller.vo;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @Project: me.pgthinker.system.controller.vo
  * @Author: NingNing0111
@@ -24,5 +26,6 @@ public class KnowledgeBaseVO {
 	private Long author;
 
 	private String authorName;
+	private LocalDateTime createTime;
 
 }

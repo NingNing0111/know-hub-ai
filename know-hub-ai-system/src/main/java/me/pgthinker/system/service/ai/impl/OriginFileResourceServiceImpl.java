@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -47,9 +48,9 @@ import java.util.UUID;
 public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourceMapper, OriginFileResource>
 		implements OriginFileResourceService {
 
-	public static final String CHAT_BUCKET_NAME = "OriginFile";
+	public static final String CHAT_BUCKET_NAME = "origin-file";
 
-	public static final String KNOWLEDGE_BUCKET_NAME = "KnowledgeFile";
+	public static final String KNOWLEDGE_BUCKET_NAME = "knowledge-file";
 
 	private final ObjectStoreService objectStoreService;
 
@@ -93,7 +94,6 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public Long uploadFile(MultipartFile file, String knowledgeId) {
-		Resource resource = file.getResource();
 		// 1. 先上传文件至MinIO
 		OriginFileResource upload = this.upload(file, KNOWLEDGE_BUCKET_NAME);
 		// 2. 存储到数据库
@@ -102,8 +102,16 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		documentEntity.setBaseId(knowledgeId);
 		documentEntity.setPath(upload.getPath());
 		documentEntity.setIsEmbedding(false);
+		documentEntity.setResourceId(upload.getId());
 		documentEntityMapper.insert(documentEntity);
 		// 3. 向量化
+		Resource resource;
+		try {
+			InputStream inputStream = objectStoreService.getFile(upload.getBucketName(), upload.getObjectName());
+			 resource = new ByteArrayResource(inputStream.readAllBytes());
+		}catch (IOException e) {
+			throw new BusinessException(CoreCode.SYSTEM_ERROR, e.getMessage());
+		}
 		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(resource);
 		List<Document> rawDocumentList = tikaDocumentReader.read();
 		List<Document> splitDocumentList = tokenTextSplitter.split(rawDocumentList);
@@ -119,7 +127,6 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		// 4. 更新
 		documentEntity.setIsEmbedding(true);
 		documentEntityMapper.updateById(documentEntity);
-
 		return documentEntity.getId();
 	}
 
@@ -136,8 +143,10 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		String path;
 		String md5;
 		try {
-			md5 = FileUtil.md5(file.getResource().getFile());
-			path = objectStoreService.uploadFile(file, bucketName, newObjectName);
+			File tmpFile = FileUtil.createTempFile("know", "_" + file.getOriginalFilename());
+			file.transferTo(tmpFile);
+			md5 = FileUtil.md5(tmpFile);
+			path = objectStoreService.uploadFile(tmpFile, bucketName, newObjectName);
 		}
 		catch (IOException e) {
 			throw new BusinessException(CoreCode.SYSTEM_ERROR, e.getMessage());

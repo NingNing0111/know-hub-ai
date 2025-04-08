@@ -7,6 +7,11 @@ spring:
     openai:
       base-url: https://api.mnzdna.xyz
       api-key: sk-KgvugzpKzki15GFxB72e7782De844b23B3E4Fc6dDf40B29a
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        table-name: vector_store_1536
+        remove-existing-vector-store-table: false
 # MinIO
 minio:
   endpoint: http://127.0.0.1:9032/

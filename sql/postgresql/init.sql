@@ -1,3 +1,11 @@
+-- 基础字段
+-- create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     deleted     BOOLEAN               DEFAULT FALSE,
+--     creator     VARCHAR(255),
+--     updater     VARCHAR(255)
+
+CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE system_user
 (
     id          BIGSERIAL PRIMARY KEY,
@@ -70,8 +78,11 @@ CREATE TABLE system_user_role
     id          BIGSERIAL PRIMARY KEY,
     user_id     BIGINT    NOT NULL,
     role_id     BIGINT    NOT NULL,
-    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    creator     VARCHAR(255)
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
 
 COMMENT ON TABLE system_user_role IS '用户-角色关联表';
@@ -85,8 +96,11 @@ CREATE TABLE system_role_permission
     id            BIGSERIAL PRIMARY KEY,
     role_id       BIGINT    NOT NULL,
     permission_id BIGINT    NOT NULL,
-    create_time   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    creator       VARCHAR(255)
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
 
 COMMENT ON TABLE system_role_permission IS '角色-权限关联表';
@@ -107,9 +121,11 @@ CREATE TABLE origin_file_source
     size         BIGINT  NOT NULL,                           -- 文件大小（字节）
     md5          TEXT    NOT NULL,                           -- 文件 MD5 哈希值
     images       TEXT    NOT NULL DEFAULT '[]',              -- 文档内包含的图片列表（JSON 数组）
-    create_time  TIMESTAMP        DEFAULT CURRENT_TIMESTAMP, -- 记录创建时间
-    update_time  TIMESTAMP        DEFAULT CURRENT_TIMESTAMP, -- 记录更新时间
-    deleted      BOOLEAN          DEFAULT FALSE              -- 是否被逻辑删除（软删除）
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
 
 COMMENT ON TABLE origin_file_source IS '存储原始文件资源的表';
@@ -137,9 +153,11 @@ CREATE TABLE chat_message
     content         TEXT    NOT NULL,                           -- 对话内容
     role            TEXT    NOT NULL,                           -- 角色
     resource_ids    TEXT    NOT NULL DEFAULT '[]',              -- 附件列表
-    create_time     TIMESTAMP        DEFAULT CURRENT_TIMESTAMP, -- 记录创建时间
-    update_time     TIMESTAMP        DEFAULT CURRENT_TIMESTAMP, -- 记录更新时间
-    deleted         BOOLEAN          DEFAULT FALSE              -- 是否被逻辑删除（软删除）
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
 
 COMMENT ON TABLE chat_message IS '对话消息';
@@ -159,9 +177,11 @@ CREATE TABLE chat_conversation
     id          TEXT PRIMARY KEY,                    -- 对话ID
     title       TEXT   NOT NULL,                     -- 标题
     userId      BIGINT NOT NULL,                     -- 发起人
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录创建时间
-    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录更新时间
-    deleted     BOOLEAN   DEFAULT FALSE              -- 是否被逻辑删除（软删除）
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
 
 COMMENT ON TABLE chat_conversation IS '对话消息';
@@ -176,7 +196,24 @@ CREATE TABLE knowledge_base
     id          varchar(32)  PRIMARY KEY       NOT NULL,
     name        varchar(100) NOT NULL,
     description TEXT,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录创建时间
-    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 记录更新时间
-    deleted     BOOLEAN   DEFAULT FALSE              -- 是否被逻辑删除（软删除）
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
+);
+
+CREATE TABLE document_entity
+(
+    id        BIGSERIAL PRIMARY KEY,
+    file_name VARCHAR(512) NOT NULL,
+    path      TEXT NOT NULL,
+    base_id   varchar(32)         NOT NULL,
+    is_embedding BOOLEAN DEFAULT FALSE,
+    resource_id varchar(64) NOT NULL ,
+    create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted     BOOLEAN               DEFAULT FALSE,
+    creator     VARCHAR(255),
+    updater     VARCHAR(255)
 );
