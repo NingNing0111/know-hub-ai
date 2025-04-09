@@ -1,0 +1,22 @@
+.message-box {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  min-height: 40px;
+  width: max-content;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: var(
+    --antd-wave-shadow-color
+  ); /* Use Ant Design's wave shadow color variable */
+}
+
+.assistant-tool {
+  height: 25px;
+  display: flex;
+  gap: 10px;
+  margin: 0px 0px 0px 10px;
+}

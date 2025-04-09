@@ -5,6 +5,7 @@ import {
   history,
   RequestConfig,
   RunTimeLayoutConfig,
+  useModel,
 } from '@umijs/max';
 import { message } from 'antd';
 import { CiBellOn } from 'react-icons/ci';
@@ -45,12 +46,20 @@ export async function getInitialState(): Promise<GlobalType> {
 }
 
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  const { menuCollapsed, setMenuCollapsed } = useModel('collapsed');
+
   return {
     title: process.env.UMI_APP_NAME,
     logo: process.env.UMI_APP_LOGO,
     menu: {
       locale: false,
       type: 'group',
+    },
+    collapsed: menuCollapsed,
+    onCollapse: (value) => {
+      console.log(value);
+
+      setMenuCollapsed(value);
     },
     layout: 'mix',
     actionsRender: () => [

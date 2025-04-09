@@ -14,23 +14,30 @@
   border-inline-end: none;
   overflow-y: scroll;
   /* Optimize the scrollbar background */
-  scrollbar-width: thin;
-  scrollbar-color: #ccc #f5f5f5;
+  /* scrollbar-width: thin; */
+  /* scrollbar-color: #ccc #f5f5f5; */
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-.menu-box::-webkit-scrollbar {
+.chat-window-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* .menu-box::-webkit-scrollbar {
   width: 6px;
 }
 
 .menu-box::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: #939393;
 }
 
 .menu-box::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 6px;
   border: 3px solid #f5f5f5;
-}
+} */
 
 .menu-style {
   border-inline-end: none;
