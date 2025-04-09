@@ -3,7 +3,10 @@ package me.pgthinker.system.controller;
 import lombok.RequiredArgsConstructor;
 import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.ResultUtils;
+import me.pgthinker.core.pojo.PageResult;
 import me.pgthinker.system.controller.vo.KnowledgeBaseVO;
+import me.pgthinker.system.controller.vo.KnowledgeFileVO;
+import me.pgthinker.system.controller.vo.ListFileIdVO;
 import me.pgthinker.system.controller.vo.SimpleBaseVO;
 import me.pgthinker.system.service.ai.KnowledgeBaseService;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +45,16 @@ public class KnowledgeBaseController {
 	@GetMapping("/simple")
 	public BaseResponse<List<SimpleBaseVO>> simpleKnowledgeBase() {
 		return ResultUtils.success(knowledgeBaseService.simpleList());
+	}
+
+	@GetMapping("/getFile/{knowledgeId}")
+	public BaseResponse<PageResult> getKnowledgeFile(@PathVariable("knowledgeId") Long knowledgeId) {
+		return ResultUtils.success(knowledgeBaseService.getKnowledgeFile(knowledgeId));
+	}
+
+	@PostMapping("/delete")
+	public BaseResponse deleteKnowledgeFile(@RequestBody ListFileIdVO listFileIdVO){
+		return ResultUtils.success(knowledgeBaseService.deleteKnowledgeFile(listFileIdVO));
 	}
 
 }
