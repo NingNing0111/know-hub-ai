@@ -117,8 +117,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 
 		try{
 			//删除文件
-			document.setDeleted(true);
-			documentEntityMapper.updateById(document);
+			documentEntityMapper.deleteById(document);
 
 			//删除向量数据
 			VectorStore vectorStore = llmService.getVectorStore();
