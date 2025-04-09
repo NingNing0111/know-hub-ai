@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.pojo.PageParam;
+import me.pgthinker.core.pojo.PageResult;
 import me.pgthinker.system.controller.vo.KnowledgeBaseVO;
 import me.pgthinker.system.controller.vo.KnowledgeFileVO;
 import me.pgthinker.system.controller.vo.ListFileIdVO;
@@ -74,7 +75,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 	}
 
 	@Override
-	public List<KnowledgeFileVO> getKnowledgeFile(Long knowledgeId) {
+	public PageResult getKnowledgeFile(Long knowledgeId) {
 		PageParam pageParam = new PageParam();
 		// 构造分页对象
 		Page<DocumentEntity> page = new Page<>(pageParam.getPageNo(), pageParam.getPageSize());
@@ -84,13 +85,23 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 		// 执行分页查询
 		Page<DocumentEntity> files = documentEntityMapper.selectPage(page,queryWrapper);
 
-		return files.getRecords().stream().filter(file -> !file.getDeleted()).map(file -> {
-			KnowledgeFileVO knowledgeFileVO = new KnowledgeFileVO();
-			knowledgeFileVO.setFileName(file.getFileName());
-			knowledgeFileVO.setPath(file.getPath());
-			knowledgeFileVO.setId(file.getId());
-			return knowledgeFileVO;
-		}).collect(Collectors.toList());
+		List<KnowledgeFileVO> records = files.getRecords().stream()
+				.filter(file -> !file.getDeleted())
+				.map(file -> {
+					KnowledgeFileVO knowledgeFileVO = new KnowledgeFileVO();
+					knowledgeFileVO.setFileName(file.getFileName());
+					knowledgeFileVO.setPath(file.getPath());
+					knowledgeFileVO.setId(file.getId());
+					return knowledgeFileVO;
+				}).collect(Collectors.toList());
+
+		return new PageResult<>(
+				files.getTotal(),     // 总条数
+				records,              // 当前页数据
+				files.getCurrent(),   // 当前页码
+				files.getSize(),      // 每页条数
+				files.getPages()      // 总页数
+		);
 	}
 
 	@Override

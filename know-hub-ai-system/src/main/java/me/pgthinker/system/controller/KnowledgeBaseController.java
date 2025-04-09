@@ -3,6 +3,7 @@ package me.pgthinker.system.controller;
 import lombok.RequiredArgsConstructor;
 import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.ResultUtils;
+import me.pgthinker.core.pojo.PageResult;
 import me.pgthinker.system.controller.vo.KnowledgeBaseVO;
 import me.pgthinker.system.controller.vo.KnowledgeFileVO;
 import me.pgthinker.system.controller.vo.ListFileIdVO;
@@ -47,7 +48,7 @@ public class KnowledgeBaseController {
 	}
 
 	@GetMapping("/getFile/{knowledgeId}")
-	public BaseResponse<List<KnowledgeFileVO>> getKnowledgeFile(@PathVariable("knowledgeId") Long knowledgeId) {
+	public BaseResponse<PageResult> getKnowledgeFile(@PathVariable("knowledgeId") Long knowledgeId) {
 		return ResultUtils.success(knowledgeBaseService.getKnowledgeFile(knowledgeId));
 	}
 
