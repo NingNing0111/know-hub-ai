@@ -49,7 +49,16 @@
 
 ![img.png](doc/images/3.png)
 
+### 非多模态对话
 
-## 开发中
+![img.png](doc/images/4.png)
 
-![img.png](doc/images/dev-1.png)
+### 非多模态RAG对话（指定特定知识库）
+![img.png](doc/images/5.png)
+
+### 多模态对话
+
+![img.png](doc/images/6.png)
+
+![img.png](doc/images/7.png)
+

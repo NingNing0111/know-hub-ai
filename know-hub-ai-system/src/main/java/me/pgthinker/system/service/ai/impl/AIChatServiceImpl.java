@@ -7,7 +7,6 @@ import me.pgthinker.core.exception.BusinessException;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
 import me.pgthinker.system.controller.vo.ChatRequestVO;
 import me.pgthinker.system.mapper.KnowledgeBaseMapper;
-import me.pgthinker.system.model.entity.ai.KnowledgeBase;
 import me.pgthinker.system.model.entity.user.SystemUser;
 import me.pgthinker.system.model.enums.ChatType;
 import me.pgthinker.system.service.ai.*;
@@ -51,7 +50,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final KnowledgeBaseMapper knowledgeBaseMapper;
 
-	@Value("classpath:prompts/RAG.txt")
+	@Value("classpath:prompt/RAG.txt")
 	private Resource ragPromptResource;
 
 	@Override
@@ -64,7 +63,7 @@ public class AIChatServiceImpl implements AIChatService {
 			user.param(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
 			user.text(chatMessageVO.getContent());
 		})
-			.advisors(new SimpleLoggerAdvisor(),
+			.advisors(
 					MessageChatMemoryAdvisor.builder(databaseChatMemory)
 						.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
 						.conversationId(chatMessageVO.getConversationId())
@@ -85,6 +84,7 @@ public class AIChatServiceImpl implements AIChatService {
 			if (resourceIds != null && !resourceIds.isEmpty()) {
 				List<Media> medias = originFileResourceService.fromResourceId(resourceIds);
 				user.media(medias.toArray(new Media[0]));
+				log.info("medias:{}", medias);
 			}
 		})
 			.advisors(new SimpleLoggerAdvisor(),
@@ -137,15 +137,15 @@ public class AIChatServiceImpl implements AIChatService {
 
 	@Override
 	public Flux<ChatResponse> unifyChat(ChatRequestVO chatRequestVO) {
-		String chatType = chatRequestVO.getChatType().toLowerCase();
+		String chatType = chatRequestVO.getChatType();
 		ChatMessageVO chatMessageVO = new ChatMessageVO();
 		BeanUtils.copyProperties(chatRequestVO, chatMessageVO);
 		ChatType type = ChatType.parse(chatType);
 		return switch (type) {
 			case SIMPLE -> this.simpleChat(chatMessageVO);
-			case SIMPLE_RAG -> this.simpleRAGChat(chatMessageVO, chatRequestVO.getResourceIds());
+			case SIMPLE_RAG -> this.simpleRAGChat(chatMessageVO, chatRequestVO.getKnowledgeIds());
 			case MULTIMODAL -> this.multimodalChat(chatMessageVO);
-			case MULTIMODAL_RAG -> this.multimodalRAGChat(chatMessageVO, chatRequestVO.getResourceIds());
+			case MULTIMODAL_RAG -> this.multimodalRAGChat(chatMessageVO, chatRequestVO.getKnowledgeIds());
 			default -> throw new BusinessException(CoreCode.PARAMS_ERROR, "未知的对话类型");
 		};
 	}
@@ -153,26 +153,55 @@ public class AIChatServiceImpl implements AIChatService {
 	// meta ==> { "user_id"、"knowledge_base_id"、"document_id"}
 	private String buildBaseAccessFilter(List<String> knowledgeBaseIds) {
 		SystemUser user = SecurityFrameworkUtil.getLoginUser();
-		StringBuilder metaFilterSqlSb = new StringBuilder();
-		metaFilterSqlSb.append(" 0 = 1 ");
-		metaFilterSqlSb.append(" OR knowledge_base_id in [ ");
-		// 防止SQL注入
 
-		for (int i = 0; i < knowledgeBaseIds.size(); i++) {
-			String knowledgeBaseId = knowledgeBaseIds.get(i);
-			KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(knowledgeBaseId);
-			if (i != 0) {
-				metaFilterSqlSb.append(",");
-			}
-			if (knowledgeBase != null) {
-				metaFilterSqlSb.append(knowledgeBaseId);
-				metaFilterSqlSb.append(" ");
-			}
+		// 如果没有 ID，返回一个 false 的表达式
+		if (knowledgeBaseIds == null || knowledgeBaseIds.isEmpty()) {
+			return "knowledge_base_id in []"; // 或直接 return ""; 看你需求
 		}
 
-		log.info("Vector Search Filter SQL: {}", metaFilterSqlSb);
+		StringBuilder sb = new StringBuilder();
+		sb.append("knowledge_base_id in [");
+
+		for (int i = 0; i < knowledgeBaseIds.size(); i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+			sb.append("\"").append(knowledgeBaseIds.get(i)).append("\"");
+		}
+
+		sb.append("]");
+
+		log.info("Vector Search Filter SQL: {}", sb);
 		log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
-		return metaFilterSqlSb.toString();
+		return sb.toString();
 	}
+
+//	private String buildBaseAccessFilter(List<String> knowledgeBaseIds) {
+//		SystemUser user = SecurityFrameworkUtil.getLoginUser();
+//		StringBuilder metaFilterSqlSb = new StringBuilder();
+//		metaFilterSqlSb.append(" user_id == -1 ");
+//		metaFilterSqlSb.append(" OR knowledge_base_id in [ ");
+//		// 防止SQL注入
+//
+//		for (int i = 0; i < knowledgeBaseIds.size(); i++) {
+//			String knowledgeBaseId = knowledgeBaseIds.get(i);
+//			KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(knowledgeBaseId);
+//			if (i != 0) {
+//				metaFilterSqlSb.append(",");
+//			}
+//			if (knowledgeBase != null) {
+//				metaFilterSqlSb.append("\"");
+//				metaFilterSqlSb.append(knowledgeBaseId);
+//				metaFilterSqlSb.append("\"");
+//
+//				metaFilterSqlSb.append(" ");
+//			}
+//		}
+//		metaFilterSqlSb.append(" ]");
+//
+//		log.info("Vector Search Filter SQL: {}", metaFilterSqlSb);
+//		log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
+//		return metaFilterSqlSb.toString();
+//	}
 
 }

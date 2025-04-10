@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.pgthinker.core.pojo.BaseEntity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

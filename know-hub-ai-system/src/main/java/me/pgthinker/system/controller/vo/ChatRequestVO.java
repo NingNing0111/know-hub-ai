@@ -22,7 +22,6 @@ public class ChatRequestVO {
 	private String content;
 
 	private List<String> resourceIds;
-
 	private List<String> knowledgeIds;
 
 	@NotNull(message = "对话类型不能为空")

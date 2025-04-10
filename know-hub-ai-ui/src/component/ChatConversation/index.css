@@ -1,5 +1,5 @@
 .base-box {
-  width: 280px;
+  width: 200px;
   height: 100%; /* Set the height to the full height of the viewport */
   display: flex;
   flex-direction: column;

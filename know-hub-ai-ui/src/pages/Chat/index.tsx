@@ -1,16 +1,17 @@
 import ChatConversation from '@/component/ChatConversation';
 import ChatWindow from '@/component/ChatWindow';
-import { ChatSetting } from '@/models/types';
 import {
   createChatConversation,
   detailChatConversation,
   listChatConversation,
+  removeChatConversation,
 } from '@/services/chatConversationController';
 import { simpleKnowledgeBase } from '@/services/knowledgeBaseController';
+import { uploadChatFile } from '@/services/originFileResourceController';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { GetProp, MenuProps, message, Tooltip } from 'antd';
+import { GetProp, MenuProps, message, Popconfirm, Tooltip } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import {
   CustomEventDataType,
@@ -39,36 +40,41 @@ const chatOptions = [
     label: '多模态RAG对话',
   },
 ];
-const initialChatSetting: ChatSetting = {
-  chatType: 'simple',
-  knowledgeIds: [],
-};
 const ChatPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { menuCollapsed } = useModel('collapsed');
   const { chatSetting, curConversationId, setCurConverstationId } =
     useModel('chat');
-  const [simpleBaseList, setSimpleBaseList] = useState<API.SimpleBaseVO[]>([]);
   const [baseOptions, setBaseOptions] = useState<
     { value: string; label: string }[]
   >([]);
-  const [conversations, setConversations] = useState<API.ChatConversationVO[]>(
-    [],
-  );
-  const [conversationItem, setConversationItem] = useState<MenuItem[]>([]);
 
+  const [conversationItem, setConversationItem] = useState<MenuItem[]>([]);
   const [curConversationInfo, setCurConversationInfo] =
     useState<API.ChatConversationVO>({});
   const curConversationInfoRef = useRef<API.ChatConversationVO>({});
   const aiTextRef = useRef('');
-  const [aiText, setAiText] = useState('');
+  const chatWindowRef = useRef<HTMLDivElement>(null);
+  const chatFilesIdsRef = useRef<string[]>([]);
 
+  const removeConversation = async (value: API.ChatConversationVO) => {
+    try {
+      const res = await removeChatConversation({ ...value });
+      if (res.code === 0 && res.data) {
+        messageApi.success('删除成功');
+      } else {
+        messageApi.error(res.message);
+      }
+    } finally {
+      await loadConversationList();
+      await loadChatMessage();
+    }
+  };
   // 加载知识库列表
   const loadSimpleBaseList = async () => {
     try {
       const res = await simpleKnowledgeBase();
       if (res.code === 0 && res.data) {
-        setSimpleBaseList(res.data);
         // 知识库选项
         const options = res.data.map((item) => ({
           value: item.id ?? '',
@@ -87,14 +93,21 @@ const ChatPage = () => {
     try {
       const res = await listChatConversation();
       if (res.code === 0 && res.data) {
-        setConversations(res.data);
         const items = res.data.map((item) => {
           const menuItem: MenuItem = {
             key: item.id ?? '',
             label: item.title ?? '',
             extra: (
               <Tooltip title="删除对话记录">
-                <DeleteOutlined style={{ color: 'red' }} />
+                <Popconfirm
+                  title="删除记录记录?"
+                  description={`这会删除"${item.title}"。`}
+                  onConfirm={async () => {
+                    await removeConversation(item);
+                  }}
+                >
+                  <DeleteOutlined style={{ color: 'red' }} />
+                </Popconfirm>
               </Tooltip>
             ),
             onClick: () => {
@@ -128,7 +141,14 @@ const ChatPage = () => {
       console.log(e);
     }
   };
-
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTo({
+        top: chatWindowRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [curConversationInfo.messages]);
   // 初始化执行
   useEffect(() => {
     loadSimpleBaseList();
@@ -138,19 +158,6 @@ const ChatPage = () => {
   useEffect(() => {
     loadChatMessage();
   }, [curConversationId]);
-
-  // 对话记录列表
-  // useEffect(() => {}, [conversations]);
-
-  const chatWindowRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTo({
-        top: chatWindowRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
-  }, [curConversationInfo.messages]);
 
   const handleSendMsg = async (value: string) => {
     if (curConversationId === '') {
@@ -182,7 +189,6 @@ const ChatPage = () => {
   };
   const handleChat = async (inputText: string) => {
     aiTextRef.current = '';
-    setAiText(aiTextRef.current);
     const aiMessage: API.ChatMessageVO = {
       id: '1000001',
       role: 'ASSISTANT',
@@ -197,7 +203,7 @@ const ChatPage = () => {
       content: inputText,
       knowledgeIds: chatSetting.knowledgeIds,
       chatType: chatSetting.chatType,
-      resourceIds: [], // TODO:资源列表
+      resourceIds: chatFilesIdsRef.current, // TODO:资源列表
     };
 
     const source = new SSE(`/api/ai/chat/unify`, {
@@ -244,9 +250,26 @@ const ChatPage = () => {
       const dataEvent = e as CustomEventReadyStateChangeType;
       if (dataEvent.readyState >= 2) {
         setCurConversationInfo({ ...curConversationInfoRef.current });
+        chatFilesIdsRef.current = [];
       }
     });
     source.stream();
+  };
+
+  const handleUploadChatFile = async (file: File) => {
+    // 上传文件
+    try {
+      const res = await uploadChatFile({}, file);
+      if (res.code === 0 && res.data) {
+        chatFilesIdsRef.current.push(res.data ?? '');
+        messageApi.success('文件上传成功');
+      } else {
+        messageApi.error(res.message);
+      }
+    } catch (e) {
+      console.log(e);
+      messageApi.error('文件上传失败');
+    }
   };
 
   return (
@@ -272,6 +295,7 @@ const ChatPage = () => {
             messages={curConversationInfo?.messages}
             onSendMessage={handleSendMsg}
             chatWindowRef={chatWindowRef}
+            uploadFile={handleUploadChatFile}
           />
         </div>
       </PageContainer>

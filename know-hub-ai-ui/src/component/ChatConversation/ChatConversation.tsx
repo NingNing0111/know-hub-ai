@@ -20,14 +20,21 @@ const ChatConversation = (props: Props) => {
 
   return (
     <div className="base-box">
-      <Button
-        type="primary"
-        style={{ height: '100px' }}
-        icon={<PlusSquareTwoTone />}
-        onClick={props.onCreate}
+      <div
+        style={{ height: '20px', display: 'flex', justifyContent: 'center' }}
       >
-        开启新对话
-      </Button>
+        <Button
+          type="primary"
+          style={{
+            width: '100%',
+          }}
+          icon={<PlusSquareTwoTone />}
+          onClick={props.onCreate}
+        >
+          开启新对话
+        </Button>
+      </div>
+
       <div className="menu-box">
         {props.menuItems.length > 0 ? (
           <Menu

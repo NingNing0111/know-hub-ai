@@ -70,7 +70,7 @@ public class DatabaseChatMemory implements ChatMemory {
 		qw.eq(ChatMessage::getIsClean, false);
 		qw.last(" LIMIT " + lastN);
 		List<ChatMessage> chatMessages = chatMessageMapper.selectList(qw);
-		log.info("上下文对话:{}", chatMessages);
+		log.info("Memory Context:{}", chatMessages);
 		return chatMessageService.toMessage(chatMessages);
 	}
 

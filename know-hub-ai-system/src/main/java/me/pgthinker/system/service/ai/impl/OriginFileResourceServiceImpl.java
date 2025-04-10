@@ -68,7 +68,7 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		List<OriginFileResource> originFileResources = this.listByIds(resourceIds);
 		List<Media> medias = originFileResources.stream().map(item -> {
 			// 获取文件资源的临时访问链接
-			String fileUrl = objectStoreService.getTmpFileUrl(CHAT_BUCKET_NAME, item.getBucketName());
+			String fileUrl = objectStoreService.getTmpFileUrl(item.getBucketName(), item.getObjectName());
 			String[] split = item.getFileName().split("\\.");
 			String suffix = split[split.length - 1];
 			try {
@@ -134,16 +134,13 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		return documentEntity.getId();
 	}
 
-	private String objectNameWithUserId(String filename) {
-		SystemUser loginUser = SecurityFrameworkUtil.getLoginUser();
-		return loginUser.getId() + "/" + UUID.randomUUID().toString().replace("-", "") + "-" + filename;
-	}
+
 
 	private OriginFileResource upload(MultipartFile file, String bucketName) {
 		String originalFilename = file.getOriginalFilename();
 		String objectName = objectNameWithUserId(originalFilename);
 		String id = FileUtil.generatorFileId(bucketName, objectName);
-		String newObjectName = String.format("%s/%s", id, objectName);
+		String newObjectName = String.format("%s/%s", objectName, id);
 		String path;
 		String md5;
 		try {
@@ -168,6 +165,11 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		originFileResource.setContentType(fileInfo.getContentType());
 		this.saveOrUpdate(originFileResource);
 		return originFileResource;
+	}
+
+	private String objectNameWithUserId(String filename) {
+		SystemUser loginUser = SecurityFrameworkUtil.getLoginUser();
+		return loginUser.getId() + "/" + UUID.randomUUID().toString().replace("-", "") + "-" + filename;
 	}
 
 }
