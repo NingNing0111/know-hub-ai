@@ -1,5 +1,7 @@
+import { ReactComponent as RobotIcon } from '@/assets/icons/robat.svg';
+import { ReactComponent as UserIcon } from '@/assets/icons/user.svg';
 import { CopyOutlined, RedoOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import { useState } from 'react';
 import MarkdownContent from '../MarkdownContent';
 import './index.css';
@@ -13,15 +15,29 @@ const ChatMessage = (props: Props) => {
     <div
       className="message-box"
       style={{
-        alignItems: props.role === 'user' ? 'end' : 'start',
+        alignItems: props.role.toLowerCase() === 'user' ? 'end' : 'start',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="content-container">
+      <div
+        className="content-container"
+        style={{
+          alignItems: props.role.toLowerCase() === 'user' ? 'end' : 'start',
+        }}
+      >
+        <Avatar
+          style={{
+            background: 'none',
+            marginBottom: '10',
+          }}
+          icon={
+            props.role.toLowerCase() === 'user' ? <UserIcon /> : <RobotIcon />
+          }
+        />
         <MarkdownContent content={props.content} />
       </div>
-      {props.role === 'assistant' && (
+      {props.role.toLowerCase() === 'assistant' && (
         <div className="assistant-tool">
           {isHovered && (
             <Tooltip title="复制" placement="bottom">

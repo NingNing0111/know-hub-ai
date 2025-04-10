@@ -11,6 +11,9 @@ import java.util.List;
  */
 @Data
 public class ListFileIdVO {
-    private Long fileId;
-    private Long baseId;
+
+	private Long fileId;
+
+	private Long baseId;
+
 }

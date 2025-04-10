@@ -19,6 +19,12 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseBoolean = {
+    code?: number;
+    data?: boolean;
+    message?: string;
+  };
+
   type BaseResponseChatConversationVO = {
     code?: number;
     data?: ChatConversationVO;
@@ -28,6 +34,12 @@ declare namespace API {
   type BaseResponseInteger = {
     code?: number;
     data?: number;
+    message?: string;
+  };
+
+  type BaseResponseListChatConversationVO = {
+    code?: number;
+    data?: ChatConversationVO[];
     message?: string;
   };
 
@@ -70,8 +82,8 @@ declare namespace API {
 
   type ChatGenerationMetadata = {
     empty?: boolean;
-    contentFilters?: string[];
     finishReason?: string;
+    contentFilters?: string[];
   };
 
   type ChatMessageVO = {
@@ -83,19 +95,16 @@ declare namespace API {
     resourceIds?: string[];
   };
 
-  type ChatResponse = {
-    result?: Generation;
-    results?: Generation[];
-    metadata?: ChatResponseMetadata;
+  type ChatRequestVO = {
+    conversationId: string;
+    content: string;
+    resourceIds?: string[];
+    knowledgeIds?: string[];
+    chatType: string;
   };
 
-  type ChatResponseMetadata = {
-    id?: string;
-    model?: string;
-    rateLimit?: RateLimit;
-    usage?: Usage;
-    promptMetadata?: PromptMetadata;
-    empty?: boolean;
+  type detailChatConversationParams = {
+    id: string;
   };
 
   type DocumentVO = {
@@ -124,10 +133,6 @@ declare namespace API {
     author?: number;
     authorName?: string;
     createTime?: string;
-  };
-
-  type listChatConversationParams = {
-    id: string;
   };
 
   type listDocumentParams = {
@@ -172,37 +177,6 @@ declare namespace API {
     pages?: number;
   };
 
-  type PromptMetadata = true;
-
-  type RateLimit = {
-    requestsLimit?: number;
-    requestsRemaining?: number;
-    requestsReset?: {
-      seconds?: number;
-      zero?: boolean;
-      nano?: number;
-      negative?: boolean;
-      units?: {
-        durationEstimated?: boolean;
-        timeBased?: boolean;
-        dateBased?: boolean;
-      }[];
-    };
-    tokensLimit?: number;
-    tokensRemaining?: number;
-    tokensReset?: {
-      seconds?: number;
-      zero?: boolean;
-      nano?: number;
-      negative?: boolean;
-      units?: {
-        durationEstimated?: boolean;
-        timeBased?: boolean;
-        dateBased?: boolean;
-      }[];
-    };
-  };
-
   type SimpleBaseVO = {
     id?: string;
     name?: string;
@@ -217,13 +191,6 @@ declare namespace API {
 
   type uploadKnowledgeFileParams = {
     knowledgeId: string;
-  };
-
-  type Usage = {
-    promptTokens?: number;
-    completionTokens?: number;
-    totalTokens?: number;
-    nativeUsage?: Record<string, any>;
   };
 
   type UserLoginVO = {

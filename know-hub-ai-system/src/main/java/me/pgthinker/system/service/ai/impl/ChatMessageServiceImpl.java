@@ -35,7 +35,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 		chatMessages.sort(Comparator.comparingInt(ChatMessage::getMessageNo));
 
 		return chatMessages.stream().map(chatMessage -> {
-			String role = chatMessage.getRole();
+			String role = chatMessage.getRole().toLowerCase();
 			Message message = switch (role) {
 				case "user" -> new UserMessage(chatMessage.getContent(),
 						originFileResourceService.fromResourceId(chatMessage.getResourceIds()));

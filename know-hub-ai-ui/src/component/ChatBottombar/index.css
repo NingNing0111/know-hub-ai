@@ -1,0 +1,18 @@
+.input-box {
+  width: 90%;
+  height: 100px;
+  border-radius: 30px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.input-box:hover {
+  border: 1px solid #ccc;
+}
+
+.input-tool {
+  padding: 10px 6px 10px 0px;
+  display: flex;
+  justify-content: space-between;
+}

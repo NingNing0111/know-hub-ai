@@ -1,7 +1,6 @@
 package me.pgthinker.system.service.ai.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import me.pgthinker.system.mapper.ChatMessageMapper;
 import me.pgthinker.system.model.entity.ai.ChatConversation;
 import me.pgthinker.system.model.entity.ai.ChatMessage;
 import me.pgthinker.system.service.ai.ChatConversationService;
-import me.pgthinker.system.service.ai.ChatMessageService;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -34,21 +32,10 @@ public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMap
 
 	private final ChatMessageMapper chatMessageMapper;
 
-	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public ChatConversationVO getConversation(String conversationId) {
-		LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
-		qw.eq(ChatMessage::getConversationId, conversationId);
-		qw.orderByAsc(ChatMessage::getMessageNo);
-		List<ChatMessage> chatMessages = chatMessageMapper.selectList(qw);
-		List<ChatMessageVO> chatMessageVOS = transferChatMessage(chatMessages);
 		ChatConversation chatConversation = this.getById(conversationId);
-		ChatConversationVO chatConversationVO = new ChatConversationVO();
-		chatConversationVO.setId(chatConversation.getId());
-		chatConversationVO.setMessages(chatMessageVOS);
-		chatConversationVO.setTitle(chatConversation.getTitle());
-		chatConversationVO.setCreateTime(chatConversation.getCreateTime());
-		return chatConversationVO;
+		return transferChatConversation(List.of(chatConversation)).get(0);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -68,6 +55,39 @@ public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMap
 		chatConversationVO.setTitle(title);
 		chatConversationVO.setMessages(new ArrayList<>());
 		return chatConversationVO;
+	}
+
+	@Override
+	public List<ChatConversationVO> listConversation() {
+		LambdaQueryWrapper<ChatConversation> qw = new LambdaQueryWrapper<>();
+		qw.orderByDesc(ChatConversation::getCreateTime);
+		qw.eq(ChatConversation::getUserId, SecurityFrameworkUtil.getCurrUserId());
+		qw.last(" LIMIT 30");
+		List<ChatConversation> list = this.list(qw);
+		return transferChatConversation(list);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public Boolean removeConversation(String conversationId) {
+		return this.removeById(conversationId);
+	}
+
+	public List<ChatConversationVO> transferChatConversation(List<ChatConversation> chatConversations) {
+		return chatConversations.stream().map(item -> {
+			LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
+			qw.eq(ChatMessage::getConversationId, item.getId());
+			qw.orderByAsc(ChatMessage::getCreateTime);
+			List<ChatMessage> chatMessages = chatMessageMapper.selectList(qw);
+			List<ChatMessageVO> chatMessageVOS = this.transferChatMessage(chatMessages);
+
+			ChatConversationVO chatConversationVO = new ChatConversationVO();
+			chatConversationVO.setId(item.getId());
+			chatConversationVO.setTitle(item.getTitle());
+			chatConversationVO.setCreateTime(item.getCreateTime());
+			chatConversationVO.setMessages(chatMessageVOS);
+			return chatConversationVO;
+		}).toList();
 	}
 
 	public List<ChatMessageVO> transferChatMessage(List<ChatMessage> chatMessages) {

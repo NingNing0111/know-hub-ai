@@ -11,8 +11,8 @@ import * as originFileResourceController from './originFileResourceController';
 export default {
   originFileResourceController,
   knowledgeBaseController,
+  documentController,
   chatConversationController,
   authController,
   aiChatController,
-  documentController,
 };

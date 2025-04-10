@@ -20,37 +20,40 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class DocumentVO extends PageParam {
 
-    private String knowledgeBaseId;
+	private String knowledgeBaseId;
 
-    private Long id;
+	private Long id;
 
-    private String fileName;
+	private String fileName;
 
-    /**
-     * 下载路径
-     */
-    private String path;
+	/**
+	 * 下载路径
+	 */
+	private String path;
 
-    /**
-     * 是否存储到了向量数据库中
-     */
-    private Boolean isEmbedding;
-    /**
-     * 知识库ID
-     */
-    private String baseId;
-    /**
-     * 知识库名称
-     */
-    private String knowledgeBaseName;
-    /**
-     * 文件类型
-     */
-    private String fileType;
+	/**
+	 * 是否存储到了向量数据库中
+	 */
+	private Boolean isEmbedding;
 
-    /**
-     * 上传时间
-     */
-    private LocalDateTime uploadTime;
+	/**
+	 * 知识库ID
+	 */
+	private String baseId;
+
+	/**
+	 * 知识库名称
+	 */
+	private String knowledgeBaseName;
+
+	/**
+	 * 文件类型
+	 */
+	private String fileType;
+
+	/**
+	 * 上传时间
+	 */
+	private LocalDateTime uploadTime;
 
 }

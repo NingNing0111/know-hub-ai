@@ -1,9 +1,6 @@
 package me.pgthinker.system.service.ai;
 
-import me.pgthinker.core.pojo.PageResult;
 import me.pgthinker.system.controller.vo.KnowledgeBaseVO;
-import me.pgthinker.system.controller.vo.KnowledgeFileVO;
-import me.pgthinker.system.controller.vo.ListFileIdVO;
 import me.pgthinker.system.controller.vo.SimpleBaseVO;
 
 import java.util.List;
@@ -29,7 +26,4 @@ public interface KnowledgeBaseService {
 	// 简单的列表
 	List<SimpleBaseVO> simpleList();
 
-	PageResult getKnowledgeFile(Long knowledgeId);
-
-	Object deleteKnowledgeFile(ListFileIdVO listFileIdVO);
 }

@@ -26,6 +26,7 @@ public class KnowledgeBaseVO {
 	private Long author;
 
 	private String authorName;
+
 	private LocalDateTime createTime;
 
 }

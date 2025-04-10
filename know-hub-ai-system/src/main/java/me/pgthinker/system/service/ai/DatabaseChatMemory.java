@@ -30,24 +30,29 @@ import static org.springframework.ai.chat.messages.AbstractMessage.MESSAGE_TYPE;
 public class DatabaseChatMemory implements ChatMemory {
 
 	private final ChatMessageMapper chatMessageMapper;
+
 	private final ChatMessageService chatMessageService;
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void add(String conversationId, List<Message> messages) {
+		LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
+		qw.eq(ChatMessage::getIsClean, false);
+		Long cnt = this.chatMessageMapper.selectCount(qw);
 		ArrayList<ChatMessage> chatMessageList = new ArrayList<>();
 		for (int i = 0; i < messages.size(); i++) {
 			Message message = messages.get(i);
 			ChatMessage chatMessage = new ChatMessage();
 			chatMessage.setConversationId(conversationId);
-			chatMessage.setMessageNo(i);
+			chatMessage.setMessageNo((int) (cnt + i + 1));
 			chatMessage.setContent(message.getText());
 			chatMessage.setRole(message.getMetadata().get(MESSAGE_TYPE).toString());
-			List<String> resourceIds = (List)message.getMetadata().get(AppConstant.CHAT_MEDIAS);
-			if(resourceIds != null && !resourceIds.isEmpty()) {
+			List<String> resourceIds = (List) message.getMetadata().get(AppConstant.CHAT_MEDIAS);
+			if (resourceIds != null && !resourceIds.isEmpty()) {
 				chatMessage.setHasMedia(true);
 				chatMessage.setResourceIds(resourceIds);
-			}else{
+			}
+			else {
 				chatMessage.setHasMedia(false);
 				chatMessage.setResourceIds(List.of());
 			}
@@ -61,11 +66,11 @@ public class DatabaseChatMemory implements ChatMemory {
 	public List<Message> get(String conversationId, int lastN) {
 		LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
 		qw.eq(ChatMessage::getConversationId, conversationId);
-		qw.orderByDesc(ChatMessage::getCreateTime);
+		qw.orderByAsc(ChatMessage::getCreateTime);
 		qw.eq(ChatMessage::getIsClean, false);
 		qw.last(" LIMIT " + lastN);
-
 		List<ChatMessage> chatMessages = chatMessageMapper.selectList(qw);
+		log.info("上下文对话:{}", chatMessages);
 		return chatMessageService.toMessage(chatMessages);
 	}
 
@@ -75,7 +80,7 @@ public class DatabaseChatMemory implements ChatMemory {
 		LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
 		qw.eq(ChatMessage::getConversationId, conversationId);
 		List<ChatMessage> chatMessages = chatMessageMapper.selectList(qw);
-		chatMessages.forEach(item->{
+		chatMessages.forEach(item -> {
 			item.setIsClean(true);
 		});
 		chatMessageMapper.updateById(chatMessages);

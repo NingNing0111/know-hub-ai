@@ -7,7 +7,6 @@ import {
   RunTimeLayoutConfig,
   useModel,
 } from '@umijs/max';
-import { message } from 'antd';
 import { CiBellOn } from 'react-icons/ci';
 import { GlobalType, ThemeType } from './access';
 import ThemeSwitcher from './component/ThemeSwitcher';
@@ -55,10 +54,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       locale: false,
       type: 'group',
     },
-    collapsed: menuCollapsed,
+    defaultCollapsed: true,
     onCollapse: (value) => {
-      console.log(value);
-
       setMenuCollapsed(value);
     },
     layout: 'mix',
@@ -109,10 +106,6 @@ export const request: RequestConfig = {
   ],
   responseInterceptors: [
     (response: AxiosResponse) => {
-      const data: ResponseData = response.data;
-      if (data.code !== 0) {
-        message.error(data.message);
-      }
       return response;
     },
   ],

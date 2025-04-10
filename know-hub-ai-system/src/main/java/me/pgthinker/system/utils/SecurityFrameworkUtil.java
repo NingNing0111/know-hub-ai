@@ -20,8 +20,6 @@ import java.util.Optional;
 @Slf4j
 public class SecurityFrameworkUtil {
 
-	public static final String AUTHORIZATION_BEARER = "Bearer";
-
 	public static Authentication getAuthentication() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Optional.ofNullable(context).orElseThrow(() -> new BusinessException(CoreCode.OPERATION_ERROR));

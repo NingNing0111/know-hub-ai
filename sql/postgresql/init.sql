@@ -153,6 +153,7 @@ CREATE TABLE chat_message
     content         TEXT    NOT NULL,                           -- 对话内容
     role            TEXT    NOT NULL,                           -- 角色
     resource_ids    TEXT    NOT NULL DEFAULT '[]',              -- 附件列表
+    is_clean BOOLEAN DEFAULT FALSE,
     create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted     BOOLEAN               DEFAULT FALSE,
@@ -176,7 +177,7 @@ CREATE TABLE chat_conversation
 (
     id          TEXT PRIMARY KEY,                    -- 对话ID
     title       TEXT   NOT NULL,                     -- 标题
-    userId      BIGINT NOT NULL,                     -- 发起人
+    user_id      BIGINT NOT NULL,                     -- 发起人
     create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted     BOOLEAN               DEFAULT FALSE,

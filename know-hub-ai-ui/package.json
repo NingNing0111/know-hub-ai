@@ -31,6 +31,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "sse-ts": "^1.0.3",
     "swagger-ui-dist": "^5.20.7"
   },
   "devDependencies": {

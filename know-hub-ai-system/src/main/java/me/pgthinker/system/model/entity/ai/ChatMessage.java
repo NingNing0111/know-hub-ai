@@ -28,7 +28,7 @@ public class ChatMessage extends BaseEntity {
 	/**
 	 * 聊天信息ID
 	 */
-	@TableId(type = IdType.AUTO)
+	@TableId(type = IdType.ASSIGN_ID)
 	private String id;
 
 	/**

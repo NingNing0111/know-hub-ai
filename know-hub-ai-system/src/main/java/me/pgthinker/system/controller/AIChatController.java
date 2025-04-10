@@ -1,9 +1,13 @@
 package me.pgthinker.system.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
+import me.pgthinker.system.controller.vo.ChatRequestVO;
 import me.pgthinker.system.service.ai.AIChatService;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.model.Generation;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -14,6 +18,7 @@ import reactor.core.publisher.Flux;
  * @Date: 2025/4/8 05:21
  * @Description:
  */
+@Slf4j
 @RestController
 @RequestMapping("/ai")
 @RequiredArgsConstructor
@@ -21,25 +26,9 @@ public class AIChatController {
 
 	private final AIChatService chatService;
 
-	@PostMapping("/chat/simple")
-	public Flux<ChatResponse> simpleChat(@RequestBody ChatMessageVO chatMessageVO) {
-		return chatService.simpleChat(chatMessageVO);
+	@PostMapping(value = "/chat/unify", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<Generation> unifyChat(@RequestBody ChatRequestVO chatRequestVO) {
+		return chatService.unifyChat(chatRequestVO).map(ChatResponse::getResult).flatMapSequential(Flux::just);
 	}
-
-	@PostMapping("/chat/multimodal")
-	public Flux<ChatResponse> multimodalChat(@RequestBody ChatMessageVO chatMessageVO) {
-		return chatService.multimodalChat(chatMessageVO);
-	}
-
-	@PostMapping("/chat/simple/rag/{knowledgeBaseId}")
-	public Flux<ChatResponse> simpleRAGChat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
-		return chatService.simpleRAGChat(chatMessageVO, knowledgeBaseId);
-	}
-
-	@PostMapping("/chat/multimodal/rag/{knowledgeBaseId}")
-	public Flux<ChatResponse> multimodalRAGChat(@PathVariable String knowledgeBaseId, @RequestBody ChatMessageVO chatMessageVO) {
-		return chatService.multimodalRAGChat(chatMessageVO, knowledgeBaseId);
-	}
-
 
 }

@@ -62,6 +62,9 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 
 	@Override
 	public List<Media> fromResourceId(List<String> resourceIds) {
+		if (resourceIds == null || resourceIds.isEmpty()) {
+			return List.of();
+		}
 		List<OriginFileResource> originFileResources = this.listByIds(resourceIds);
 		List<Media> medias = originFileResources.stream().map(item -> {
 			// 获取文件资源的临时访问链接
@@ -108,8 +111,9 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		Resource resource;
 		try {
 			InputStream inputStream = objectStoreService.getFile(upload.getBucketName(), upload.getObjectName());
-			 resource = new ByteArrayResource(inputStream.readAllBytes());
-		}catch (IOException e) {
+			resource = new ByteArrayResource(inputStream.readAllBytes());
+		}
+		catch (IOException e) {
 			throw new BusinessException(CoreCode.SYSTEM_ERROR, e.getMessage());
 		}
 		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(resource);

@@ -7,6 +7,8 @@ import me.pgthinker.system.controller.vo.ChatConversationVO;
 import me.pgthinker.system.service.ai.ChatConversationService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Project: me.pgthinker.system.controller
  * @Author: NingNing0111
@@ -26,9 +28,19 @@ public class ChatConversationController {
 		return ResultUtils.success(chatConversationService.createConversation(chatConversationVO));
 	}
 
-	@GetMapping("/list")
-	public BaseResponse<ChatConversationVO> listChatConversation(@RequestParam(name = "id") String id) {
+	@GetMapping("/detail")
+	public BaseResponse<ChatConversationVO> detailChatConversation(@RequestParam(name = "id") String id) {
 		return ResultUtils.success(chatConversationService.getConversation(id));
+	}
+
+	@GetMapping("/list")
+	public BaseResponse<List<ChatConversationVO>> listChatConversation() {
+		return ResultUtils.success(chatConversationService.listConversation());
+	}
+
+	@PostMapping("/remove")
+	public BaseResponse<Boolean> removeChatConversation(@RequestBody ChatConversationVO chatConversationVO) {
+		return ResultUtils.success(chatConversationService.removeConversation(chatConversationVO.getId()));
 	}
 
 }

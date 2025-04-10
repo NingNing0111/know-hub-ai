@@ -6,12 +6,17 @@
 
 .content-container {
   min-height: 40px;
-  width: max-content;
   padding: 10px;
   border-radius: 12px;
-  background-color: var(
-    --antd-wave-shadow-color
-  ); /* Use Ant Design's wave shadow color variable */
+  background-color: var(--antd-wave-shadow-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-size: 18px;
 }
 
 .assistant-tool {

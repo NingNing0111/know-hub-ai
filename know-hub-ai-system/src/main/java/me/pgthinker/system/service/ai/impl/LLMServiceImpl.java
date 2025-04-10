@@ -108,17 +108,17 @@ public class LLMServiceImpl implements LLMService {
 	@Override
 	public VectorStore getVectorStore() {
 		return PgVectorStore.builder(jdbcTemplate, this.getEmbeddingModel())
-				.initializeSchema(pgVectorStoreProperties.isInitializeSchema())
-				.dimensions(pgVectorStoreProperties.getDimensions())
-				.distanceType(pgVectorStoreProperties.getDistanceType())
-				.indexType(pgVectorStoreProperties.getIndexType())
-				.maxDocumentBatchSize(pgVectorStoreProperties.getMaxDocumentBatchSize())
-				.schemaName(pgVectorStoreProperties.getSchemaName())
-				.vectorTableName(pgVectorStoreProperties.getTableName())
-				.removeExistingVectorStoreTable(pgVectorStoreProperties.isRemoveExistingVectorStoreTable())
-				.idType(pgVectorStoreProperties.getIdType())
-				.vectorTableValidationsEnabled(pgVectorStoreProperties.isSchemaValidation())
-				.build();
+			.initializeSchema(pgVectorStoreProperties.isInitializeSchema())
+			.dimensions(pgVectorStoreProperties.getDimensions())
+			.distanceType(pgVectorStoreProperties.getDistanceType())
+			.indexType(pgVectorStoreProperties.getIndexType())
+			.maxDocumentBatchSize(pgVectorStoreProperties.getMaxDocumentBatchSize())
+			.schemaName(pgVectorStoreProperties.getSchemaName())
+			.vectorTableName(pgVectorStoreProperties.getTableName())
+			.removeExistingVectorStoreTable(pgVectorStoreProperties.isRemoveExistingVectorStoreTable())
+			.idType(pgVectorStoreProperties.getIdType())
+			.vectorTableValidationsEnabled(pgVectorStoreProperties.isSchemaValidation())
+			.build();
 	}
 
 }

@@ -37,6 +37,10 @@ public interface LLMService {
 	 */
 	EmbeddingModel getEmbeddingModel();
 
+	/**
+	 * 获取向量存储对象
+	 * @return
+	 */
 	VectorStore getVectorStore();
 
 }

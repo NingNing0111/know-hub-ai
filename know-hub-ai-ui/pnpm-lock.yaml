@@ -59,6 +59,9 @@ importers:
       remark-math:
         specifier: ^6.0.0
         version: 6.0.0
+      sse-ts:
+        specifier: ^1.0.3
+        version: 1.0.3
       swagger-ui-dist:
         specifier: ^5.20.7
         version: 5.20.7
@@ -6033,6 +6036,9 @@ packages:
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==, tarball: https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz}
+
+  sse-ts@1.0.3:
+    resolution: {integrity: sha512-hi1/1zWL+S0zcF2IBALBcl63BID5V2w15fglAANke+SYgFe8AbNXxOrlLBBFVwiuNZbLszF0ZGSgQLslUyAWPQ==, tarball: https://registry.npmjs.org/sse-ts/-/sse-ts-1.0.3.tgz}
 
   stable@0.1.8:
     resolution: {integrity: sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==, tarball: https://registry.npmjs.org/stable/-/stable-0.1.8.tgz}
@@ -14356,6 +14362,8 @@ snapshots:
   split2@4.2.0: {}
 
   sprintf-js@1.0.3: {}
+
+  sse-ts@1.0.3: {}
 
   stable@0.1.8: {}
 

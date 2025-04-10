@@ -15,9 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageResult<T> {
-    private long total;
-    private List<T> records;
-    private long current;
-    private long size;
-    private long pages;
+
+	private long total;
+
+	private List<T> records;
+
+	private long current;
+
+	private long size;
+
+	private long pages;
+
 }

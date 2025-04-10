@@ -12,5 +12,8 @@ import me.pgthinker.system.controller.vo.DocumentVO;
  */
 public interface DocumentEntityService {
 
-    Page<DocumentVO> listDocuments(DocumentVO document);
+	Page<DocumentVO> listDocuments(DocumentVO document);
+
+	Boolean deleteKnowledgeFile(DocumentVO documentVO);
+
 }
