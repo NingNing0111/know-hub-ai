@@ -134,8 +134,6 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		return documentEntity.getId();
 	}
 
-
-
 	private OriginFileResource upload(MultipartFile file, String bucketName) {
 		String originalFilename = file.getOriginalFilename();
 		String objectName = objectNameWithUserId(originalFilename);

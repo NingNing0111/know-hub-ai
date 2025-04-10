@@ -63,11 +63,10 @@ public class AIChatServiceImpl implements AIChatService {
 			user.param(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
 			user.text(chatMessageVO.getContent());
 		})
-			.advisors(
-					MessageChatMemoryAdvisor.builder(databaseChatMemory)
-						.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
-						.conversationId(chatMessageVO.getConversationId())
-						.build())
+			.advisors(MessageChatMemoryAdvisor.builder(databaseChatMemory)
+				.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
+				.conversationId(chatMessageVO.getConversationId())
+				.build())
 			.stream()
 			.chatResponse();
 	}
@@ -176,32 +175,32 @@ public class AIChatServiceImpl implements AIChatService {
 		return sb.toString();
 	}
 
-//	private String buildBaseAccessFilter(List<String> knowledgeBaseIds) {
-//		SystemUser user = SecurityFrameworkUtil.getLoginUser();
-//		StringBuilder metaFilterSqlSb = new StringBuilder();
-//		metaFilterSqlSb.append(" user_id == -1 ");
-//		metaFilterSqlSb.append(" OR knowledge_base_id in [ ");
-//		// 防止SQL注入
-//
-//		for (int i = 0; i < knowledgeBaseIds.size(); i++) {
-//			String knowledgeBaseId = knowledgeBaseIds.get(i);
-//			KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(knowledgeBaseId);
-//			if (i != 0) {
-//				metaFilterSqlSb.append(",");
-//			}
-//			if (knowledgeBase != null) {
-//				metaFilterSqlSb.append("\"");
-//				metaFilterSqlSb.append(knowledgeBaseId);
-//				metaFilterSqlSb.append("\"");
-//
-//				metaFilterSqlSb.append(" ");
-//			}
-//		}
-//		metaFilterSqlSb.append(" ]");
-//
-//		log.info("Vector Search Filter SQL: {}", metaFilterSqlSb);
-//		log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
-//		return metaFilterSqlSb.toString();
-//	}
+	// private String buildBaseAccessFilter(List<String> knowledgeBaseIds) {
+	// SystemUser user = SecurityFrameworkUtil.getLoginUser();
+	// StringBuilder metaFilterSqlSb = new StringBuilder();
+	// metaFilterSqlSb.append(" user_id == -1 ");
+	// metaFilterSqlSb.append(" OR knowledge_base_id in [ ");
+	// // 防止SQL注入
+	//
+	// for (int i = 0; i < knowledgeBaseIds.size(); i++) {
+	// String knowledgeBaseId = knowledgeBaseIds.get(i);
+	// KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(knowledgeBaseId);
+	// if (i != 0) {
+	// metaFilterSqlSb.append(",");
+	// }
+	// if (knowledgeBase != null) {
+	// metaFilterSqlSb.append("\"");
+	// metaFilterSqlSb.append(knowledgeBaseId);
+	// metaFilterSqlSb.append("\"");
+	//
+	// metaFilterSqlSb.append(" ");
+	// }
+	// }
+	// metaFilterSqlSb.append(" ]");
+	//
+	// log.info("Vector Search Filter SQL: {}", metaFilterSqlSb);
+	// log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
+	// return metaFilterSqlSb.toString();
+	// }
 
 }
