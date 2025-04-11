@@ -1,6 +1,7 @@
 package me.pgthinker.system.service.ai;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.http.HttpServletResponse;
 import me.pgthinker.system.controller.vo.DocumentVO;
 
 /**
@@ -16,4 +17,5 @@ public interface DocumentEntityService {
 
 	Boolean deleteKnowledgeFile(DocumentVO documentVO);
 
+	void download(Long fileId, HttpServletResponse response);
 }
