@@ -3,8 +3,11 @@ package me.pgthinker.system.service.ai.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.exception.BusinessException;
 import me.pgthinker.core.service.objectstore.ObjectStoreService;
@@ -15,6 +18,7 @@ import me.pgthinker.system.mapper.OriginFileResourceMapper;
 import me.pgthinker.system.model.entity.ai.DocumentEntity;
 import me.pgthinker.system.model.entity.ai.KnowledgeBase;
 import me.pgthinker.system.model.entity.ai.OriginFileResource;
+import me.pgthinker.system.objectstore.service.MinIOService;
 import me.pgthinker.system.service.ai.DocumentEntityService;
 import me.pgthinker.system.service.ai.LLMService;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -23,6 +27,10 @@ import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -46,6 +54,7 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 	private final ObjectStoreService objectStoreService;
 
 	private final LLMService llmService;
+	private final MinIOService minIOService;
 
 	@Override
 	public Page<DocumentVO> listDocuments(DocumentVO document) {
@@ -94,6 +103,28 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 			throw new BusinessException(CoreCode.SYSTEM_ERROR, e.getMessage());
 		}
 
+	}
+
+	@Override
+	public String download(Long fileId, HttpServletResponse response) {
+		OriginFileResource originFileResource = originFileResourceMapper.selectById(fileId);
+		InputStream file = minIOService.getFile(originFileResource.getBucketName(), originFileResource.getObjectName());
+
+		//设置响应头
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition","attachment; filename=\"" + URLEncoder.encode(originFileResource.getFileName(), StandardCharsets.UTF_8) + "\"");
+
+		try(ServletOutputStream out = response.getOutputStream()){
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = file.read(buffer)) != -1) {
+				out.write(buffer, 0, length);
+			}
+			out.flush();
+			return "下载成功";
+		} catch (IOException e){
+			throw new RuntimeException("文件下载失败", e);
+		}
 	}
 
 	private List<DocumentVO> transfer(List<DocumentEntity> documentEntities) {

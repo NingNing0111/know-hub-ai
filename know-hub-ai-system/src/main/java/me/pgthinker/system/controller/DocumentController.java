@@ -1,6 +1,7 @@
 package me.pgthinker.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import me.pgthinker.core.common.BaseResponse;
 import me.pgthinker.core.common.ResultUtils;
@@ -30,6 +31,11 @@ public class DocumentController {
 	@PostMapping("/delete")
 	public BaseResponse<Boolean> deleteKnowledgeFile(@RequestBody DocumentVO documentVO) {
 		return ResultUtils.success(documentEntityService.deleteKnowledgeFile(documentVO));
+	}
+
+	@GetMapping("/download/{fileId}")
+	public BaseResponse<String> downloadDocument(@PathVariable Long fileId, HttpServletResponse response) {
+		return ResultUtils.success(documentEntityService.download(fileId,response));
 	}
 
 }
