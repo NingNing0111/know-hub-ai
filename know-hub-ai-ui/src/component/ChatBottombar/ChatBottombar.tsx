@@ -1,6 +1,7 @@
+import { fileToBlob } from '@/utils/file';
 import { PlusOutlined, SendOutlined } from '@ant-design/icons';
 import { ProFormUploadButton } from '@ant-design/pro-components';
-import { Button, Input, Tooltip } from 'antd';
+import { Button, Image, Input, Tooltip } from 'antd';
 import { UploadFile } from 'antd/lib';
 import { useState } from 'react';
 import './index.css';
@@ -15,9 +16,29 @@ const ChatBottombar = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileBlobList, setBlobList] = useState<
+    { blob: Blob; fileName: string }[]
+  >([]);
 
   return (
     <>
+      {fileBlobList.length > 0 && (
+        <div className="image-preview-list">
+          {fileBlobList.map((file) =>
+            file.blob.type.startsWith('image/') ? (
+              <div className="image-preview-item">
+                <Image
+                  width={100}
+                  src={URL.createObjectURL(file.blob)}
+                  alt="Preview"
+                />
+              </div>
+            ) : (
+              <span>{file.fileName}</span>
+            ),
+          )}
+        </div>
+      )}
       <div className="input-box">
         <div>
           <TextArea
@@ -48,13 +69,16 @@ const ChatBottombar = (props: Props) => {
               beforeUpload: async (file) => {
                 try {
                   setUploading(true);
+                  const blob = await fileToBlob(file);
                   setFileList([...fileList, file]);
+                  setBlobList([...fileBlobList, { blob, fileName: file.name }]);
                   await props.uploadFile(file);
                   return false;
                 } finally {
                   setUploading(false);
                 }
               },
+              showUploadList: false,
             }}
             icon={
               <Tooltip title="上传附件进行对话">
@@ -75,6 +99,7 @@ const ChatBottombar = (props: Props) => {
               } finally {
                 setIsSending(false);
                 setFileList([]);
+                setBlobList([]);
               }
             }}
           >

@@ -4,15 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.exception.BusinessException;
+import me.pgthinker.system.advisor.MessageChatMemoryAdvisor;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
 import me.pgthinker.system.controller.vo.ChatRequestVO;
-import me.pgthinker.system.mapper.KnowledgeBaseMapper;
 import me.pgthinker.system.model.entity.user.SystemUser;
 import me.pgthinker.system.model.enums.ChatType;
 import me.pgthinker.system.service.ai.*;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
@@ -26,6 +25,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static me.pgthinker.system.constant.AppConstant.*;
@@ -47,8 +47,6 @@ public class AIChatServiceImpl implements AIChatService {
 	private final OriginFileResourceService originFileResourceService;
 
 	private final DatabaseChatMemory databaseChatMemory;
-
-	private final KnowledgeBaseMapper knowledgeBaseMapper;
 
 	@Value("classpath:prompt/RAG.txt")
 	private Resource ragPromptResource;
@@ -77,13 +75,15 @@ public class AIChatServiceImpl implements AIChatService {
 		List<String> resourceIds = chatMessageVO.getResourceIds();
 		ChatClient chatClient = ChatClient.builder(chatModel).build();
 		return chatClient.prompt().user(user -> {
-			user.param(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
-			user.param(CHAT_MEDIAS, chatMessageVO.getResourceIds());
+			HashMap<String, Object> params = new HashMap<>();
+			params.put(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
+			params.put(CHAT_MEDIAS, chatMessageVO.getResourceIds());
+			user.params(params);
 			user.text(chatMessageVO.getContent());
+			log.info("params:{}", params);
 			if (resourceIds != null && !resourceIds.isEmpty()) {
 				List<Media> medias = originFileResourceService.fromResourceId(resourceIds);
 				user.media(medias.toArray(new Media[0]));
-				log.info("medias:{}", medias);
 			}
 		})
 			.advisors(new SimpleLoggerAdvisor(),
@@ -155,7 +155,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 		// 如果没有 ID，返回一个 false 的表达式
 		if (knowledgeBaseIds == null || knowledgeBaseIds.isEmpty()) {
-			return "knowledge_base_id in []"; // 或直接 return ""; 看你需求
+			return "knowledge_base_id in [\"___empty___\"]"; // 不让查询任何知识库
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -174,33 +174,5 @@ public class AIChatServiceImpl implements AIChatService {
 		log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
 		return sb.toString();
 	}
-
-	// private String buildBaseAccessFilter(List<String> knowledgeBaseIds) {
-	// SystemUser user = SecurityFrameworkUtil.getLoginUser();
-	// StringBuilder metaFilterSqlSb = new StringBuilder();
-	// metaFilterSqlSb.append(" user_id == -1 ");
-	// metaFilterSqlSb.append(" OR knowledge_base_id in [ ");
-	// // 防止SQL注入
-	//
-	// for (int i = 0; i < knowledgeBaseIds.size(); i++) {
-	// String knowledgeBaseId = knowledgeBaseIds.get(i);
-	// KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(knowledgeBaseId);
-	// if (i != 0) {
-	// metaFilterSqlSb.append(",");
-	// }
-	// if (knowledgeBase != null) {
-	// metaFilterSqlSb.append("\"");
-	// metaFilterSqlSb.append(knowledgeBaseId);
-	// metaFilterSqlSb.append("\"");
-	//
-	// metaFilterSqlSb.append(" ");
-	// }
-	// }
-	// metaFilterSqlSb.append(" ]");
-	//
-	// log.info("Vector Search Filter SQL: {}", metaFilterSqlSb);
-	// log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
-	// return metaFilterSqlSb.toString();
-	// }
 
 }

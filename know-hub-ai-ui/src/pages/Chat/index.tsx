@@ -126,6 +126,11 @@ const ChatPage = () => {
   };
   // 加载对话内容
   const loadChatMessage = async () => {
+    curConversationInfoRef.current = {
+      id: '',
+      title: '',
+      messages: [],
+    };
     try {
       if (curConversationId === '') {
         return;
@@ -160,7 +165,7 @@ const ChatPage = () => {
   }, [curConversationId]);
 
   const handleSendMsg = async (value: string) => {
-    if (curConversationId === '') {
+    if (!curConversationId || curConversationId === '') {
       try {
         const res = await createChatConversation({
           title: value,
@@ -172,7 +177,6 @@ const ChatPage = () => {
           messageApi.error('创建对话失败' + res.message);
         }
       } catch (e) {
-        console.log(e);
         messageApi.error('创建对话失败');
         return;
       }
@@ -203,7 +207,7 @@ const ChatPage = () => {
       content: inputText,
       knowledgeIds: chatSetting.knowledgeIds,
       chatType: chatSetting.chatType,
-      resourceIds: chatFilesIdsRef.current, // TODO:资源列表
+      resourceIds: chatFilesIdsRef.current,
     };
 
     const source = new SSE(`/api/ai/chat/unify`, {
@@ -220,29 +224,37 @@ const ChatPage = () => {
 
     source.addEventListener('message', (e: CustomEventType) => {
       const dataEvent = e as CustomEventDataType;
-      const data = JSON.parse(dataEvent.data);
 
-      if (data.output && data.output.text !== null) {
-        const payload = JSON.parse(dataEvent.data);
-        const text = payload.output.text;
-        aiTextRef.current = aiTextRef.current + text;
-        if (
-          curConversationInfoRef.current.messages &&
-          curConversationInfoRef.current.messages.length > 0
-        ) {
-          const updatedMessages = [...curConversationInfoRef.current.messages];
-          // 修改content值
-          updatedMessages[updatedMessages.length - 1] = {
-            ...updatedMessages[updatedMessages.length - 1],
-            content: aiTextRef.current,
-          };
-          // 设置
-          curConversationInfoRef.current = {
-            ...curConversationInfoRef.current,
-            messages: updatedMessages,
-          };
+      try {
+        const data = JSON.parse(dataEvent.data);
+        if (data.output && data.output.text !== null) {
+          const payload = JSON.parse(dataEvent.data);
+          const text = payload.output.text;
+          aiTextRef.current = aiTextRef.current + text;
+          if (
+            curConversationInfoRef.current.messages &&
+            curConversationInfoRef.current.messages.length > 0
+          ) {
+            const updatedMessages = [
+              ...curConversationInfoRef.current.messages,
+            ];
+            // 修改content值
+            updatedMessages[updatedMessages.length - 1] = {
+              ...updatedMessages[updatedMessages.length - 1],
+              content: aiTextRef.current,
+            };
+            // 设置
+            curConversationInfoRef.current = {
+              ...curConversationInfoRef.current,
+              messages: updatedMessages,
+            };
+          }
+          setCurConversationInfo({ ...curConversationInfoRef.current });
         }
-        setCurConversationInfo({ ...curConversationInfoRef.current });
+      } catch (e) {
+        messageApi.error('对话异常');
+        console.log(e);
+        loadChatMessage();
       }
     });
 

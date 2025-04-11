@@ -82,8 +82,8 @@ declare namespace API {
 
   type ChatGenerationMetadata = {
     empty?: boolean;
-    finishReason?: string;
     contentFilters?: string[];
+    finishReason?: string;
   };
 
   type ChatMessageVO = {
@@ -93,6 +93,7 @@ declare namespace API {
     content?: string;
     role?: string;
     resourceIds?: string[];
+    resources?: ResourceVO[];
   };
 
   type ChatRequestVO = {
@@ -122,8 +123,8 @@ declare namespace API {
   };
 
   type Generation = {
-    output?: AssistantMessage;
     metadata?: ChatGenerationMetadata;
+    output?: AssistantMessage;
   };
 
   type KnowledgeBaseVO = {
@@ -151,11 +152,11 @@ declare namespace API {
     type?: string;
     subtype?: string;
     parameters?: Record<string, any>;
-    charset?: string;
-    concrete?: boolean;
     wildcardType?: boolean;
     wildcardSubtype?: boolean;
     subtypeSuffix?: string;
+    charset?: string;
+    concrete?: boolean;
   };
 
   type OrderItem = {
@@ -175,6 +176,13 @@ declare namespace API {
     maxLimit?: number;
     countId?: string;
     pages?: number;
+  };
+
+  type ResourceVO = {
+    resourceId?: string;
+    fileName?: string;
+    fileType?: string;
+    path?: string;
   };
 
   type SimpleBaseVO = {

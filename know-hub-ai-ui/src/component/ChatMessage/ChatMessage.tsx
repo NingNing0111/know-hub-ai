@@ -1,21 +1,31 @@
 import { ReactComponent as RobotIcon } from '@/assets/icons/robat.svg';
 import { ReactComponent as UserIcon } from '@/assets/icons/user.svg';
-import { CopyOutlined, RedoOutlined } from '@ant-design/icons';
-import { Avatar, Tooltip } from 'antd';
+import { copyContent } from '@/utils/keyboard';
+import { CopyOutlined, LoadingOutlined, RedoOutlined } from '@ant-design/icons';
+import { Avatar, Image, message, Tooltip } from 'antd';
 import { useState } from 'react';
 import MarkdownContent from '../MarkdownContent';
 import './index.css';
 interface Props {
   role: string;
   content: string;
+  resource?: {
+    fileName: string;
+    type: string;
+    url: string;
+  }[];
 }
 const ChatMessage = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isUserContent = props.role.toLowerCase() === 'user';
+
+  const isImage = (type: string) => type.startsWith('image/');
+
   return (
     <div
       className="message-box"
       style={{
-        alignItems: props.role.toLowerCase() === 'user' ? 'end' : 'start',
+        alignItems: isUserContent ? 'end' : 'start',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -23,25 +33,47 @@ const ChatMessage = (props: Props) => {
       <div
         className="content-container"
         style={{
-          alignItems: props.role.toLowerCase() === 'user' ? 'end' : 'start',
+          alignItems: isUserContent ? 'end' : 'start',
         }}
       >
         <Avatar
           style={{
             background: 'none',
-            marginBottom: '10',
+            marginBottom: '10px', // Fixed the missing unit
           }}
-          icon={
-            props.role.toLowerCase() === 'user' ? <UserIcon /> : <RobotIcon />
-          }
+          icon={isUserContent ? <UserIcon /> : <RobotIcon />}
         />
-        <MarkdownContent content={props.content} />
+        {props.resource &&
+          props.resource.map((item, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              {isImage(item.type) ? (
+                <Image src={item.url} alt={item.fileName} width={200} />
+              ) : (
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.fileName}
+                </a>
+              )}
+            </div>
+          ))}
+        {!isUserContent &&
+          (props.content === '' ? (
+            <LoadingOutlined />
+          ) : (
+            <MarkdownContent content={props.content} />
+          ))}
+        {isUserContent && <MarkdownContent content={props.content} />}
       </div>
-      {props.role.toLowerCase() === 'assistant' && (
+      {!isUserContent && (
         <div className="assistant-tool">
           {isHovered && (
             <Tooltip title="复制" placement="bottom">
-              <CopyOutlined style={{ cursor: 'pointer' }} />
+              <CopyOutlined
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  message.success('复制成功');
+                  copyContent(props.content);
+                }}
+              />
             </Tooltip>
           )}
           {isHovered && (

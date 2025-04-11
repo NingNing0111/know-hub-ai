@@ -8,6 +8,7 @@ import me.pgthinker.core.exception.BusinessException;
 import me.pgthinker.core.service.objectstore.ObjectStoreService;
 import me.pgthinker.core.service.objectstore.StorageFile;
 import me.pgthinker.core.utils.FileUtil;
+import me.pgthinker.system.controller.vo.ResourceVO;
 import me.pgthinker.system.mapper.DocumentEntityMapper;
 import me.pgthinker.system.mapper.OriginFileResourceMapper;
 import me.pgthinker.system.model.entity.ai.DocumentEntity;
@@ -132,6 +133,22 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 		documentEntity.setIsEmbedding(true);
 		documentEntityMapper.updateById(documentEntity);
 		return documentEntity.getId();
+	}
+
+	@Override
+	public List<ResourceVO> resourcesFromIds(List<String> resourceIds) {
+		if(resourceIds == null || resourceIds.isEmpty()) {
+			return List.of();
+		}
+		return resourceIds.stream().map(item -> {
+			ResourceVO resourceVO = new ResourceVO();
+			OriginFileResource originFileResource = this.getById(item);
+			resourceVO.setResourceId(item);
+			resourceVO.setFileType(originFileResource.getContentType());
+			resourceVO.setFileName(originFileResource.getFileName());
+			resourceVO.setPath(objectStoreService.getTmpFileUrl(originFileResource.getBucketName(), originFileResource.getObjectName()));
+			return resourceVO;
+		}).toList();
 	}
 
 	private OriginFileResource upload(MultipartFile file, String bucketName) {

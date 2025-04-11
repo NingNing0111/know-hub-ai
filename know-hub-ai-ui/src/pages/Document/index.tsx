@@ -17,6 +17,14 @@ const DocumentPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState<boolean>(false);
   const [documentList, setDocumentList] = useState<API.DocumentVO[]>([]);
+  // const downloadFile = async (fileId: ) => {
+  //   try {
+  //     const res = await downloadDocument({fileId: fileId});
+
+  //   }catch (error) {
+  //     messageApi.error('下载失败');
+  //   }
+  // }
   const columns: ProColumns<API.DocumentVO>[] = [
     {
       title: '文件名',
@@ -50,11 +58,15 @@ const DocumentPage = () => {
           <Button
             type="primary"
             size="small"
-            onClick={() => {
-              downloadFile(record.path ?? '', record.fileName ?? '');
+            onClick={async () => {
+              if (record.path && record.path !== '') {
+                downloadFile(record.path);
+              } else {
+                messageApi.error('文件不存在');
+              }
             }}
           >
-            下载
+            查看
           </Button>
         );
       },

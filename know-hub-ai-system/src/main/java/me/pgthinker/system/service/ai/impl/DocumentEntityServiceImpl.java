@@ -54,6 +54,7 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 	private final ObjectStoreService objectStoreService;
 
 	private final LLMService llmService;
+
 	private final MinIOService minIOService;
 
 	@Override
@@ -108,23 +109,25 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 	@Override
 	public void download(Long fileId, HttpServletResponse response) {
 		OriginFileResource originFileResource = originFileResourceMapper.selectById(fileId);
-		if(originFileResource == null) {
+		if (originFileResource == null) {
 			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
 		}
 		InputStream file = minIOService.getFile(originFileResource.getBucketName(), originFileResource.getObjectName());
 
-		//设置响应头
+		// 设置响应头
 		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition","attachment; filename=\"" + URLEncoder.encode(originFileResource.getFileName(), StandardCharsets.UTF_8) + "\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\""
+				+ URLEncoder.encode(originFileResource.getFileName(), StandardCharsets.UTF_8) + "\"");
 
-		try(ServletOutputStream out = response.getOutputStream()){
+		try (ServletOutputStream out = response.getOutputStream()) {
 			byte[] buffer = new byte[1024];
 			int length;
 			while ((length = file.read(buffer)) != -1) {
 				out.write(buffer, 0, length);
 			}
 			out.flush();
-		} catch (IOException e){
+		}
+		catch (IOException e) {
 			throw new RuntimeException("文件下载失败", e);
 		}
 	}
@@ -134,7 +137,7 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 			String resourceId = item.getResourceId();
 			OriginFileResource originFileResource = originFileResourceMapper.selectById(resourceId);
 			String path = objectStoreService.getTmpFileUrl(originFileResource.getBucketName(),
-					originFileResource.getFileName());
+					originFileResource.getObjectName());
 			KnowledgeBase knowledgeBase = knowledgeBaseMapper.selectById(item.getBaseId());
 			DocumentVO documentVO = new DocumentVO();
 			documentVO.setId(item.getId());

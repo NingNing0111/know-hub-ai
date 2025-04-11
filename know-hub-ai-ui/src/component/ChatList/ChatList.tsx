@@ -17,6 +17,13 @@ const ChatList = (props: Props) => {
                 key={item.id}
                 role={item.role ?? ''}
                 content={item.content ?? ''}
+                resource={item.resources?.map((item) => {
+                  return {
+                    type: item.fileType ?? '',
+                    url: item.path ?? '',
+                    fileName: item.fileName ?? '',
+                  };
+                })}
               />
             );
           })

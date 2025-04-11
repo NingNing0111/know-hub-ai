@@ -12,6 +12,10 @@ spring:
         initialize-schema: true
         table-name: vector_store_1536
         remove-existing-vector-store-table: false
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost/template_db
 # MinIO
 minio:
   endpoint: http://127.0.0.1:9032/

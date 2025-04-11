@@ -1,11 +1,11 @@
-export const downloadFile = (url: string, fileName: string) => {
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  // Append the link to the body
-  document.body.appendChild(link);
-  // Trigger the click event
-  link.click();
-  // Remove the link from the body
-  document.body.removeChild(link);
+export const downloadFile = (url: string) => {
+  // Open the URL in a new window to trigger the download
+  window.open(url, '_blank');
+};
+
+export const fileToBlob = (file: File): Promise<Blob> => {
+  return new Promise((resolve) => {
+    const blob = new Blob([file], { type: file.type });
+    resolve(blob);
+  });
 };

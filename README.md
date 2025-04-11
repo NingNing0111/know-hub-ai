@@ -24,7 +24,7 @@
 - [x] `DatabaseChatMemory` 实现：Message 存储到数据库中
 - [x] 知识库增删改查接口：添加知识库、删除知识库、知识库列表
 - [x] 知识库附件上传接口：指定知识库（携带id）上传，将文档存储到向量数据库（meta记录知识库id-baseId），同时生成附件文档对象。
-- [ ] 知识库下的附件文档删查接口：在指定知识库下，可以删除附件、查询附件。
+- [x] 知识库下的附件文档删查接口：在指定知识库下，可以删除附件、查询附件。
 - [x] 对话信息接口：创建对话、查询对话信息
 - [x] 非多模态RAG对话: 指定多个知识库进行对话
 - [ ] 多模态RAG对话
@@ -35,38 +35,58 @@
 
 - [x] 对话界面: 快速搭建
 - [x] 知识库管理界面
-- [ ] 知识库下附件管理界面
-
-## 开发流程
-
-> 重构代码均在new分支上，待开发完毕才会合并到master上。
-
-- fork整个项目，包含new分支
-- 拉去项目:`git clone -b new 仓库地址`
-
-为了保证代码格式统一，需要在提交代码前，执行插件`spring-javaformat:apply`对整个项目的代码进行格式化。
-
-![format](doc/images/format.png)
+- [x] 知识库下附件管理界面
+- [ ] 对话界面优化
 
 
-## 效果
+
+
+## 演示
+
+### 知识库管理
 
 ![img.png](doc/images/1.png)
 
 ![img.png](doc/images/2.png)
 
-![img.png](doc/images/3.png)
+[//]: # (![img.png]&#40;doc/images/3.png&#41;)
 
-### 非多模态对话
+### 简单对话 + 简单RAG对话
 
-![img.png](doc/images/4.png)
+![img.png](doc/images/8.png)
 
-### 非多模态RAG对话（指定特定知识库）
-![img.png](doc/images/5.png)
+![img_1.png](doc/images/9.png)
 
 ### 多模态对话
 
-![img.png](doc/images/6.png)
+![img.png](doc/images/10.png)
 
-![img.png](doc/images/7.png)
 
+## 开发
+
+### 环境
+
+- node: v18
+- jdk: 17
+- minio + pgvector: [docker-compose.yml](env/docker-compose.yml)
+
+### 启动前端
+
+```shell
+pnpm install
+pnpm start
+```
+
+### 启动后端
+
+- 修改配置文件：`application.yml` 和 `llm.yml`
+
+&emsp;注意：`application.yml`配置里的`llm-dev.yml`需要改为`llm.yml`,当然也可以新建`llm-dev.yml`,在代码推送时，`llm-dev.yml`文件会被忽略:
+
+```yaml
+spring:
+  config:
+    import: classpath:llm-dev.yml
+```
+
+- 启动`SystemApp`

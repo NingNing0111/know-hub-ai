@@ -36,8 +36,11 @@ public class DatabaseChatMemory implements ChatMemory {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void add(String conversationId, List<Message> messages) {
+		log.info("messages:{}", messages);
+		log.info("params:{}", messages.get(0).getMetadata());
 		LambdaQueryWrapper<ChatMessage> qw = new LambdaQueryWrapper<>();
 		qw.eq(ChatMessage::getIsClean, false);
+		qw.eq(ChatMessage::getConversationId, conversationId);
 		Long cnt = this.chatMessageMapper.selectCount(qw);
 		ArrayList<ChatMessage> chatMessageList = new ArrayList<>();
 		for (int i = 0; i < messages.size(); i++) {
@@ -58,7 +61,6 @@ public class DatabaseChatMemory implements ChatMemory {
 			}
 			chatMessageList.add(chatMessage);
 		}
-		log.debug("对话记录入库：{}", chatMessageList);
 		chatMessageMapper.insert(chatMessageList);
 	}
 

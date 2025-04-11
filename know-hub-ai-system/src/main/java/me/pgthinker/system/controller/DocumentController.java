@@ -35,7 +35,7 @@ public class DocumentController {
 
 	@GetMapping("/download/{fileId}")
 	public void downloadDocument(@PathVariable Long fileId, HttpServletResponse response) {
-		documentEntityService.download(fileId,response);
+		documentEntityService.download(fileId, response);
 	}
 
 }

@@ -11,9 +11,6 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost/template_db
     type: com.zaxxer.hikari.HikariDataSource
     # hikari连接池配置
     hikari:

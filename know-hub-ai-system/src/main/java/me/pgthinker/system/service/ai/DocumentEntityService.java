@@ -18,4 +18,5 @@ public interface DocumentEntityService {
 	Boolean deleteKnowledgeFile(DocumentVO documentVO);
 
 	void download(Long fileId, HttpServletResponse response);
+
 }

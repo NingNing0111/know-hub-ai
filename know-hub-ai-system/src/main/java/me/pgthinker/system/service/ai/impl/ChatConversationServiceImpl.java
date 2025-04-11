@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.system.controller.vo.ChatConversationVO;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
+import me.pgthinker.system.controller.vo.ResourceVO;
 import me.pgthinker.system.mapper.ChatConversationMapper;
 import me.pgthinker.system.mapper.ChatMessageMapper;
 import me.pgthinker.system.model.entity.ai.ChatConversation;
 import me.pgthinker.system.model.entity.ai.ChatMessage;
 import me.pgthinker.system.service.ai.ChatConversationService;
+import me.pgthinker.system.service.ai.OriginFileResourceService;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMap
 		implements ChatConversationService {
 
 	private final ChatMessageMapper chatMessageMapper;
+	private final OriginFileResourceService originFileResourceService;
 
 	@Override
 	public ChatConversationVO getConversation(String conversationId) {
@@ -94,6 +97,9 @@ public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMap
 		return chatMessages.stream().map(item -> {
 			ChatMessageVO chatMessageVO = new ChatMessageVO();
 			BeanUtils.copyProperties(item, chatMessageVO);
+			List<String> resourceIds = item.getResourceIds();
+			List<ResourceVO> resourceVOS = originFileResourceService.resourcesFromIds(resourceIds);
+			chatMessageVO.setResources(resourceVOS);
 			return chatMessageVO;
 		}).toList();
 	}

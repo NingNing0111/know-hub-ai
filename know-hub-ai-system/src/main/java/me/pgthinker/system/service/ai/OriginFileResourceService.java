@@ -1,6 +1,7 @@
 package me.pgthinker.system.service.ai;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.pgthinker.system.controller.vo.ResourceVO;
 import me.pgthinker.system.model.entity.ai.OriginFileResource;
 import org.springframework.ai.model.Media;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,5 +38,8 @@ public interface OriginFileResourceService extends IService<OriginFileResource> 
 	 * @return
 	 */
 	Long uploadFile(MultipartFile file, String knowledgeId);
+
+
+	List<ResourceVO> resourcesFromIds(List<String> resourceIds);
 
 }

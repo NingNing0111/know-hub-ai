@@ -16,3 +16,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.image-preview-list {
+  width: 90%;
+  margin-left: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+}
