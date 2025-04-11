@@ -108,8 +108,17 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 
 	@Override
 	public void download(Long fileId, HttpServletResponse response) {
+<<<<<<< HEAD
 		OriginFileResource originFileResource = originFileResourceMapper.selectById(fileId);
 		if (originFileResource == null) {
+=======
+		DocumentEntity document = documentEntityMapper.selectById(fileId);
+		if(document == null) {
+			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
+		}
+		OriginFileResource originFileResource = originFileResourceMapper.selectById(document.getResourceId());
+		if(originFileResource == null) {
+>>>>>>> 16071e71fe8f1ebe59ee4409104ea76f7045a56d
 			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
 		}
 		InputStream file = minIOService.getFile(originFileResource.getBucketName(), originFileResource.getObjectName());
