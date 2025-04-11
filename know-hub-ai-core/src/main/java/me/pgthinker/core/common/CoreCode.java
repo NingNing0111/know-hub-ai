@@ -59,4 +59,6 @@ public interface CoreCode {
 	/// 文件业务
 	ErrorCode FILE_UPLOAD_ERROR = new ErrorCode(1000_000_204, "文件上传失败");
 
+	ErrorCode FILE_NOT_FOUND = new ErrorCode(1000_000_205, "文件不存在");
+
 }

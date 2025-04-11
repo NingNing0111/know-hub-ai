@@ -106,8 +106,11 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 	}
 
 	@Override
-	public String download(Long fileId, HttpServletResponse response) {
+	public void download(Long fileId, HttpServletResponse response) {
 		OriginFileResource originFileResource = originFileResourceMapper.selectById(fileId);
+		if(originFileResource == null) {
+			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
+		}
 		InputStream file = minIOService.getFile(originFileResource.getBucketName(), originFileResource.getObjectName());
 
 		//设置响应头
@@ -121,7 +124,6 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 				out.write(buffer, 0, length);
 			}
 			out.flush();
-			return "下载成功";
 		} catch (IOException e){
 			throw new RuntimeException("文件下载失败", e);
 		}
