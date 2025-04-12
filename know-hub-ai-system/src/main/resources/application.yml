@@ -34,9 +34,6 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-
-
-
 security:
 #  下面几个配置使用默认的即可
 
@@ -51,6 +48,7 @@ security:
     - "/webjars/**"
     - "/auth/login"
     - "/ai/chat/**"
+    - "/login/oauth2/**"
   admin-init: true
   password: 123123
 

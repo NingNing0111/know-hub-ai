@@ -36,14 +36,11 @@ public class ChatMessageVO {
 	 */
 	private String role;
 
-
 	private List<String> resourceIds;
 
 	/**
 	 * 资源列表
 	 */
 	private List<ResourceVO> resources;
-
-
 
 }

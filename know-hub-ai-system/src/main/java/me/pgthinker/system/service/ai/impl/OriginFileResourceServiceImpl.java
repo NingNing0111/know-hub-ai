@@ -137,7 +137,7 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 
 	@Override
 	public List<ResourceVO> resourcesFromIds(List<String> resourceIds) {
-		if(resourceIds == null || resourceIds.isEmpty()) {
+		if (resourceIds == null || resourceIds.isEmpty()) {
 			return List.of();
 		}
 		return resourceIds.stream().map(item -> {
@@ -146,7 +146,8 @@ public class OriginFileResourceServiceImpl extends ServiceImpl<OriginFileResourc
 			resourceVO.setResourceId(item);
 			resourceVO.setFileType(originFileResource.getContentType());
 			resourceVO.setFileName(originFileResource.getFileName());
-			resourceVO.setPath(objectStoreService.getTmpFileUrl(originFileResource.getBucketName(), originFileResource.getObjectName()));
+			resourceVO.setPath(objectStoreService.getTmpFileUrl(originFileResource.getBucketName(),
+					originFileResource.getObjectName()));
 			return resourceVO;
 		}).toList();
 	}

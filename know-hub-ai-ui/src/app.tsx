@@ -1,5 +1,5 @@
 // src/app.ts
-import { UserOutlined } from '@ant-design/icons';
+import { GithubOutlined, UserOutlined } from '@ant-design/icons';
 import {
   AxiosResponse,
   history,
@@ -7,7 +7,8 @@ import {
   RunTimeLayoutConfig,
   useModel,
 } from '@umijs/max';
-import { CiBellOn } from 'react-icons/ci';
+import { Avatar, Button, Dropdown, MenuProps } from 'antd';
+import { useRef, useState } from 'react';
 import { GlobalType, ThemeType } from './access';
 import ThemeSwitcher from './component/ThemeSwitcher';
 import { userInfo } from './services/authController';
@@ -19,7 +20,6 @@ export async function getInitialState(): Promise<GlobalType> {
   const token = localStorage.getItem('token');
   const theme: ThemeType =
     localStorage.getItem('vite-ui-theme') === 'dark' ? 'dark' : 'light';
-
   // 无 token，跳转登录
   if (!token) {
     const { location } = history;
@@ -46,7 +46,22 @@ export async function getInitialState(): Promise<GlobalType> {
 
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   const { menuCollapsed, setMenuCollapsed } = useModel('collapsed');
-
+  const logout = () => {
+    localStorage.removeItem('token');
+    history.push('/login');
+  };
+  const userInfoRef = useRef(initialState?.authVO);
+  const [username, setUsername] = useState('');
+  const items: MenuProps['items'] = [
+    {
+      key: 'logout',
+      label: (
+        <Button danger type="text" onClick={logout}>
+          退出登录
+        </Button>
+      ),
+    },
+  ];
   return {
     title: process.env.UMI_APP_NAME,
     logo: process.env.UMI_APP_LOGO,
@@ -54,38 +69,59 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       locale: false,
       type: 'group',
     },
-    defaultCollapsed: true,
+    collapsed: menuCollapsed,
     onCollapse: (value) => {
       setMenuCollapsed(value);
     },
     layout: 'mix',
     actionsRender: () => [
       <ThemeSwitcher key="theme-switch" />,
-      <CiBellOn size={35} key="bell" />,
+      <GithubOutlined
+        key="GitHub"
+        onClick={() => {
+          if (process.env.UMI_APP_GITHUB_REPOSITORY) {
+            history.push(process.env.UMI_APP_GITHUB_REPOSITORY);
+          }
+        }}
+      />,
     ],
     avatarProps: {
-      icon: <UserOutlined />,
-      title: initialState?.authVO?.username
-        ? `欢迎您, ${initialState.authVO.username}`
-        : '',
+      render: () => {
+        return (
+          <Dropdown menu={{ items }} placement="bottom" arrow>
+            <div
+              style={{
+                width: 'max-content',
+                display: 'flex',
+                gap: '10px',
+              }}
+            >
+              <Avatar icon={<UserOutlined />} />
+              <span>欢迎您, {username}</span>
+            </div>
+          </Dropdown>
+        );
+      },
     },
-    // 页面切换时拦截未登录
-    onPageChange: () => {
-      const { location } = history;
+    // 页面切换时拦截未登录并请求用户信息
+    onPageChange: async () => {
       const token = localStorage.getItem('token');
-      if (!token && !loginWhiteList.includes(location.pathname)) {
+      if (!token) {
         history.push('/login');
+      } else {
+        try {
+          const res = await userInfo();
+          if (res?.data) {
+            userInfoRef.current = res.data;
+            setUsername(userInfoRef.current.username ?? '未知用户');
+          }
+        } catch (e) {
+          console.error('获取用户信息失败:', e);
+        }
       }
     },
   };
 };
-
-// 请求配置
-interface ResponseData<T = any> {
-  code: number;
-  data: T;
-  message: string;
-}
 
 export const request: RequestConfig = {
   errorConfig: {

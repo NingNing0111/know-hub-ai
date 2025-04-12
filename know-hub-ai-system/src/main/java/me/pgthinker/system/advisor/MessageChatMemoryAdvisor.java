@@ -34,8 +34,13 @@ import java.util.List;
  * @author NingNing0111
  * @since 1.0.0
  *
- * Spring AI 1.0.0-M6 version: The userParams need to add UserMessage.
- * Line: 96
+ * Spring AI 1.0.0-M6 version:
+ * userParams在经过MessageChatMemoryAdvisor处理后，进入到ChatMemory无法获取，详见97行代码 Spring
+ * AI目前正在准备构建更方便的更改参数的方式,详情参考下面的issues:
+ * https://github.com/spring-projects/spring-ai/issues/2701
+ * https://github.com/spring-projects/spring-ai/issues/2655
+ *
+ *
  *
  */
 public class MessageChatMemoryAdvisor extends AbstractChatMemoryAdvisor<ChatMemory> {
@@ -49,7 +54,7 @@ public class MessageChatMemoryAdvisor extends AbstractChatMemoryAdvisor<ChatMemo
 	}
 
 	public MessageChatMemoryAdvisor(ChatMemory chatMemory, String defaultConversationId, int chatHistoryWindowSize,
-                                    int order) {
+			int order) {
 		super(chatMemory, defaultConversationId, chatHistoryWindowSize, true, order);
 	}
 
@@ -94,8 +99,10 @@ public class MessageChatMemoryAdvisor extends AbstractChatMemoryAdvisor<ChatMemo
 		// 3. Create a new request with the advised messages.
 		AdvisedRequest advisedRequest = AdvisedRequest.from(request).messages(advisedMessages).build();
 
-		// 4. Add the new user input to the conversation memory.
+		// 4. Add the new user input to the conversation memory., request.userParams()
+		// UserMessage userMessage = new UserMessage(request.userText(), request.media());
 		UserMessage userMessage = new UserMessage(request.userText(), request.media(), request.userParams());
+
 		this.getChatMemoryStore().add(this.doGetConversationId(request.adviseContext()), userMessage);
 
 		return advisedRequest;

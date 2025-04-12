@@ -1,23 +1,30 @@
 import { login } from '@/services/authController';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
   LoginFormPage,
   ProConfigProvider,
   ProFormCheckbox,
-  ProFormText,
 } from '@ant-design/pro-components';
-import { history, useRequest } from '@umijs/max';
+import { history, useRequest, useSearchParams } from '@umijs/max';
 import { message, Tabs, theme } from 'antd';
-import { useState } from 'react';
-
+import { CSSProperties, useState } from 'react';
+import UsernamePassword from './components/UsernamePassword';
 type LoginType = 'email' | 'account';
 
 const LoginPage = () => {
+  const { token } = theme.useToken();
+  const [searchParams] = useSearchParams();
+
+  const iconStyles: CSSProperties = {
+    marginInlineStart: '16px',
+    color: token.colorTextBase,
+    fontSize: '24px',
+    verticalAlign: 'middle',
+    cursor: 'pointer',
+  };
   const [messageApi, contextHolder] = message.useMessage();
   const [loginType, setLoginType] = useState<LoginType>('account');
-  const { token } = theme.useToken();
   const { loading, run: doLogin } = useRequest(
-    async (values) => {
+    async (values: API.UserLoginVO) => {
       return await login({
         ...values,
       });
@@ -45,15 +52,11 @@ const LoginPage = () => {
     const res = await doLogin(values);
     return !!res?.token;
   };
+
   return (
     <>
       {contextHolder}
-      <div
-        style={{
-          backgroundColor: 'white',
-          height: '100vh',
-        }}
-      >
+      <div style={{ backgroundColor: token.colorBgContainer, height: '100vh' }}>
         <LoginFormPage<API.UserLoginVO>
           loading={loading}
           onFinish={handleLoginFinish}
@@ -63,8 +66,15 @@ const LoginPage = () => {
           containerStyle={{
             backgroundColor: 'rgba(0, 0, 0,0.65)',
             backdropFilter: 'blur(4px)',
+            color: token.colorText,
           }}
           subTitle={process.env.UMI_APP_SUB_TITLE}
+          // actions={
+          //   <Space style={{ marginTop: '10px' }}>
+          //     其他登录方式:
+          //     <GithubOutlined style={iconStyles}  />
+          //   </Space>
+          // }
         >
           <Tabs
             centered
@@ -74,119 +84,14 @@ const LoginPage = () => {
               {
                 label: '账号密码登录',
                 key: 'account',
-                children: (
-                  <>
-                    <ProFormText
-                      name="username"
-                      fieldProps={{
-                        size: 'large',
-                        autoComplete: 'username',
-                        prefix: (
-                          <UserOutlined
-                            style={{
-                              color: token.colorText,
-                            }}
-                            className={'prefixIcon'}
-                          />
-                        ),
-                      }}
-                      placeholder={'请输入用户名'}
-                      rules={[
-                        {
-                          required: true,
-                          message: '请输入用户名!',
-                        },
-                      ]}
-                    />
-                    <ProFormText.Password
-                      name="password"
-                      fieldProps={{
-                        size: 'large',
-                        autoComplete: 'current-password',
-                        prefix: (
-                          <LockOutlined
-                            style={{
-                              color: token.colorText,
-                            }}
-                            className={'prefixIcon'}
-                          />
-                        ),
-                      }}
-                      placeholder={'请输入密码'}
-                      rules={[
-                        {
-                          required: true,
-                          message: '请输入密码！',
-                        },
-                      ]}
-                    />
-                  </>
-                ),
+                children: <UsernamePassword />,
               },
               // {
               //   label: '邮箱登录',
               //   key: 'email',
               //   children: (
               //     <>
-              //       <ProFormText
-              //         fieldProps={{
-              //           size: 'large',
-              //           prefix: (
-              //             <MailOutlined
-              //               style={{
-              //                 color: token.colorText,
-              //               }}
-              //               className={'prefixIcon'}
-              //             />
-              //           ),
-              //         }}
-              //         name="mail"
-              //         placeholder={'请输入邮箱'}
-              //         rules={[
-              //           {
-              //             required: true,
-              //             message: '请输入邮箱！',
-              //           },
-              //           {
-              //             pattern:
-              //               /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              //             message: '邮箱格式错误！',
-              //           },
-              //         ]}
-              //       />
-              //       <ProFormCaptcha
-              //         fieldProps={{
-              //           size: 'large',
-              //           prefix: (
-              //             <LockOutlined
-              //               style={{
-              //                 color: token.colorText,
-              //               }}
-              //               className={'prefixIcon'}
-              //             />
-              //           ),
-              //         }}
-              //         captchaProps={{
-              //           size: 'large',
-              //         }}
-              //         placeholder={'请输入验证码'}
-              //         captchaTextRender={(timing, count) => {
-              //           if (timing) {
-              //             return `${count} ${'获取验证码'}`;
-              //           }
-              //           return '获取验证码';
-              //         }}
-              //         name="captcha"
-              //         rules={[
-              //           {
-              //             required: true,
-              //             message: '请输入验证码！',
-              //           },
-              //         ]}
-              //         onGetCaptcha={async () => {
-              //           message.success('获取验证码成功！验证码为：1234');
-              //         }}
-              //       />
+              //       <EmailCaptcha />
               //     </>
               //   ),
               // },
@@ -217,7 +122,7 @@ const LoginPage = () => {
 
 export default () => {
   return (
-    <ProConfigProvider dark>
+    <ProConfigProvider hashed={false}>
       <LoginPage />
     </ProConfigProvider>
   );

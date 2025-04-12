@@ -109,11 +109,11 @@ public class DocumentEntityServiceImpl implements DocumentEntityService {
 	@Override
 	public void download(Long fileId, HttpServletResponse response) {
 		DocumentEntity document = documentEntityMapper.selectById(fileId);
-		if(document == null) {
+		if (document == null) {
 			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
 		}
 		OriginFileResource originFileResource = originFileResourceMapper.selectById(document.getResourceId());
-		if(originFileResource == null) {
+		if (originFileResource == null) {
 			throw new BusinessException(CoreCode.FILE_NOT_FOUND);
 		}
 		InputStream file = minIOService.getFile(originFileResource.getBucketName(), originFileResource.getObjectName());

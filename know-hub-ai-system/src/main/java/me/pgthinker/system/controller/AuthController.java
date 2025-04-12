@@ -34,4 +34,9 @@ public class AuthController {
 		return ResultUtils.success(authService.userInfo());
 	}
 
+	// @PostMapping("/logout")
+	// public BaseResponse<Boolean> logout() {
+	//
+	// }
+
 }

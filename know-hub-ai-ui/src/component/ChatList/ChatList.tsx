@@ -3,14 +3,14 @@ import { LegacyRef } from 'react';
 import ChatMessage from '../ChatMessage';
 import './index.css';
 interface Props {
-  messages: API.ChatMessageVO[] | undefined;
+  messages: API.ChatMessageVO[];
   chatWindowRef: LegacyRef<any>;
 }
 const ChatList = (props: Props) => {
   return (
     <>
       <div className="chat-window-container" ref={props.chatWindowRef}>
-        {props.messages && props.messages.length > 0 ? (
+        {props.messages.length > 0 ? (
           props.messages.map((item) => {
             return (
               <ChatMessage

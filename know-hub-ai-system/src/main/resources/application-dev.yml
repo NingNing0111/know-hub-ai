@@ -1,4 +1,4 @@
-debug: true
+#debug: true
 
 spring:
   config:
@@ -16,6 +16,7 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost/template_db
+
 # MinIO
 minio:
   endpoint: http://127.0.0.1:9032/

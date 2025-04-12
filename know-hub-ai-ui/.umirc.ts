@@ -22,30 +22,21 @@ export default defineConfig({
     },
     {
       path: '/',
-      redirect: '/home',
+      redirect: '/chat',
     },
-    {
-      path: '/home',
-      name: '首页',
-      title: '首页',
-      component: '@/pages/Home',
-      icon: 'HomeOutlined',
-    },
+    // {
+    //   path: '/home',
+    //   name: '首页',
+    //   title: '首页',
+    //   component: '@/pages/Home',
+    //   icon: 'HomeOutlined',
+    // },
     {
       path: '/chat',
       name: 'AI对话',
       title: 'AI对话',
       component: '@/pages/Chat',
       icon: 'RobotOutlined',
-      routes: [
-        {
-          path: '/chat/:conversationId',
-          name: 'AI对话详情',
-          title: 'AI对话详情',
-          component: '@/pages/Chat',
-          hideInMenu: true,
-        },
-      ],
     },
     {
       path: '/knowlegeBase',
@@ -61,12 +52,13 @@ export default defineConfig({
       component: '@/pages/Document',
       hideInMenu: true,
     },
+
     { path: '/*', component: '@/pages/404' },
   ],
   npmClient: 'pnpm',
   proxy: {
     '/api': {
-      target: process.env.BASE_URL || 'http://localhost:8788/api',
+      target: process.env.UMI_APP_BASE_URL || 'http://localhost:8788/api',
       changeOrigin: true,
       secure: false,
       pathRewrite: {
@@ -77,7 +69,7 @@ export default defineConfig({
   openAPI: [
     {
       requestLibPath: "import { request } from '@umijs/max'",
-      schemaPath: `${process.env.BASE_URL}/v3/api-docs/default`, // openapi 接口地址
+      schemaPath: `${process.env.UMI_APP_BASE_URL}/v3/api-docs/default`, // openapi 接口地址
       mock: false,
       apiPrefix() {
         return "'/api'";

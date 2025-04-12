@@ -39,7 +39,6 @@ public interface OriginFileResourceService extends IService<OriginFileResource> 
 	 */
 	Long uploadFile(MultipartFile file, String knowledgeId);
 
-
 	List<ResourceVO> resourcesFromIds(List<String> resourceIds);
 
 }

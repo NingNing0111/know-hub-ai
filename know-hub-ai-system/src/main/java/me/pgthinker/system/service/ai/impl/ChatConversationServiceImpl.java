@@ -33,6 +33,7 @@ public class ChatConversationServiceImpl extends ServiceImpl<ChatConversationMap
 		implements ChatConversationService {
 
 	private final ChatMessageMapper chatMessageMapper;
+
 	private final OriginFileResourceService originFileResourceService;
 
 	@Override
