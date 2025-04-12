@@ -157,19 +157,15 @@ public class AIChatServiceImpl implements AIChatService {
 		if (knowledgeBaseIds == null || knowledgeBaseIds.isEmpty()) {
 			return "knowledge_base_id in [\"___empty___\"]"; // 不让查询任何知识库
 		}
-
 		StringBuilder sb = new StringBuilder();
 		sb.append("knowledge_base_id in [");
-
 		for (int i = 0; i < knowledgeBaseIds.size(); i++) {
 			if (i != 0) {
 				sb.append(",");
 			}
 			sb.append("\"").append(knowledgeBaseIds.get(i)).append("\"");
 		}
-
 		sb.append("]");
-
 		log.info("Vector Search Filter SQL: {}", sb);
 		log.info("Vector Search Filter Parameter: {}", knowledgeBaseIds);
 		return sb.toString();
