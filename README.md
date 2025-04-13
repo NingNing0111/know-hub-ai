@@ -14,7 +14,13 @@
 &emsp;🌟🌟**请将本项目视为一个 Spring AI 和 RAG 技术的学习项目，本项目重在介绍 Spring AI 的使用以及结合向量数据库实现 RAG 技术的实现**。
 
 
+## 特性
 
+- 实现`DatabaseChatMemory`将对话数据存储到数据库中；
+- 重写`MessageChatMemoryAdvisor`解决`1.0.0-M6`版本中经过`MessageChatMemoryAdvisor`处理后，无法在ChatMemory中获取到Message的Params数据；
+- 使用`QuestionAnswerAdvisor`+自定义提示词构建RAG对话上下文；
+- 通过自定义向量数据查询条件，实现知识库分离，支持RAG对话时指定某些知识库；
+- 多模态对话时，将附件存储到Minio；
 
 ## TODO 
 
