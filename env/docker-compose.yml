@@ -10,7 +10,8 @@ services:
       - POSTGRES_DB=know-hub
       - PGPASSWORD=postgres
     volumes:
-      - ../sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../sql/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./pg_data/vector_db:/var/lib/postgresql/data
     logging:
       options:
         max-size: 10m
@@ -18,7 +19,7 @@ services:
     ports:
       - '5432:5432'
     healthcheck:
-      test: "pg_isready -U postgres -d vector_store"
+      test: "pg_isready -U postgres -d know-hub"
       interval: 2s
       timeout: 20s
       retries: 10
