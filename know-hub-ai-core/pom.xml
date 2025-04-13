@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>me.pgthinker</groupId>
-        <artifactId>knowhub-ai</artifactId>
+        <artifactId>know-hub-ai</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>know-hub-ai-core</artifactId>
     <description>core</description>
+
 
     <dependencyManagement>
         <dependencies>
@@ -53,7 +54,15 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+            </extension>
+        </extensions>
+    </build>
 
 </project>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/know-hub-ai-ui/node_modules/.pnpm/@umijs+es-module-parser@0.0.7/node_modules/@umijs/es-module-parser/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/env/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/web/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/web/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/KnowledgeBaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/KnowledgeBaseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-ui/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-ui/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="43aic0wp" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2vfG7lp7Ra6ZZha0qhrAZzOPEJk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.know-hub-ai [clean].executor": "Run",
+    "Maven.know-hub-ai [compile].executor": "Run",
+    "Maven.know-hub-ai [org.springframework.boot:spring-boot-maven-plugin:3.3.3:repackage].executor": "Run",
+    "Maven.know-hub-ai [package].executor": "Run",
+    "Maven.know-hub-ai [validate].executor": "Run",
+    "Maven.know-hub-ai-system [clean].executor": "Run",
+    "Maven.know-hub-ai-system [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor": "Run",
+    "Maven.know-hub-ai-system [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor": "Run",
+    "Maven.know-hub-ai-system [package].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/pgthinker/StudyCode/LLM/know-hub-ai",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.first.attach.projects": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.27468354",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Cargo.Test umijs_es-module-parser">
+    <configuration name="Test umijs_es-module-parser" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="test --workspace" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/know-hub-ai-ui/node_modules/.pnpm/@umijs+es-module-parser@0.0.7/node_modules/@umijs/es-module-parser" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SystemApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="know-hub-ai-system" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="me.pgthinker.system.SystemApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="" />
+      <created>1744528549520</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744528549520</updated>
+      <workItem from="1744528551889" duration="4905000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

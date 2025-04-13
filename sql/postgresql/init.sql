@@ -4,7 +4,8 @@
 --     deleted     BOOLEAN               DEFAULT FALSE,
 --     creator     VARCHAR(255),
 --     updater     VARCHAR(255)
-
+CREATE DATABASE IF NOT EXISTS `know-hub`;
+USE `know-hub`;
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE system_user
 (

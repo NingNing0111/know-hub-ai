@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>me.pgthinker</groupId>
-        <artifactId>knowhub-ai</artifactId>
+        <artifactId>know-hub-ai</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -13,6 +13,7 @@
     <artifactId>know-hub-ai-system</artifactId>
     <name>${project.artifactId}</name>
     <description>system</description>
+    <packaging>jar</packaging>
 
     <dependencyManagement>
         <dependencies>
@@ -30,6 +31,7 @@
         <dependency>
             <groupId>me.pgthinker</groupId>
             <artifactId>know-hub-ai-core</artifactId>
+            <version>${revision}</version>
         </dependency>
         <!-- AI -->
         <dependency>
@@ -104,5 +106,25 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <testSource>${java.version}</testSource>
+                    <testTarget>${java.version}</testTarget>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

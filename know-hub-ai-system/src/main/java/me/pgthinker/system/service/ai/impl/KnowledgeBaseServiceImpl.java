@@ -1,5 +1,6 @@
 package me.pgthinker.system.service.ai.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,9 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, K
 
 	@Override
 	public List<KnowledgeBaseVO> knowLedgelist() {
-		List<KnowledgeBase> knowledgeBaseList = this.list();
+		LambdaQueryWrapper<KnowledgeBase> qw = new LambdaQueryWrapper<>();
+		qw.orderByDesc(KnowledgeBase::getCreateTime);
+		List<KnowledgeBase> knowledgeBaseList = this.list(qw);
 		return transfer(knowledgeBaseList);
 	}
 
