@@ -17,8 +17,8 @@
 
     <properties>
         <spring-boot.version>3.3.3</spring-boot.version>
-        <spring-ai.version>1.0.0-M6</spring-ai.version>
-        <spring-ai-snapshot.version>1.0.0-SNAPSHOT</spring-ai-snapshot.version>
+        <spring-ai.version>1.0.0-M7</spring-ai.version>
+        <spring-ai-snapshot.version>1.0.0-M7</spring-ai-snapshot.version>
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
         <jwt.version>0.11.5</jwt.version>
         <hutool.version>5.8.29</hutool.version>
@@ -44,17 +44,27 @@
             <!--  AI 生态   -->
             <dependency>
                 <groupId>org.springframework.ai</groupId>
-                <artifactId>spring-ai-core</artifactId>
+                <artifactId>spring-ai-commons</artifactId>
                 <version>${spring-ai.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.ai</groupId>
-                <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+                <artifactId>spring-ai-starter-model-openai</artifactId>
                 <version>${spring-ai.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.ai</groupId>
-                <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
+                <artifactId>spring-ai-advisors-vector-store</artifactId>
+                <version>${spring-ai.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
+                <version>${spring-ai.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-autoconfigure-vector-store-pgvector</artifactId>
                 <version>${spring-ai.version}</version>
             </dependency>
             <dependency>

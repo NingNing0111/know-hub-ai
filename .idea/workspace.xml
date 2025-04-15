@@ -8,24 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/env/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/web/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/web/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/KnowledgeBaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/KnowledgeBaseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-ui/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-ui/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/OriginFileResourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/OriginFileResourceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/LLMServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/LLMServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/OriginFileResourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/OriginFileResourceServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,9 +28,9 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="43aic0wp" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2vfG7lp7Ra6ZZha0qhrAZzOPEJk" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -62,6 +52,7 @@
     "Maven.know-hub-ai-system [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor": "Run",
     "Maven.know-hub-ai-system [package].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.SystemApp.executor": "Run",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/pgthinker/StudyCode/LLM/know-hub-ai",
     "node.js.detected.package.eslint": "true",
@@ -76,6 +67,11 @@
     "project.structure.side.proportion": "0.27468354",
     "settings.editor.selected.configurable": "language.rust.cargo.check",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -83,26 +79,10 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Test umijs_es-module-parser">
+  <component name="RunManager" selected="Spring Boot.SystemApp">
     <configuration name="Test umijs_es-module-parser" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test --workspace" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$/know-hub-ai-ui/node_modules/.pnpm/@umijs+es-module-parser@0.0.7/node_modules/@umijs/es-module-parser" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run" />
       <envs />
       <option name="emulateTerminal" value="true" />
       <option name="channel" value="DEFAULT" />
@@ -147,7 +127,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744528549520</updated>
-      <workItem from="1744528551889" duration="4905000" />
+      <workItem from="1744528551889" duration="8359000" />
+      <workItem from="1744629845000" duration="2884000" />
+      <workItem from="1744730210911" duration="1058000" />
     </task>
     <servers />
   </component>
