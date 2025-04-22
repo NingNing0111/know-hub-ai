@@ -9,13 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/OriginFileResourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/OriginFileResourceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/LLMServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/LLMServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/OriginFileResourceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/OriginFileResourceServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +37,7 @@
   "keyToString": {
     "Maven.know-hub-ai [clean].executor": "Run",
     "Maven.know-hub-ai [compile].executor": "Run",
+    "Maven.know-hub-ai [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor": "Run",
     "Maven.know-hub-ai [org.springframework.boot:spring-boot-maven-plugin:3.3.3:repackage].executor": "Run",
     "Maven.know-hub-ai [package].executor": "Run",
     "Maven.know-hub-ai [validate].executor": "Run",
@@ -51,6 +45,10 @@
     "Maven.know-hub-ai-system [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor": "Run",
     "Maven.know-hub-ai-system [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor": "Run",
     "Maven.know-hub-ai-system [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.SystemApp.executor": "Run",
     "kotlin-language-version-configured": "true",
@@ -65,7 +63,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.27468354",
-    "settings.editor.selected.configurable": "language.rust.cargo.check",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -129,7 +127,8 @@
       <updated>1744528549520</updated>
       <workItem from="1744528551889" duration="8359000" />
       <workItem from="1744629845000" duration="2884000" />
-      <workItem from="1744730210911" duration="1058000" />
+      <workItem from="1744730210911" duration="1275000" />
+      <workItem from="1745040117102" duration="2512000" />
     </task>
     <servers />
   </component>
