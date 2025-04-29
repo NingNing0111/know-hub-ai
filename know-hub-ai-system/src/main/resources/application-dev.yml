@@ -2,7 +2,7 @@
 
 spring:
   config:
-    import: classpath:llm-dev.yml
+    import: classpath:llm.yml
   ai:
     openai:
       base-url: https://api.mnzdna.xyz
@@ -15,7 +15,7 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost/template_db
+    url: jdbc:postgresql://localhost/know-hub
 
 # MinIO
 minio:
