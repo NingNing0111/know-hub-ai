@@ -8,17 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/advisor/MessageChatMemoryAdvisor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/controller/AIChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/controller/AIChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/model/entity/ai/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/model/entity/ai/ChatMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/security/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/security/filter/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/DatabaseChatMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/memory/DatabaseChatMemory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/ChatMessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/ChatMessageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/postgresql/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/postgresql/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.bloomcycle.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.bloomcycle.bin/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin.bkp/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin.bkp/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage-cache.bin/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage.json/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/.usage.json/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/origin-file/.usage-cache.bin.bkp/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/origin-file/.usage-cache.bin.bkp/xl.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.minio.sys/buckets/origin-file/.usage-cache.bin/xl.meta" beforeDir="false" afterPath="$PROJECT_DIR$/data/.minio.sys/buckets/origin-file/.usage-cache.bin/xl.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +150,7 @@
       <workItem from="1745040117102" duration="2512000" />
       <workItem from="1745940927330" duration="842000" />
       <workItem from="1747650843078" duration="1237000" />
-      <workItem from="1748080370598" duration="11463000" />
+      <workItem from="1748080370598" duration="11898000" />
     </task>
     <servers />
   </component>

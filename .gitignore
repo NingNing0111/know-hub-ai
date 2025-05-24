@@ -40,3 +40,5 @@ build/
 shadcn-admin
 
 /**/llm-dev.yml
+data
+env/pg_data
