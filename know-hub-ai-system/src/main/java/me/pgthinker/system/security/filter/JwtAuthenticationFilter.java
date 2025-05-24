@@ -45,13 +45,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// 1. 从Header提取Token
 		final String authHeader = request.getHeader("Authorization");
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-			// 如果是AI对话 没有jwt 则无权限
-			if (pathMatcher.match("/ai/chat/**", servletPath)) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			}
-			else {
-				filterChain.doFilter(request, response);
-			}
+			// // 如果是AI对话 没有jwt 则无权限
+			// if (pathMatcher.match("/ai/chat/**", servletPath)) {
+			// response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			// }
+			// else {
+			// filterChain.doFilter(request, response);
+			// }
+			filterChain.doFilter(request, response);
+
 			return;
 		}
 

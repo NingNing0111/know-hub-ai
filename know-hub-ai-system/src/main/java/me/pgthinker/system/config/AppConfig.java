@@ -1,5 +1,8 @@
 package me.pgthinker.system.config;
 
+import lombok.RequiredArgsConstructor;
+import me.pgthinker.system.memory.DatabaseChatMemory;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @Description:
  */
 @Configuration
+@RequiredArgsConstructor
 public class AppConfig {
 
 	@Bean

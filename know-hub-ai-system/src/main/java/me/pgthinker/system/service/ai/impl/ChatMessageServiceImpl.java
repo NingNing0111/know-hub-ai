@@ -1,8 +1,8 @@
 package me.pgthinker.system.service.ai.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.exception.BusinessException;
 import me.pgthinker.system.mapper.ChatMessageMapper;
@@ -10,7 +10,6 @@ import me.pgthinker.system.model.entity.ai.ChatMessage;
 import me.pgthinker.system.service.ai.ChatMessageService;
 import me.pgthinker.system.service.ai.OriginFileResourceService;
 import org.springframework.ai.chat.messages.*;
-import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -36,9 +35,13 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 
 		return chatMessages.stream().map(chatMessage -> {
 			String role = chatMessage.getRole().toLowerCase();
+
 			Message message = switch (role) {
-				case "user" -> new UserMessage(chatMessage.getContent(),
-						originFileResourceService.fromResourceId(chatMessage.getResourceIds()));
+				case "user" -> {
+					UserMessage userMessage = new UserMessage(chatMessage.getContent());
+					userMessage.mutate().media(originFileResourceService.fromResourceId(chatMessage.getResourceIds()));
+					yield userMessage;
+				}
 				case "system" -> new SystemMessage(chatMessage.getContent());
 				case "assistant" -> new AssistantMessage(chatMessage.getContent(), Map.of(), List.of(),
 						originFileResourceService.fromResourceId(chatMessage.getResourceIds()));

@@ -61,9 +61,4 @@ public class ChatMessage extends BaseEntity {
 	@TableField(typeHandler = JacksonTypeHandler.class)
 	private List<String> resourceIds = new ArrayList<>();
 
-	/**
-	 * 是否删除
-	 */
-	private Boolean isClean;
-
 }

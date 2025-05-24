@@ -2,7 +2,6 @@ package me.pgthinker.system.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.pgthinker.system.controller.vo.ChatMessageVO;
 import me.pgthinker.system.controller.vo.ChatRequestVO;
 import me.pgthinker.system.service.ai.AIChatService;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -10,6 +9,8 @@ import org.springframework.ai.chat.model.Generation;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.util.Objects;
 
 /**
  * @Project: me.pgthinker.system.controller
@@ -28,7 +29,17 @@ public class AIChatController {
 
 	@PostMapping(value = "/chat/unify", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public Flux<Generation> unifyChat(@RequestBody ChatRequestVO chatRequestVO) {
-		return chatService.unifyChat(chatRequestVO).map(ChatResponse::getResult).flatMapSequential(Flux::just);
+		return chatService.unifyChat(chatRequestVO).flatMap(chatResponse -> {
+			if (chatResponse == null) {
+				return Flux.empty();
+			}
+			Generation result = chatResponse.getResult();
+			if (result == null) {
+				return Flux.empty();
+			}
+
+			return Flux.just(result);
+		});
 	}
 
 }

@@ -9,15 +9,38 @@
   <component name="ChangeListManager">
     <list default="true" id="cd717f22-6a7d-4dab-acc3-47b7803524b9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-bom/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/advisor/MessageChatMemoryAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/controller/AIChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/controller/AIChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/model/entity/ai/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/model/entity/ai/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/security/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/security/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/DatabaseChatMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/memory/DatabaseChatMemory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/AIChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/ChatMessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/java/me/pgthinker/system/service/ai/impl/ChatMessageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/know-hub-ai-system/src/main/resources/llm.yml" beforeDir="false" afterPath="$PROJECT_DIR$/know-hub-ai-system/src/main/resources/llm.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/postgresql/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/postgresql/init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="43aic0wp" />
   </component>
@@ -33,45 +56,46 @@
     <option name="showLibraryContents" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.know-hub-ai [clean].executor": "Run",
-    "Maven.know-hub-ai [compile].executor": "Run",
-    "Maven.know-hub-ai [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor": "Run",
-    "Maven.know-hub-ai [org.springframework.boot:spring-boot-maven-plugin:3.3.3:repackage].executor": "Run",
-    "Maven.know-hub-ai [package].executor": "Run",
-    "Maven.know-hub-ai [validate].executor": "Run",
-    "Maven.know-hub-ai-system [clean].executor": "Run",
-    "Maven.know-hub-ai-system [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor": "Run",
-    "Maven.know-hub-ai-system [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor": "Run",
-    "Maven.know-hub-ai-system [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.SystemApp.executor": "Run",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/pgthinker/StudyCode/LLM/know-hub-ai",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.first.attach.projects": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.27468354",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.know-hub-ai [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai [org.springframework.boot:spring-boot-maven-plugin:3.3.3:repackage].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai-system [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai-system [io.spring.javaformat:spring-javaformat-maven-plugin:0.0.39:apply].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai-system [org.apache.maven.plugins:maven-jar-plugin:3.3.0:jar].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.know-hub-ai-system [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.SystemApp.executor&quot;: &quot;Run&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/pgthinker/StudyCode/LLM/know-hub-ai&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.27468354&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -129,6 +153,9 @@
       <workItem from="1744629845000" duration="2884000" />
       <workItem from="1744730210911" duration="1275000" />
       <workItem from="1745040117102" duration="2512000" />
+      <workItem from="1745940927330" duration="842000" />
+      <workItem from="1747650843078" duration="1237000" />
+      <workItem from="1748080370598" duration="10904000" />
     </task>
     <servers />
   </component>

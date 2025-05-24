@@ -4,8 +4,8 @@
 --     deleted     BOOLEAN               DEFAULT FALSE,
 --     creator     VARCHAR(255),
 --     updater     VARCHAR(255)
-CREATE DATABASE IF NOT EXISTS `know-hub`;
-USE `know-hub`;
+-- CREATE DATABASE IF NOT EXISTS `know-hub`;
+-- USE `know-hub`;
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE system_user
 (
@@ -154,7 +154,6 @@ CREATE TABLE chat_message
     content         TEXT    NOT NULL,                           -- 对话内容
     role            TEXT    NOT NULL,                           -- 角色
     resource_ids    TEXT    NOT NULL DEFAULT '[]',              -- 附件列表
-    is_clean BOOLEAN DEFAULT FALSE,
     create_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     deleted     BOOLEAN               DEFAULT FALSE,

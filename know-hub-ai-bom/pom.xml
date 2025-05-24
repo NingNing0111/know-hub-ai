@@ -17,8 +17,8 @@
 
     <properties>
         <spring-boot.version>3.3.3</spring-boot.version>
-        <spring-ai.version>1.0.0-M7</spring-ai.version>
-        <spring-ai-snapshot.version>1.0.0-M7</spring-ai-snapshot.version>
+        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-ai-snapshot.version>1.0.0</spring-ai-snapshot.version>
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
         <jwt.version>0.11.5</jwt.version>
         <hutool.version>5.8.29</hutool.version>

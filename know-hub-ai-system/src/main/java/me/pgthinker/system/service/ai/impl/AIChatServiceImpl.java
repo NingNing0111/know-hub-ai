@@ -4,18 +4,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.pgthinker.core.common.CoreCode;
 import me.pgthinker.core.exception.BusinessException;
-import me.pgthinker.system.advisor.MessageChatMemoryAdvisor;
 import me.pgthinker.system.controller.vo.ChatMessageVO;
 import me.pgthinker.system.controller.vo.ChatRequestVO;
+import me.pgthinker.system.memory.DatabaseChatMemory;
 import me.pgthinker.system.model.entity.user.SystemUser;
 import me.pgthinker.system.model.enums.ChatType;
 import me.pgthinker.system.service.ai.*;
 import me.pgthinker.system.utils.SecurityFrameworkUtil;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.MessageWindowChatMemory;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.content.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -55,14 +59,12 @@ public class AIChatServiceImpl implements AIChatService {
 	public Flux<ChatResponse> simpleChat(ChatMessageVO chatMessageVO) {
 		ChatModel chatModel = llmService.getChatModel();
 		// 构建Meta信息
+		HashMap<String, Object> params = new HashMap<>();
+		params.put(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
+		UserMessage userMessage = UserMessage.builder().text(chatMessageVO.getContent()).metadata(params).build();
 		ChatClient chatClient = ChatClient.builder(chatModel).build();
-
-		return chatClient.prompt().user(user -> {
-			user.param(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
-			user.text(chatMessageVO.getContent());
-		})
+		return chatClient.prompt(Prompt.builder().messages(userMessage).build())
 			.advisors(MessageChatMemoryAdvisor.builder(databaseChatMemory)
-				.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
 				.conversationId(chatMessageVO.getConversationId())
 				.build())
 			.stream()
@@ -74,22 +76,22 @@ public class AIChatServiceImpl implements AIChatService {
 		ChatModel chatModel = llmService.getMultimodalModel();
 		List<String> resourceIds = chatMessageVO.getResourceIds();
 		ChatClient chatClient = ChatClient.builder(chatModel).build();
-		return chatClient.prompt().user(user -> {
-			HashMap<String, Object> params = new HashMap<>();
-			params.put(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
-			params.put(CHAT_MEDIAS, chatMessageVO.getResourceIds());
-			user.params(params);
-			user.text(chatMessageVO.getContent());
-			log.info("params:{}", params);
-			if (resourceIds != null && !resourceIds.isEmpty()) {
-				List<Media> medias = originFileResourceService.fromResourceId(resourceIds);
-				user.media(medias.toArray(new Media[0]));
-			}
-		})
+		HashMap<String, Object> params = new HashMap<>();
+		params.put(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
+		params.put(CHAT_MEDIAS, chatMessageVO.getResourceIds());
+		UserMessage.Builder userMessageBuilder = UserMessage.builder()
+			.text(chatMessageVO.getContent())
+			.metadata(params);
+		if (resourceIds != null && !resourceIds.isEmpty()) {
+			List<Media> medias = originFileResourceService.fromResourceId(resourceIds);
+			userMessageBuilder.media(medias.toArray(new Media[0]));
+		}
+		UserMessage userMessage = userMessageBuilder.build();
+
+		return chatClient.prompt(Prompt.builder().messages(userMessage).build())
 			.advisors(new SimpleLoggerAdvisor(),
 					MessageChatMemoryAdvisor.builder(databaseChatMemory)
 						.conversationId(chatMessageVO.getConversationId())
-						.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
 						.build())
 			.stream()
 			.chatResponse();
@@ -101,7 +103,6 @@ public class AIChatServiceImpl implements AIChatService {
 		// 构建Meta信息
 		ChatClient chatClient = ChatClient.builder(chatModel).build();
 		PromptTemplate template = new PromptTemplate(ragPromptResource);
-		String ragTemplate = template.getTemplate();
 
 		// 向量查询条件
 		SearchRequest searchRequest = SearchRequest.builder()
@@ -110,17 +111,17 @@ public class AIChatServiceImpl implements AIChatService {
 			.filterExpression(buildBaseAccessFilter(baseIds))
 			.build();
 
-		return chatClient.prompt().user(user -> {
-			user.param(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
-			user.text(chatMessageVO.getContent());
-		})
+		HashMap<String, Object> params = new HashMap<>();
+		params.put(CHAT_CONVERSATION_NAME, chatMessageVO.getConversationId());
+		UserMessage userMessage = UserMessage.builder().text(chatMessageVO.getContent()).metadata(params).build();
+
+		return chatClient.prompt(Prompt.builder().messages(userMessage).build())
 			.advisors(new SimpleLoggerAdvisor(),
 					QuestionAnswerAdvisor.builder(llmService.getVectorStore())
-						.userTextAdvise(ragTemplate)
+						.promptTemplate(template)
 						.searchRequest(searchRequest)
 						.build(),
 					MessageChatMemoryAdvisor.builder(databaseChatMemory)
-						.chatMemoryRetrieveSize(CHAT_MAX_LENGTH)
 						.conversationId(chatMessageVO.getConversationId())
 						.build()
 
